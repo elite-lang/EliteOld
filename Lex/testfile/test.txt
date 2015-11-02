@@ -1,0 +1,9 @@
+function test() {
+	int a = 5;
+	write(e+3);
+}
+
+function main() {
+	test();
+	return 0;
+}

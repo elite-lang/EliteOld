@@ -1,0 +1,12 @@
+*.*~
+.fuse*
+*.sublime-*
+bin/
+build/
+Lex/bin/
+Lex/build/
+LR_Scanner/bin/
+LR_Scanner/build/
+RedApple/bin/
+RedApple/build/
+

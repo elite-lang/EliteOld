@@ -1,0 +1,203 @@
+<program> = <initlua> <definelist> <main> ;
+
+# 调用lua的初始化脚本
+<initlua> = e {{ require("init_pcode") }} ;
+
+# 主函数部分
+<main> = "function" "main" <maindo> <push> "(" <parametersdef> ")" <funcblock> ;
+<maindo> = e {{
+    write_code( 1, now_pointer() )
+}} ; # 这里已经很确定的知道了，main函数的跳转是第一条语句的强制跳转，所以在1位置写入
+
+
+# 定义列表
+<definelist> = <definelist> <define> | e ;
+<define> = <constdef> | <vardef> | <functiondef> ;
+
+# 变量和常量定义
+<constdef> = "const" <const_def_run>  <vardef> {{ isconstdef = false }} ;
+<vardef> = "int" <iddeflist> ";" ;
+<iddeflist> = <iddeflist> "," <iddef> | <iddef> ;
+<iddef> = [id:id] "=" [int:i] {{ 
+            i.data = tonumber(i.val)
+            vardef(id.val,i.data)
+        }} 
+        | [id:id] {{ 
+            vardef(id.val)
+        }} ;
+
+<const_def_run> = e {{ isconstdef = true }} ;  # 这里对常量做了单独的优化，认为是一个立即数
+
+# 函数定义
+<functiondef> = "function" <function_id> <push> "(" <parametersdef> ")" <funcblock> ;
+<parametersdef> = e | <parameterlist> ;
+<parameterlist> = <parameterlist> "," [id:id] {{
+                    print(param_kind)
+                    save_id(id.val,param_kind,int_type,0)
+                }}
+                | [id:id] {{
+                    print(param_kind)
+                    save_id(id.val,param_kind,int_type,0)
+                }} ;
+<function_id> = [id:id] {{
+                print("function ",id.val); save_id(id.val,func_kind,int_type,now_pointer()) 
+            }} ;
+
+
+# 块定义
+<block> = <push> "{"  <statementlist> <pop> "}" ; # block 需要处理符号栈的压栈问题
+<funcblock> = "{"  <statementlist> <pop> "}" ;    # function的block需要将参数和自己的局部变量一同考虑
+<push> = e {{ push_stack() paramsum = 0 }} ;
+<pop>  = e {{ make_code(RET,0) pop_stack() }} ;
+
+<statementlist> = <statementlist> <statement> | e ;
+
+# 语句的所有可能情况列表
+<statement> = <vardef> | <constdef> | <ifstatement> | <whilestatement> 
+            | <putstatement> ";" | <callstatement> ";" | <block>
+            | <readstatement> ";" | <writestatement> ";" | <returnstatement> ";" ;
+
+# 赋值语句
+<putstatement> = <idlist:list> "=" <Elist> {{
+    local last = list
+    while last do
+        make_code( STO, last.level, last.address )
+        last = last.pre
+    end
+}};
+
+# 条件语句 好烦人的拉链回填，为避免if嵌套带来的问题，还需要使用链表记录 = = 
+<ifstatement> = "if" "(" <condition:c> <iflistdo> ")" <statement:s>   
+              {{
+                write_code(iflist.data, now_pointer())
+                iflist = iflist.pre
+              }}
+              | "if" "(" <condition:c> <iflistdo> ")" <statement:s1> <iflistdoelse> "else" <statement:s2>
+              {{
+                write_code(iflist.data, now_pointer())
+                iflist = iflist.pre
+              }}
+              ;
+
+<iflistdo> = e  # 这里使用的是邵兵老师讲的拉链回填技术 ,  JPC(1) , pointer(4) , JMP(1) , pointer(4) , 
+    {{
+        make_code( JPC, now_pointer()+10 )
+        make_code( JMP, 0 )
+        iflist = { pre = iflist , data = now_pointer() - 4 }
+    }} ;
+
+<iflistdoelse> = e   # 这里是else的拉链部分 JPC(1) , pointer(4) , JMP(1) , pointer(4) , s1 , JMP(1) , pointer(4) , s2 
+    {{
+        make_code( JMP, 0 )
+        write_code(iflist.data, now_pointer())
+        iflist = iflist.pre
+        iflist = { pre = iflist , data = now_pointer() - 4 }
+    }} ;
+
+<condition> = <E> [opte] <E> | "!" <E> | <E> ;
+
+# while型循环语句
+<whilestatement> = "while" <whiledo> "(" <condition> <iflistdo> ")" <statement> 
+{{
+        
+}} ;
+
+<whiledo> = e {{ 
+    make_code( JMP, 0 )
+    write_code(iflist.data, now_pointer())
+    iflist = iflist.pre
+    iflist = { pre = iflist , data = now_pointer() - 4 }
+}} ;
+
+# 返回语句
+<returnstatement> = "return" <parameterscall> {{
+    make_code(RET,0)
+}} ;
+
+# 函数调用语句
+<callstatement> = [id:id] "(" <parameterscall> ")" {{
+    local t = find_id( id.val );
+    if t.kind == func_kind then
+        make_code( CAL, t.level, t.address )
+    else
+        print("Error name of the function")
+    end
+}} ;
+
+# 参数列表 简单讲就是可空的表达式列表
+<parameterscall> = <Elist> | e ; 
+
+# id列表,用于赋值语句
+# 其实本质上就是将当前栈顶的内容一个个的存入对应的变量中
+<idlist> = <idlist:list> "," [id:id]  # 这个部分是一个链表
+        {{ 
+            id.pre = list  
+            return id
+        }}
+         | [id:id] {{ 
+            id.level, id.address = varload_address(id.val)
+            return id
+         }};
+
+# 表达式列表,用于赋值语句等
+# 其实本质上就是将当前的要计算的东西算好,放在栈顶就行了
+<Elist> = <Elist> "," <E> | <E> ;
+
+<readstatement> = "read" "(" <readidlist> ")" {{
+    local last = list
+    while last do
+        make_code( RED, last.level, last.address )
+        last = last.pre
+    end
+}} ;
+
+<readidlist> = <readidlist:list> "," [id:id] {{
+            id.level, id.address = varload_address(id.val)
+            make_code( RED, id.level, id.address )
+          }} | [id:id] {{ 
+            id.level, id.address = varload_address(id.val)
+            make_code( RED, id.level, id.address )
+         }};
+
+<writestatement> = "write" "(" <WriteElist> ")" ;
+
+<WriteElist> = <WriteElist> "," <E:exp> {{
+            make_code( WRT )
+          }} | <E:e> {{
+            make_code( WRT )
+          }} ;
+
+<E> = <T:t>        {{ return t;  }}
+    | <E:exp> [optd:opt] <T:t> 
+    {{
+        local p = trytoCalculate(exp, t, opt.val)
+        if p ~= nil then
+            local table = {}
+            table.data = p
+            return table
+        end
+    }}
+    ;
+<T> = <T:t> [optc:opt] <F:f> 	# trytoCalculate这个函数中会尝试计算两个值，如果尝试失败，则会生成两条计算指令
+    {{
+        local p = trytoCalculate(t, f, opt.val)
+        if p ~= nil then
+            local table = {}
+            table.data = p
+            return table
+        end
+    }}
+    | <F:f> 		{{ print("F",f.data,f.level,f.address) return f; }}
+    ;
+<F> = "(" <E:exp> ")" 	{{ print("( E )",exp.data,exp.level,exp.address)  return exp;  }}
+    | <I:i>		{{ print("I",i.data,i.level,i.address) return i; }}
+    | <callstatement> {{  }}    
+    ;
+<I> = [int:i]  		{{  i.data = tonumber(i.val); make_code(LIT, i.data) return i;  }}
+    | [float:f]		{{  f.data = tonumber(f.val); make_code(LIT, i.data) return f;  }}
+    | [id:id]       {{  varload(id.val); return id; }}
+    ;
+
+
+
+

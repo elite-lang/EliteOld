@@ -1,0 +1,13 @@
+const int a = 3;
+function test() {
+	const int pi = 3;
+	int a = 5;
+	a = a * pi;
+	write(a);
+}
+
+function main() {
+	test();
+	write(a * 2);
+	return 0;
+}
