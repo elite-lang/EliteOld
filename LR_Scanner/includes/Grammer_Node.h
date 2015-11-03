@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-02 16:28:17
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-01-02 16:28:51
+* @Last Modified time: 2015-11-03 08:36:59
 */
 #include "afx.h"
 
@@ -37,7 +37,7 @@ public:
     }
     virtual Grammer_Node* AddBortherNode(Grammer_Node* _brother);
     virtual Grammer_Node* AddChildrenNode(Grammer_Node* _children);
-    virtual Grammer_Node* NewNode();
+    static Grammer_Node* NewNode();
 };
 
 #endif // GRAMMER_NODE_H

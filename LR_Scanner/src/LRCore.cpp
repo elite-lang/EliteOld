@@ -2,16 +2,17 @@
 * @Author: sxf
 * @Date:   2015-01-03 18:43:13
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-04-21 16:29:13
+* @Last Modified time: 2015-11-02 19:48:10
 */
 
 #include "LRCore.h"
 
 
 Grammer_Node* LRCore::Run(){
+    script_runner->Init();
     Token* t = TokenFliter(lex->Read());
 
-    LRStack.push_back(0);
+    LRStack.push_back(0); // 放入0号根
     int s;
     while (1) {
         s = LRStack.back();
@@ -32,7 +33,7 @@ Grammer_Node* LRCore::Run(){
         }
         case 'a':
             printf("Accept!\n");
-            script_runner->WriteFile("test.pco");
+            script_runner->Finished();
             return ast;
         default:
             println(_T("error"));

@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-01 19:40:28
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-04-20 09:52:59
+* @Last Modified time: 2015-11-03 08:23:30
 */
 
 #ifndef LR_PARSER_H
@@ -16,6 +16,7 @@
 #include <vector>
 #include <map>
 #include "VMap.h"
+#include "Grammer_Node.h"
 using namespace std;
 
 class LR_parser : public Parser
@@ -39,6 +40,11 @@ public:
 
     // 设置词法分析器
     virtual void setLex(LexInterface*);
+
+    // 设置脚本解析器
+    virtual void setScriptRunner(ScriptRunner* sr) {
+        core.setScriptRunner(sr);
+    }
 
     virtual void setBaseVtSize(int size) {
         vmap.constSize = size;

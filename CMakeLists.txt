@@ -1,13 +1,26 @@
 cmake_minimum_required(VERSION 2.8)
-project(lex)
-SET(CMAKE_CXX_COMPILER_ENV_VAR "CXX")
-SET(CMAKE_CXX_FLAGS "-std=c++11")
-include_directories(include src)
-file(GLOB_RECURSE lex_source_files "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-add_library(lex STATIC ${lex_source_files}) 
-add_executable(lextest ${lex_source_files})
-install(TARGETS lextest RUNTIME DESTINATION bin)
+project(Elite)
+
+SET (CMAKE_CXX_COMPILER_ENV_VAR "clang++")
+SET (CMAKE_CXX_FLAGS "-std=c++11")
+SET (CMAKE_CXX_FLAGS_DEBUG   "-g")
+SET (CMAKE_CXX_FLAGS_MINSIZEREL  "-Os -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELEASE  "-O4 -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+
+include_directories(src extlib/lua extlib/lex extlib/scanner extlib/redapple)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extlib)
+
+file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+
+add_executable(elite ${source_files})
+
+install(TARGETS elite RUNTIME DESTINATION bin)
+
+target_link_libraries(elite lex scanner red lua dl)
+
 
 FIND_PACKAGE(Doxygen)  
 OPTION(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ${DOXYGEN_FOUND})  

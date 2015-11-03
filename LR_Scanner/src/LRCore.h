@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-03 18:42:35
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-01-03 18:43:08
+* @Last Modified time: 2015-11-02 18:47:19
 */
 
 #ifndef LR_CORE_H
@@ -18,8 +18,8 @@ using namespace std;
 class LRCore 
 {
 public:
-    LRCore() { script_runner = new ScriptRunner(); }
-    ~LRCore() { delete script_runner; }
+    LRCore() {}
+    ~LRCore() {}
     Grammer_Node* Run();
     
     //======= setter and getter =========

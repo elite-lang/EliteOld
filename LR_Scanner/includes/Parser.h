@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-02 16:29:28
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-04-17 15:38:14
+* @Last Modified time: 2015-11-03 08:23:08
 */
 
 #ifndef PARSER_H
@@ -10,7 +10,10 @@
 
 #include "LexInterface.h"
 #include "afx.h"
-#include "Grammer_Node.h"
+
+#include "ScriptRunner.h"
+
+class Grammer_Node;
 
 class Parser {
 public:
@@ -31,6 +34,10 @@ public:
 
     // set the Base Vt size of Lex
     virtual void setBaseVtSize(int size) = 0;
+
+    // 设置脚本解析器
+    virtual void setScriptRunner(ScriptRunner* sr) = 0;
+
     // 构建LR解析器对象
     static Parser* NewLRParser();
 };

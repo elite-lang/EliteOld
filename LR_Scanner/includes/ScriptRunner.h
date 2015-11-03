@@ -1,39 +1,34 @@
 #include "afx.h"
-#include "Grammer_Node.h"
 #include "lua.hpp"
-#include <vector>
 #include "LexInterface.h"
-#include "idtable.h"
-#include "codegenerator.h"
+#include <vector>
+
 using namespace std;
 
 #ifndef SCRIPTRUNNER_H
 #define SCRIPTRUNNER_H
 
-
+class Grammer_Node;
 
 class ScriptRunner
 {
 public:
+    virtual void Init();
+    virtual int MakeEnv(BNFCHAR*, Grammer_Node*);
+    virtual int MakeNewLuaTable(Token* t);
+    virtual int Run(int&, BNFCHAR*, Grammer_Node*);
+    virtual void Finished();
+    virtual void ClearEnv();
+    virtual vector< pair<BNFCHAR*, Grammer_Node*> >& getEnv();
+    virtual lua_State* getLuaState();
+
+protected:
     ScriptRunner();
     ~ScriptRunner();
-    void Init();
-    int MakeEnv(BNFCHAR*, Grammer_Node*);
-    int MakeNewLuaTable(Token* t);
-    int Run(int&, BNFCHAR*, Grammer_Node*);
-    void ClearEnv() { if (env.size() != 0) env.clear(); }
-    vector< pair<BNFCHAR*, Grammer_Node*> >& getEnv() { return env; }
-    lua_State* L = NULL;
-
-    void WriteFile(const char* path) { code_generator->WriteFile(path); }
-private:
-    vector< pair<BNFCHAR*, Grammer_Node*> > env;
-
-    IDTable* id_table;
-    CodeGenerator* code_generator;
-
-    char* WCharToChar(wchar_t* data,int& size);
     char* addFunction(BNFCHAR* data);
+    char* WCharToChar(wchar_t* data,int& size);
+    lua_State* L = NULL;
+    vector< pair<BNFCHAR*, Grammer_Node*> > env;
 };
 
 #endif // SCRIPTRUNNER_H

@@ -21,17 +21,14 @@ class CodeGenContext;
 class Node
 {
 public:
-	Node();
-	Node(Node* n);
-	~Node();
-
 	// 构建列表部分
 	void addChildren(Node* n);
 	void addBrother (Node* n);
 	bool isSingle();
 	static Node* make_list(int num, ...);
 	static Node* getList(Node* node);
-
+	static Node* Create(Node* n);
+	static Node* Create();
 
 	void print(int k);
 	Node* getNext() { return next; }
@@ -56,6 +53,10 @@ public:
 	bool isCharNode();
 
 protected:
+	Node();
+	Node(Node* n);
+	~Node();
+
 	virtual void printSelf();
 	void init();
 
