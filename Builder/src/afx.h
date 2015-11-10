@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-06-23 23:44:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-01-03 14:27:54
+* @Last Modified time: 2015-04-17 15:26:25
 */
 
 #ifndef AFX_H
@@ -16,11 +16,17 @@
 #define EOF -1
 #endif
 
+#ifndef TESTV
+#define TESTV -2
+#endif
+
+#define BNFCHAR char
+
 #ifndef _UNICODE
 #define CHAR char
 #define STRLEN(x) strlen(x)
 #define STRCPY(x,y) strcpy(x,y)
-#define Print printf
+#define Print(X) printf("%s",X)
 #define Strformat sprintf
 #define _T(x) x
 #define String string
@@ -38,7 +44,7 @@
 #define CHAR wchar_t
 #define STRLEN(x) wcslen(x)
 #define STRCPY(x,y) wcscpy(x,y)
-#define Print wprintf
+#define Print(X) printf("%S",X)
 #define Strformat swprintf
 #define _T(x) L##x
 #define String wstring

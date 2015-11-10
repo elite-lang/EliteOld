@@ -1,11 +1,14 @@
+#ifndef REGEX_H
+#define REGEX_H
 
-#pragma once
+
 
 #include <stack>
 #include <vector>
 #include <set>
 #include "CharSet.h"
 #include "EquivalenceClass.h"
+#include "glibmm.h"
 
 struct _node;
 typedef struct _node_func
@@ -61,9 +64,9 @@ public:
 	~Regex();
 
 	// it's same as init method
-	Regex(const wchar_t* pattern, EquivalenceClass* pEClass);
+	Regex(const char* pattern, EquivalenceClass* pEClass);
 
-	bool init(const wchar_t* pattern, EquivalenceClass* pEClass = NULL);
+	bool init(const char* pattern, EquivalenceClass* pEClass = NULL);
 
     node* getRoot() { return root; }
 
@@ -71,39 +74,42 @@ public:
 
 	void setEClass(EquivalenceClass* pEClass);
 	EquivalenceClass* getEClass();
-    const wchar_t* getPattern() { return pattern; }
+    const char* getPattern() { return pattern; }
 
 private:
 
-	void run(wchar_t);
+	void run(gunichar c);
 	CharSet* makeEscape();
 	void doCharSet(CharSet*);
-	void doOperater(wchar_t);
+	void doOperater(gunichar);
 	void operate();
-	void putOperater(wchar_t c);
+	void putOperater(gunichar c);
 
-	void push(wchar_t c);
+	void push(gunichar c);
 	void pop();
 	// ===================
 	// member variable
 	// ===================
 
-	const wchar_t* pattern;
+	const char* pattern;
 
 	int pointer = 0;
 
 	// it's the root of the tree
 	node* root; // for test ,so put it in public
 
-	std::stack<wchar_t> operater_stack;
+	std::stack<gunichar> operater_stack;
 	std::stack<node*> obj_stack;
 
 	EquivalenceClass* pEClass;
 
-	std::wstring tempSet;
-	std::wstring tempLeftInt;
-	std::wstring tempRightInt;
+	Glib::ustring tempSet;
+	Glib::ustring tempLeftInt;
+	Glib::ustring tempRightInt;
 
 	bool isEnd = false;
 };
 
+
+
+#endif // REGEX_H

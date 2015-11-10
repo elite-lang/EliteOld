@@ -2,11 +2,12 @@
 * @Author: sxf
 * @Date:   2015-11-02 18:58:29
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-03 08:25:59
+* @Last Modified time: 2015-11-08 10:49:47
 */
 
 #include "PCodeScriptRunner.h"
 #include "Grammer_Node.h"
+#include "lua.hpp"
 
 static ScriptRunner* runner;
 static int cachecode;

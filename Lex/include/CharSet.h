@@ -1,7 +1,10 @@
-#pragma once
+#ifndef CHAR_SET_H
+#define CHAR_SET_H
+
 
 #include <map>
 #include <string>
+#include "glibmm.h"
 
 typedef struct _cv{
 	char type;
@@ -30,25 +33,31 @@ public:
 	CharSet(const CharSet& copy);
 
 	// make constructor
-	CharSet(const std::wstring str);
+	CharSet(const Glib::ustring str);
 
-	void Combine(const CharSet& obj);
+	// 已弃用
+	// void Combine(const CharSet& obj);
 
 	bool operator==(const CharSet&);
 
 	// all the char is saved in the balanced tree.
-	std::map<wchar_t, cv> charset; //to make the test,it should be private
+	std::map<gunichar, cv> charset; //to make the test,it should be private
 
 	// insert method , type = 0 means a standalone char
 	// type = 1 means the begin of a interval, type = 2 means the end of the interval.
-	void insert(wchar_t p, wchar_t q, unsigned short eclass);
-	void insert(wchar_t p, wchar_t q);
-	void insert(wchar_t c);
-	std::wstring str;
-private:
+	// void insert(gunichar p, gunichar q, unsigned short eclass);
+	void insert(gunichar p, gunichar q);
+	void insert(gunichar c);
+	Glib::ustring str;
+
 	// make the set negate
 	bool negate = false;
 
 	unsigned short eclass_sum;
+
+private:
+	gunichar CharEscape(Glib::ustring::iterator& i);
+	int HexToDec(const char *s);
 };
 
+#endif // CHAR_SET_H

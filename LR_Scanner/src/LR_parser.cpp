@@ -1,6 +1,9 @@
 #include "LR_parser.h"
 #include "BNFParser.h"
 #include "LALRTable.h"
+#include "ScriptRunner.h"
+#include "Grammer_Node.h"
+
 
 LR_parser::LR_parser()
 {

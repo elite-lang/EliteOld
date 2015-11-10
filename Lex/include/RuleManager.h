@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-10-02 23:31:33
 * @Last Modified by:   sxf
-* @Last Modified time: 2014-11-07 18:06:36
+* @Last Modified time: 2015-11-08 16:42:12
 */
 
 #include <string>
@@ -16,10 +16,10 @@
 #define RULEMANAGER_H
 
 struct Rule{
-	std::wstring name;
-	std::wstring pattern;
+	Glib::ustring name;
+	Glib::ustring pattern;
 	DFA* dfa;
-	bool operator==(std::wstring obj){
+	bool operator==(Glib::ustring obj){
 		return name==obj;
 	}
 };
@@ -35,22 +35,23 @@ public:
 	~RuleManager();
 	
 	// add a new Lex rule
-    int AddRule(const wchar_t*,const wchar_t*); // return the rule's id
+    int AddRule(const char*,const char*); // return the rule's id
 
 	// find the rule, will return the id of it.
-    int FindRule(const wchar_t*);
+    int FindRule(const char*);
 	
-    LexToken* Read();
+    Token* Read();
 
 	// when you change the Rule, you should run it manually
 	DFA* combineAllDFA();
 
-    void InitCore(const wchar_t*);
+    void InitCore(const char*);
 	
 	// ====setter and getter =============
     int getRuleSize() { ruleList.size(); }
 	DFA* getMainDFA();
     const Rule getRule(int id) { return ruleList.at(id); }
+    
 private:
 	std::vector<Rule> ruleList;
 	EquivalenceClass* pEClass;

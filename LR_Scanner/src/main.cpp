@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-04-14 14:38:22
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-04-21 16:24:55
+* @Last Modified time: 2015-11-03 08:56:14
 */
 
 #include "afx.h"
@@ -13,6 +13,7 @@
 #include <fstream>
 #include "Parser.h"
 #include <unistd.h>
+#include "Grammer_Node.h"
 
 
 #define maxpath 1000
@@ -71,7 +72,7 @@ int main(int argc,const char *argv[])
 	    printf("lex done.\n");
 	    parser->BuildParser("lrparser.txt");
 	    printf("parser done.\n");
-	    Grammer_Node* root = new Grammer_Node();
+	    Grammer_Node* root = Grammer_Node::NewNode();
 	    parser->Parse(root);
 	}
 	return 0;

@@ -1,4 +1,7 @@
-#pragma once
+
+#ifndef EQUIVALENCE_CLASS_H
+#define EQUIVALENCE_CLASS_H
+
 #include "CharSet.h"
 #include <vector>
 #include <set>
@@ -22,13 +25,17 @@ public:
 
 	set<unsigned short> makeSet(CharSet &charset);
 
-	unsigned short getClass(wchar_t);
+	unsigned short getClass(gunichar);
 
 	int getSum();
+
+	void print();
 private:
-	void insert(wchar_t p, wchar_t q);
+	void insert(gunichar p, gunichar q, int xs);
 
 	int eclass_sum = 0;
 	vector<unsigned short> equivalence_class;
 };
 
+
+#endif // EQUIVALENCE_CLASS_H

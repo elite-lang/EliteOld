@@ -12,23 +12,21 @@ Regex::~Regex()
 	delete root;
 }
 
-Regex::Regex(const wchar_t* pattern, EquivalenceClass* pEClass) {
+Regex::Regex(const char* pattern, EquivalenceClass* pEClass) {
 	init(pattern, pEClass);
 }
 
-bool Regex::init(const wchar_t* pattern, EquivalenceClass* pEClass) {
+bool Regex::init(const char* pattern, EquivalenceClass* pEClass) {
 	this->pattern = pattern;
 	this->setEClass(pEClass);
 	pointer = 0;
 	try {
-		wchar_t c;
+		gunichar c;
 		while ((c = pattern[pointer]) != 0) {
 			++pointer;
 			run(c);
 		}
-		
-	}
-	catch(const std::exception& e) {
+	} catch (const std::exception& e) {
 		std::cerr << e.what() << '\n';
 		return false;
 	}
@@ -44,10 +42,10 @@ bool Regex::init(const wchar_t* pattern, EquivalenceClass* pEClass) {
 }
 
 // 此处使用内联函数避免函数反复调用的开销 - - I don't know what I think...
-inline void Regex::run(wchar_t c) {
-    if (c == ' ' || c == '\t') return; // jump all space and \t
+inline void Regex::run(gunichar c) {
+	if (c == ' ' || c == '\t') return; // jump all space and \t
 	if ((!operater_stack.empty()) && (operater_stack.top() == '[') && (c !=']')) {
-        tempSet.push_back(c);
+		tempSet.push_back(c);
 		return;
 	}
 	
@@ -72,7 +70,7 @@ inline void Regex::run(wchar_t c) {
 		case ')':{	// * end
 // 			if (operater_stack.empty()) throw new std::exception("the ) didn't matching", 1003);
 			push(')');
-			/*wchar_t top;
+			/*gunicode top;
 			while (!operater_stack.empty() && (top = operater_stack.top()) != '('){
 				if (top == '|' || top == 1) {
 					node* obj = obj_stack.top();
@@ -134,10 +132,9 @@ inline void Regex::run(wchar_t c) {
 			break; 
 		}
 		default:{
-//			wchar_t str[2];
+//			gunicode str[2];
 //			str[0] = c; str[1] = 0;
             CharSet* pSet = new CharSet();
-            pSet = new CharSet();
             pSet->insert(c, c);
 			doCharSet(pSet);
 			break; 
@@ -169,7 +166,7 @@ void Regex::doCharSet(CharSet* pSet){
 	pEClass->Add(*pSet);
 	obj_stack.push(pNode);
 	/*
-	wchar_t ope;
+	gunicode ope;
 	if (!operater_stack.empty() && ((ope = operater_stack.top()) == 1 )) {
 		auto top = obj_stack.top();
 		obj_stack.top() = new node(1, top, pNode, 0);
@@ -181,10 +178,10 @@ void Regex::doCharSet(CharSet* pSet){
 }
 
 
-void Regex::push(wchar_t c){
+void Regex::push(gunichar c){
 	switch (c){
 	case 1:{
-		wchar_t ope;
+		gunichar ope;
 		while (!operater_stack.empty() && ((ope = operater_stack.top()) == 1)) {
 			pop();
 		}
@@ -192,7 +189,7 @@ void Regex::push(wchar_t c){
 		break; 
 	}
 	case '|':{
-		wchar_t ope;
+		gunichar ope;
 		while (!operater_stack.empty() && ((ope = operater_stack.top()) == 1 || ope == '|')) {
 			pop();
 		}
@@ -204,7 +201,7 @@ void Regex::push(wchar_t c){
 		break;
 	case ')':{
 // 		if (operater_stack.empty()) throw new std::exception("the ) didn't matching", 1003);
-		wchar_t top;
+		gunichar top;
 		while (!operater_stack.empty() && (top = operater_stack.top()) != '('){
 			pop();
 		}
@@ -218,7 +215,7 @@ void Regex::push(wchar_t c){
 }
 
 void Regex::pop(){
-	wchar_t top = operater_stack.top();
+	gunichar top = operater_stack.top();
 	if (top == '|' || top == 1) {
 		node* obj = obj_stack.top();
 		obj_stack.pop();
@@ -228,12 +225,12 @@ void Regex::pop(){
 	operater_stack.pop();
 }
 
-void Regex::doOperater(wchar_t c){
+void Regex::doOperater(gunichar c){
 
 }
 
 void Regex::operate(){
-	wchar_t top = operater_stack.top();
+	gunichar top = operater_stack.top();
 	operater_stack.pop();
 	switch (top) 
 	{
@@ -252,7 +249,7 @@ void Regex::operate(){
 	
 }
 
-void Regex::putOperater(wchar_t c){
+void Regex::putOperater(gunichar c){
 // 	if (obj_stack.empty())
 // 	    throw new std::exception("empty obj_stack");
 	node* obj = obj_stack.top();
@@ -261,7 +258,7 @@ void Regex::putOperater(wchar_t c){
 }
 
 CharSet* Regex::makeEscape() {
-	wchar_t c = this->pattern[pointer];
+	gunichar c = this->pattern[pointer];
     ++pointer;
     printf("%C",c);
 	CharSet* pSet;
@@ -270,22 +267,22 @@ CharSet* Regex::makeEscape() {
 		{
 			// 常用字符集
 			case 'd': // [0-9]
-				pSet = new CharSet(L"0-9");
+				pSet = new CharSet("0-9");
 				break;
 			case 'D': // [^0-9]
-				pSet = new CharSet(L"^0-9");
+				pSet = new CharSet("^0-9");
 				break;
 			case 'w': // [A-Za-z0-9_]
-				pSet = new CharSet(L"A-Za-z0-9_");
+				pSet = new CharSet("A-Za-z0-9_");
 				break;
 			case 'W': // [^A-Za-z0-9_]
-				pSet = new CharSet(L"^A-Za-z0-9_");
+				pSet = new CharSet("^A-Za-z0-9_");
 				break;
 			case 's': // [\f\n\r\t\v]
-                pSet = new CharSet(L" \f\n\r\t\v");
+                pSet = new CharSet(" \f\n\r\t\v");
 				break;
 			case 'S': // [^\f\n\r\t\v]
-                pSet = new CharSet(L"^ \f\n\r\t\v");
+                pSet = new CharSet("^ \f\n\r\t\v");
 				break;
 
 			// 匹配单词边界(暂不支持) 
@@ -322,7 +319,7 @@ CharSet* Regex::makeEscape() {
 			case 'x': // 后接2位16进制数
 				break;
 			default:{
-//				wchar_t str[2];
+//				gunichar str[2];
 //				str[0] = c; str[1] = 0;
 //				pSet = new CharSet(str);
                 pSet = new CharSet();

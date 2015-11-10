@@ -1,0 +1,8 @@
+*.*~
+.fuse*
+*.sublime-*
+bin/
+build/
+libcharsetdetect/
+libiconv-1.14/
+

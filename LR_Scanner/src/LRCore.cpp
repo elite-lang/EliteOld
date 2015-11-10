@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-03 18:43:13
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-02 19:48:10
+* @Last Modified time: 2015-11-05 21:54:40
 */
 
 #include "LRCore.h"
@@ -63,6 +63,8 @@ Token* LRCore::TokenFliter(Token* token) {
     int id = vmap->getConst(WCharToChar(token->pToken, size));
     if (id != -1) token->type = id;
     printf("next Token: %d %S\n",token->type,token->pToken);
+    if (*(token->pToken) == '#') // 这里过滤Token，将#开头的当做元脚本进行执行
+        script_runner->RunLine(token->pToken); 
     return token;
 }
     
@@ -100,8 +102,6 @@ int LRCore::Reduce(int x,Grammer_Node*& root){
     printf("Reduce: %d\n",x+1);
 
     bnf->print_bnf();
-
-
 
     // 从栈顶弹出对应BNF式元素数个
     int state_sum = bnf->getBNFdata().size();

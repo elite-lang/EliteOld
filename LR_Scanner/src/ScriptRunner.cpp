@@ -1,5 +1,7 @@
+#include "Grammer_Node.h"
 #include "ScriptRunner.h"
 #include <string>
+#include "lua.hpp"
 
 static ScriptRunner* runner;
 static int cachecode;
@@ -39,7 +41,9 @@ void ScriptRunner::Init() {
         L = luaL_newstate();
         luaL_openlibs(L);
         lua_register(L,"Cfunc",getLuaFunc);
-    }   
+    } else {
+        lua_register(L,"Cfunc",getLuaFunc);
+    }
 }
 
 void ScriptRunner::Finished() {
@@ -97,6 +101,18 @@ char* ScriptRunner::WCharToChar(wchar_t* data,int& size) {
     newdata[i] = 0;
     size = i;
     return newdata;
+}
+
+void ScriptRunner::RunLine(CHAR* line) {
+    int size;
+    char* buff = WCharToChar(line, size);
+    int error = luaL_loadbuffer(L, buff, size ,"chunk") //加载当前script
+                | lua_pcall(L, 0, 0, 0); // 巧妙的利用或运算符，前面若成功返回0，则执行后面的
+    if (error) {
+        printf("%s", lua_tostring(L, -1));
+        lua_pop(L, 1);/* pop error message from the stack */
+        return;
+    }
 }
 
 int ScriptRunner::Run(int& code, BNFCHAR* data, Grammer_Node* node) {

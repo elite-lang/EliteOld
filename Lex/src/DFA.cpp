@@ -377,7 +377,7 @@ int DFA::getStateSum(){
 void DFA::print_StateMap(){
 
     if (re != NULL)
-        printf("=== %S ===\n",re->getPattern());
+        printf("=== %s ===\n",re->getPattern());
     else
         printf("==== Main DFA ====\n");
     for (int i = 1; i<= pEClass->getSum(); ++i) {

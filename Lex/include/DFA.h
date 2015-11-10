@@ -1,4 +1,9 @@
-#pragma once
+
+#ifndef DFA_H
+#define DFA_H
+
+
+
 
 #include "Regex.h"
 #include <list>
@@ -78,3 +83,4 @@ public:
 	
 };
 
+#endif // DFA_H

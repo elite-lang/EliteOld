@@ -13,10 +13,10 @@ RuleManager::~RuleManager() {
 
 }
 
-int RuleManager::AddRule(const wchar_t* pName,const wchar_t* pPattern)
+int RuleManager::AddRule(const char* pName,const char* pPattern)
 {
-    wstring name(pName);
-    wstring pattern(pPattern);
+    Glib::ustring name(pName);
+    Glib::ustring pattern(pPattern);
 
     int id = FindRule(pName);
     if (id != -1) { // 已经找到了已有的Rule，更新其
@@ -39,15 +39,15 @@ int RuleManager::AddRule(const wchar_t* pName,const wchar_t* pPattern)
     Regex* re = new Regex(r.pattern.c_str(), pEClass);
     r.dfa->Init(re);
 
-    if (name == wstring(L"ignore"))
+    if (name == Glib::ustring("ignore"))
         ruleList.insert(ruleList.begin(),r);
     else
         ruleList.push_back(r);
     return ruleList.size();
 }
 
-int RuleManager::FindRule(const wchar_t* pName){
-    wstring name(pName);
+int RuleManager::FindRule(const char* pName){
+    std::string name(pName);
     auto result = std::find(ruleList.begin(), ruleList.end(), name);
     if (result == ruleList.end()) return -1;
     return (int)(result - ruleList.begin());
@@ -74,45 +74,47 @@ DFA* RuleManager::combineAllDFA(){
     }
     statelist.push_back(states);
     addStopState(states,0);
-    printvec(states);
+    // printvec(states);
     mainDFA->Top = 0;
     int i = 0;
     while (i<statelist.size())
     {
-	bool b = true;
-	mainDFA->m_base.push_back(0);
-	mainDFA->m_default.push_back(0);
-	// 等价类是从1-n的
-	for (int c = 1; c <= pEClass->getSum(); ++c)
-	{
-	    vector<int>* newvec = new vector<int>();
-	    for (int j = 0; j< ruleList.size(); ++j)
-	    {
-		DFA* dfa = ruleList[j].dfa;
-		int nowstate = statelist[i][j];
-		int nextstate = -1;
-		if (nowstate != -1)
-		    nextstate = dfa->nextState(nowstate,c);
-		newvec->push_back(nextstate);
-	    }
-	    // 第一次找到转移时对base数组进行计算赋值
-	    if (b) {
-            b = false;
-            mainDFA->m_base[i] = mainDFA->Top - c;
-	    }
-	    int p = testin(*newvec,statelist);
-        if (p == -2) {
-            statelist.push_back(*newvec);
-            p = statelist.size()-1;
-            addStopState(*newvec,p);
-            printvec(*newvec);
-	    }
-        mainDFA->addEdge(i,p,c);
-	}
-	++i;
+    	bool b = true;
+    	mainDFA->m_base.push_back(0);
+    	mainDFA->m_default.push_back(0);
+    	// 等价类是从1-n的
+    	for (int c = 1; c <= pEClass->getSum(); ++c)
+    	{
+    	    vector<int>* newvec = new vector<int>();
+    	    for (int j = 0; j< ruleList.size(); ++j)
+    	    {
+    		DFA* dfa = ruleList[j].dfa;
+    		int nowstate = statelist[i][j];
+    		int nextstate = -1;
+    		if (nowstate != -1)
+    		    nextstate = dfa->nextState(nowstate,c);
+    		newvec->push_back(nextstate);
+    	    }
+    	    // 第一次找到转移时对base数组进行计算赋值
+    	    if (b) {
+                b = false;
+                mainDFA->m_base[i] = mainDFA->Top - c;
+    	    }
+
+    	    int p = testin(*newvec,statelist);
+            if (p == -2) {
+                statelist.push_back(*newvec);
+                p = statelist.size()-1;
+                addStopState(*newvec,p);
+                // printvec(*newvec);
+    	    }
+            mainDFA->addEdge(i,p,c);
+    	}
+    	++i;
     }
     mainDFA->setEClass(this->pEClass);
     mainDFA->print_StateMap();
+    // this->pEClass->print();
 }
 
 void RuleManager::addStopState(vector<int>& newvec,int p)
@@ -147,12 +149,12 @@ bool RuleManager::testequal(vector< int > a, vector< int > b) {
     return true;
 }
 
-void RuleManager::InitCore(const wchar_t* pData) {
+void RuleManager::InitCore(const char* pData) {
     core = new DFACore();
     core->Init(mainDFA,pData,pEClass);
 }
 
-LexToken* RuleManager::Read() {
+Token* RuleManager::Read() {
     return core->Read();
 }
 
