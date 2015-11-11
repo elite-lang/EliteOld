@@ -2,13 +2,12 @@
 * @Author: sxf
 * @Date:   2015-01-01 19:40:28
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-03 08:23:30
+* @Last Modified time: 2015-11-10 19:41:20
 */
 
 #ifndef LR_PARSER_H
 #define LR_PARSER_H
 
-#include "afx.h"
 #include "Parser.h"
 #include "BNF.h"
 #include "LRTable.h"

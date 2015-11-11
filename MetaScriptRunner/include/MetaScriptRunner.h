@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-07 13:57:14
+* @Last Modified time: 2015-11-11 19:29:45
 */
 
 
@@ -12,20 +12,23 @@
 #include "ScriptRunner.h"
 #include "oolua/oolua.h"
 
-using namespaces std;
+using namespace std;
 
 class MetaScriptRunner : public ScriptRunner
 {
 public:
 	virtual void Init();
+	virtual Node* getRoot();
+	virtual void Finished();
 	static MetaScriptRunner* Create();
 
-	bool run_file (std::string const &filename);
-	bool load_file (std::string const &filename);
-	bool load_chunk (std::string const &chunk);
-	bool run_chunk (std::string const &chunk);
+	bool run_file (string const &filename);
+	bool load_file (string const &filename);
+	bool load_chunk (string const &chunk);
+	bool run_chunk (string const &chunk);
 protected:
 	OOLUA::Script vm;
+	Node* root;
 
 	MetaScriptRunner();
 	~MetaScriptRunner();

@@ -1,8 +1,8 @@
 /* 
 * @Author: 笑凡
 * @Date:   2014-12-31 08:38:50
-* @Last Modified by:   笑凡
-* @Last Modified time: 2014-12-31 09:17:41
+* @Last Modified by:   sxf
+* @Last Modified time: 2015-11-10 19:42:51
 */
 
 #include<vector>
@@ -13,7 +13,6 @@ using namespace std;
 #ifndef ITEM_H
 #define ITEM_H
 
-#include "afx.h"
 #include "BNF.h"
 #include "State.h"
 

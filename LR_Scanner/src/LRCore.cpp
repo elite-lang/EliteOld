@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-03 18:43:13
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-05 21:54:40
+* @Last Modified time: 2015-11-10 20:45:15
 */
 
 #include "LRCore.h"
@@ -36,7 +36,7 @@ Grammer_Node* LRCore::Run(){
             script_runner->Finished();
             return ast;
         default:
-            println(_T("error"));
+            printf("error\n");
             //TODO: 需要释放本层资源
             return NULL;
         }
@@ -44,26 +44,13 @@ Grammer_Node* LRCore::Run(){
 
 }
 
-char* WCharToChar(const wchar_t* data,int& size) {
-    int len = STRLEN(data);
-    char* newdata = new char[len+1];
-    int i = 0;
-    while (data[i] != 0) {
-        if (data[i] < 255)
-        newdata[i] = (char)data[i];
-        ++i;
-    }
-    newdata[i] = 0;
-    size = i;
-    return newdata;
-}
 
 Token* LRCore::TokenFliter(Token* token) {
     int size;
-    int id = vmap->getConst(WCharToChar(token->pToken, size));
+    printf("next Token: %d %s\n",token->type,token->pToken);
+    int id = vmap->getConst(token->pToken);
     if (id != -1) token->type = id;
-    printf("next Token: %d %S\n",token->type,token->pToken);
-    if (*(token->pToken) == '#') // 这里过滤Token，将#开头的当做元脚本进行执行
+    if (token->pToken != NULL && *(token->pToken) == '#') // 这里过滤Token，将#开头的当做元脚本进行执行
         script_runner->RunLine(token->pToken); 
     return token;
 }

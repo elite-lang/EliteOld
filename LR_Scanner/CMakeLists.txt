@@ -1,8 +1,12 @@
 cmake_minimum_required(VERSION 2.8)
 
 project(scanner)
-SET(CMAKE_CXX_COMPILER_ENV_VAR "clang++")
-SET(CMAKE_CXX_FLAGS "-std=c++11")
+SET (CMAKE_CXX_COMPILER_ENV_VAR "clang++")
+SET (CMAKE_CXX_FLAGS "-std=c++11")
+SET (CMAKE_CXX_FLAGS_DEBUG   "-g")
+SET (CMAKE_CXX_FLAGS_MINSIZEREL  "-Os -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELEASE  "-O4 -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 include_directories(includes build src lib/lua_include lib/lex_include)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
@@ -22,7 +26,12 @@ add_executable(scannertest
 
 add_library(scanner STATIC ${source_files} ${BISON_PARSER_OUTPUTS} ${FLEX_SCANNER_OUTPUTS})
 
-TARGET_LINK_LIBRARIES(scannertest lex lua dl)
+find_package(PkgConfig)
+pkg_check_modules(GLIBMM glibmm-2.4)
+link_directories(${GLIBMM_LIBRARY_DIRS})
+include_directories(${GLIBMM_INCLUDE_DIRS})
+
+TARGET_LINK_LIBRARIES(scannertest lex lua dl ${GLIBMM_LIBRARIES})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 

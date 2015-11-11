@@ -2,14 +2,19 @@
 * @Author: sxf
 * @Date:   2015-09-22 19:21:10
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-01 20:26:44
+* @Last Modified time: 2015-11-11 19:48:24
 */
 
 #ifndef NODE_H
 #define NODE_H
 
 #include <string>
-#include "llvm/IR/Module.h"
+
+namespace llvm {
+	class Value;
+	class Type;
+} // llvm
+
 using namespace llvm;
 
 enum NodeType

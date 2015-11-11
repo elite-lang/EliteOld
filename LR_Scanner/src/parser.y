@@ -16,7 +16,7 @@ void yyerror(const char *s);
 
 %union {
 	State *s;
-	char *str = NULL;
+	char *str;
 }
 
 

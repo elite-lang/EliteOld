@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-12-31 18:41:35
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-04-21 17:04:29
+* @Last Modified time: 2015-11-10 19:46:38
 */
 
 #include "BNF.h"
@@ -10,12 +10,12 @@
 void BNF::print_bnf(int point) const {
     printf(this->root->state_class);
 //    printf("%d",this->root->id);
-    Print(_T(" => "));
+    printf(" => ");
 
     int k = 0;
     for (auto p = BNFdata.begin(); p!= BNFdata.end();++p)
     {
-        if (point == k) Print(_T(". "));
+        if (point == k) printf(". ");
         ++k;
         State* s = *p;
         if (s->state_type == constant)
@@ -23,10 +23,10 @@ void BNF::print_bnf(int point) const {
         else
             printf(s->state_class);
 //        printf("%d",s->id);
-        Print(_T(" "));
+        printf(" ");
     }
-    if (point == k) Print(_T(". "));
-    Print(_T("\n"));
+    if (point == k) printf(". ");
+    printf("\n");
 }
 
 void BNF::print_bnf() const {
@@ -80,7 +80,7 @@ void BNF::BuildFromNode(State* node, VMap& vmap)
                             bnf->bnf_script = q->script;
                         else {
                             ++temp_size;
-                            BNFCHAR* classname = new BNFCHAR[10];
+                            char* classname = new char[10];
                             sprintf(classname,"temp%d",temp_size);
                             q->state_class = classname;
                             vec.push_back(q);
@@ -95,7 +95,7 @@ void BNF::BuildFromNode(State* node, VMap& vmap)
                         }
                     } else {
                         ++temp_size;
-                        BNFCHAR* classname = new BNFCHAR[10];
+                        char* classname = new char[10];
                         sprintf(classname,"temp%d",temp_size);
                         q->state_class = classname;
                         vec.push_back(q);

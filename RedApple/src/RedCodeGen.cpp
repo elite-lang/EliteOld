@@ -2,10 +2,10 @@
 * @Author: sxf
 * @Date:   2015-09-23 22:57:41
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-10-30 12:38:41
+* @Last Modified time: 2015-11-11 19:58:34
 */
 
-#include "CodeGen.h"
+#include "RedCodeGen.h"
 #include <string>
 #include <map>
 #include <vector>
@@ -13,13 +13,26 @@ using namespace std;
 
 #include "CodeGenContext.h"
 
-CodeGen::CodeGen(Node* node) {
+RedCodeGen::RedCodeGen() {}
+
+RedCodeGen::RedCodeGen(Node* node) {
     // 创建一个上下文类
-    
+    Init(node);
+}
+
+RedCodeGen* RedCodeGen::Create() {
+    return new RedCodeGen();
+}
+
+RedCodeGen* RedCodeGen::Create(Node* node) {
+    return new RedCodeGen(node);
+}
+
+void RedCodeGen::Init(Node* node) {
     context = new CodeGenContext(node); 
 }
 
-CodeGen::~CodeGen() {
+RedCodeGen::~RedCodeGen() {
     if (context != NULL) delete context;
 }
 
@@ -28,8 +41,7 @@ void register_malloc(llvm::Module *module);
 void register_echo(CodeGenContext* context, llvm::Function* printfFn);
 
 
-
-void CodeGen::Make(const char* outfile_name) {
+void RedCodeGen::Make(const char* outfile_name) {
 	InitializeNativeTarget();
 	
     LLVMContext Context;

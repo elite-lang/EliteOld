@@ -1,4 +1,3 @@
-#include "afx.h"
 #include <map>
 
 using namespace std;
@@ -12,30 +11,31 @@ struct VMap {
     map<string, int> ConstMap; // 用来处理静态终结符
     int constSize = 0;
     int constMax = 0;
-    int InsertVn(const BNFCHAR* s) {
+    int InsertVn(const char* s) {
         auto i = VnMap.find(s);
         if (i != VnMap.end()) return i->second;
         VnMap[s] = ++constSize;
         return constSize;
     }
-    int getVn(const BNFCHAR* s){
+    int getVn(const char* s){
         return VnMap[s];
     }
     
-    void InsertVt(const BNFCHAR* s, int id) {
+    void InsertVt(const char* s, int id) {
         VtMap[s] = id;
     }
-    int getVt(BNFCHAR* s){
+    int getVt(const char* s){
         return VtMap[s];
     }
     
-    int InsertConst(const BNFCHAR* s) {
+    int InsertConst(const char* s) {
         auto i = ConstMap.find(s);
         if (i != ConstMap.end()) return i->second;
         ConstMap[s] = ++constSize;
         return constSize;
     }
-    int getConst(BNFCHAR* s){
+    int getConst(const char* s){
+        if (s == NULL) return -1;
         if (ConstMap.find(s) == ConstMap.end()) return -1;
         return ConstMap[s];
     }
@@ -45,16 +45,16 @@ struct VMap {
         {
             pair<string, int> t = *p;
             printf(t.first.c_str());
-            Print(_T(":"));
+            printf(":");
             printf("%d\n",t.second);
         }
     }
     void printAll() {
-        println(_T("==== Vn ===="));
+        printf("==== Vn ====");
         print(VnMap);
-        println(_T("==== Vt ===="));
+        printf("==== Vt ====");
         print(VtMap);
-        println(_T("==== Const ===="));
+        printf("==== Const ====");
         print(ConstMap);
     }
     

@@ -4,7 +4,7 @@
 <initlua> = e {{ require("init_pcode") }} ;
 
 # 主函数部分
-<main> = "function" "main" <maindo> <push> "(" <parametersdef> ")" <funcblock> ;
+<main> = "函数" "main" <maindo> <push> "(" <parametersdef> ")" <funcblock> ;
 <maindo> = e {{
     write_code( 1, now_pointer() )
 }} ; # 这里已经很确定的知道了，main函数的跳转是第一条语句的强制跳转，所以在1位置写入
@@ -29,7 +29,7 @@
 <const_def_run> = e {{ isconstdef = true }} ;  # 这里对常量做了单独的优化，认为是一个立即数
 
 # 函数定义
-<functiondef> = "function" <function_id> <push> "(" <parametersdef> ")" <funcblock> ;
+<functiondef> = "函数" <function_id> <push> "(" <parametersdef> ")" <funcblock> ;
 <parametersdef> = e | <parameterlist> ;
 <parameterlist> = <parameterlist> "," [id:id] {{
                     print(param_kind)
@@ -163,7 +163,7 @@
 
 <WriteElist> = <WriteElist> "," <E:exp> {{
             make_code( WRT )
-          }} | <E:e> {{
+          }} | <E:exp> {{
             make_code( WRT )
           }} ;
 

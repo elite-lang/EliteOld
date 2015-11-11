@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-02 18:58:29
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-08 10:49:47
+* @Last Modified time: 2015-11-10 20:16:27
 */
 
 #include "PCodeScriptRunner.h"
@@ -27,6 +27,7 @@ PCodeScriptRunner::~PCodeScriptRunner() {
 }
 
 void PCodeScriptRunner::Finished() {
+    printf("finished!\n");
 	code_generator->WriteFile("test.pco");
 }
 

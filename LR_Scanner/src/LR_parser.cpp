@@ -120,7 +120,6 @@ void LR_parser::BuildParser(const char* filename) {
     BuildParser();
 }
 
-extern char* WCharToChar(const wchar_t* data,int& size);
 
 void LR_parser::AddBNF(const char* filename) {
     // ask the ID name from the lex
@@ -128,10 +127,9 @@ void LR_parser::AddBNF(const char* filename) {
     vmap.constSize = size-1;
     printf("Size: %d\n", size);
 
-    int tt;
     for (int i = 1; i< size; ++i) {
-        printf("VMap: %S %d\n",lex->getRule(i), i);
-        vmap.InsertVt(WCharToChar(lex->getRule(i), tt), i);
+        printf("VMap: %s %d\n",lex->getRule(i), i);
+        vmap.InsertVt(lex->getRule(i), i);
     }
     BNFParser* bnfparser = new BNFParser();
     State* root = bnfparser->Analysis(filename);

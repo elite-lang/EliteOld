@@ -2,12 +2,14 @@
 * @Author: sxf
 * @Date:   2015-01-02 16:28:17
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-03 08:36:59
+* @Last Modified time: 2015-11-10 19:51:47
 */
-#include "afx.h"
 
 #ifndef GRAMMER_NODE_H
 #define GRAMMER_NODE_H
+
+#include <iostream>
+
 
 #define remove_ptr(P) if (P != 0) { delete P; P = 0; }
 

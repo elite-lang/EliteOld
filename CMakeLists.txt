@@ -19,7 +19,13 @@ add_executable(elite ${source_files})
 
 install(TARGETS elite RUNTIME DESTINATION bin)
 
-target_link_libraries(elite lex scanner red lua dl)
+find_package(PkgConfig)
+pkg_check_modules(GLIBMM glibmm-2.4)
+link_directories(${GLIBMM_LIBRARY_DIRS})
+include_directories(${GLIBMM_INCLUDE_DIRS})
+
+
+target_link_libraries(elite lex scanner red lua dl ${GLIBMM_LIBRARIES})
 
 
 FIND_PACKAGE(Doxygen)  

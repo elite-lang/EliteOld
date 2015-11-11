@@ -2,12 +2,17 @@
 * @Author: sxf
 * @Date:   2014-12-31 18:46:08
 * @Last Modified by:   sxf
-* @Last Modified time: 2014-12-31 18:47:59
+* @Last Modified time: 2015-11-10 19:52:45
 */
 
 #include "ItemCollection.h"
 #include <algorithm>
 using namespace std;
+
+#ifndef TESTV
+#define TESTV -2
+#endif
+
 
 vector<bool> ItemCollection::NULLABLE;
 vector<set<int>> ItemCollection::FirstMap;

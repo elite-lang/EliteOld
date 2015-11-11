@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-10-02 17:39:24
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-08 20:16:46
+* @Last Modified time: 2015-11-10 19:16:28
 */
 
 #include <iostream>
@@ -43,8 +43,8 @@ char* fileReader(const char* path) {
 
 int main()
 {    
-    lex.ReadConfig("/mnt/data/workspace/Complier/Lex/build/lex.txt");
-    char* data = fileReader("/mnt/data/workspace/Complier/Lex/build/test.txt");
+    lex.ReadConfig("lex.txt");
+    char* data = fileReader("test.txt");
     lex.Init(data);
     Token* t = lex.Read();
     while (t->type != 0 && t->type != EOF) {

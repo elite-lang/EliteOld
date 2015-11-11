@@ -1,6 +1,6 @@
 #include "Grammer_Node.h"
 #include "ScriptRunner.h"
-#include <string>
+#include <string.h>
 #include "lua.hpp"
 
 static ScriptRunner* runner;
@@ -8,7 +8,7 @@ static int cachecode;
 static Grammer_Node* rootnode;
 
 static int CallFunc(lua_State * L) {
-    vector< pair<BNFCHAR*, Grammer_Node*> >& env = runner->getEnv();
+    auto& env = runner->getEnv();
     for (auto p : env) {
         lua_rawgeti(L,LUA_REGISTRYINDEX, p.second->lua_data);
     }
@@ -50,34 +50,33 @@ void ScriptRunner::Finished() {
 
 }
 
-int ScriptRunner::MakeEnv(BNFCHAR* name, Grammer_Node* node) {
+Node* ScriptRunner::getRoot() {
+    return NULL;
+}
+
+int ScriptRunner::MakeEnv(const char* name, Grammer_Node* node) {
     env.push_back(make_pair(name,node));
 }
 
 int ScriptRunner::MakeNewLuaTable(Token* t) {
     lua_newtable(L);
-    // TODO: 这里需要进行Unicode支持，先暂时使用简单的转换函数
-    int size;
-    char* str = WCharToChar(t->pToken, size);
-    lua_pushstring(L,str);
+    lua_pushstring(L,t->pToken);
     lua_setfield(L,-2,"val");
     lua_pushinteger(L,t->type);
     lua_setfield(L,-2,"type");
-    delete[] str;
     return luaL_ref(L,LUA_REGISTRYINDEX);//获得引用的索引,并pop当前栈顶
 }
 
-char* ScriptRunner::addFunction(BNFCHAR* data) {
+char* ScriptRunner::addFunction(char* data) {
     char* func;
     string params;
     int len = 0; bool isfirst = true;
     for (auto p : env) {
-        char* name = p.first;
+        const char* name = p.first.c_str();
         int namelen = strlen(name);
         if (isfirst) isfirst = false; else { params.push_back(','); ++len; }
         params.append(name);
         len += namelen;
-        // delete[] name; // 我不知道为何这里要删除这个地方不能删除
     }
 
     int codelen = strlen(data);
@@ -88,24 +87,9 @@ char* ScriptRunner::addFunction(BNFCHAR* data) {
 }
 
 
-
-char* ScriptRunner::WCharToChar(wchar_t* data,int& size) {
-    int len = STRLEN(data);
-    char* newdata = new char[len+1];
-    int i = 0;
-    while (data[i] != 0) {
-        if (data[i] < 255)
-        newdata[i] = (char)data[i];
-        ++i;
-    }
-    newdata[i] = 0;
-    size = i;
-    return newdata;
-}
-
-void ScriptRunner::RunLine(CHAR* line) {
+void ScriptRunner::RunLine(const char* line) {
     int size;
-    char* buff = WCharToChar(line, size);
+    const char* buff = line + 1;
     int error = luaL_loadbuffer(L, buff, size ,"chunk") //加载当前script
                 | lua_pcall(L, 0, 0, 0); // 巧妙的利用或运算符，前面若成功返回0，则执行后面的
     if (error) {
@@ -115,7 +99,7 @@ void ScriptRunner::RunLine(CHAR* line) {
     }
 }
 
-int ScriptRunner::Run(int& code, BNFCHAR* data, Grammer_Node* node) {
+int ScriptRunner::Run(int& code, char* data, Grammer_Node* node) {
     int error;
     runner = this; rootnode = node;
     printf("LUA STACK: %d\n",lua_gettop(L));
@@ -148,6 +132,6 @@ void ScriptRunner::ClearEnv() {
     if (env.size() != 0) env.clear(); 
 }
 
-vector< pair<BNFCHAR*, Grammer_Node*> >& ScriptRunner::getEnv() { 
+vector< pair<string, Grammer_Node*> >& ScriptRunner::getEnv() { 
     return env; 
 }

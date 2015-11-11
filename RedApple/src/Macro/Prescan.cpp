@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-10-29 11:05:42
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-01 19:10:54
+* @Last Modified time: 2015-11-11 08:58:07
 */
 
 #include "CodeGenContext.h"
@@ -76,8 +76,7 @@ static Value* function_type_macro(CodeGenContext* context, Node* node) {
 			Node* pSec = pC->getChild()->getNext();
 			Type* t = context->FindType(pSec);
 			type_vec.push_back(t);
-			StringNode* str_node = (StringNode*)(pSec->getNext());
-			arg_name.push_back(str_node->getStr());	
+			arg_name.push_back(pSec->getNext()->getStr());	
 		}
 	}
 	// 先合成一个函数

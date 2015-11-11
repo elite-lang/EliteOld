@@ -2,11 +2,10 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-03 08:38:20
+* @Last Modified time: 2015-11-11 13:02:32
 */
 
 
-#include "afx.h"
 #include <stdio.h>
 #include <iostream>
 #include "Lex.h"
@@ -19,8 +18,8 @@
 #define maxpath 1000
 using namespace std;  
 
-CHAR* fileReader(const char* path, int& flen) {
-    wfstream file;
+char* fileReader(const char* path, int& flen) {
+    fstream file;
     locale::global(locale("zh_CN.UTF-8"));
     file.open(path);//打开文件
     if(!file.is_open())
@@ -31,7 +30,7 @@ CHAR* fileReader(const char* path, int& flen) {
     file.seekg(0,ios::end);
     flen = file.tellg();
     file.seekg(0,ios::beg);
-    CHAR* data = new CHAR[flen+1];
+    char* data = new char[flen+1];
     file.read(data,flen);
     file.close();
     data[flen] = 0;
@@ -54,7 +53,7 @@ int main(int argc,const char *argv[])
 
 	    const char *file_in_name = argv[1];
 
-		CHAR* data = fileReader(file_in_name,flen);
+		char* data = fileReader(file_in_name,flen);
 	    if (data == NULL) {
 	        printf(file_in_name);
 	        printf("找不到程序源文件");

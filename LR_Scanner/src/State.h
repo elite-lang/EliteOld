@@ -1,8 +1,6 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "afx.h"
-
 enum StateType
 {
       statement, constant , temporality , epsilon , terminal , script
@@ -29,10 +27,10 @@ public:
     
     int id;
     
-    BNFCHAR* state_const;
-    BNFCHAR* state_class;
-    BNFCHAR* state_var;
-    BNFCHAR* script;
+    const char* state_const;
+    const char* state_class;
+    const char* state_var;
+    char* script;
     
     enum StateType state_type; // 0为class的声明, 1为常量, 2为临时型, 3为Epsilon
 

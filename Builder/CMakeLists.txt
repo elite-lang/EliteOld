@@ -9,7 +9,7 @@ SET (CMAKE_CXX_FLAGS_RELEASE  "-O4 -DNDEBUG")
 SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
-include_directories(src include)
+include_directories(src include lib/lex lib/scanner)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
@@ -21,7 +21,7 @@ include_directories(${GLIBMM_INCLUDE_DIRS})
 
 add_executable(builder_test ${source_files})
 add_library(builder STATIC ${source_files})
-target_link_libraries(builder_test ${GLIBMM_LIBRARIES})
+target_link_libraries(builder_test lex scanner ${GLIBMM_LIBRARIES})
 
 FIND_PACKAGE(Doxygen)  
 OPTION(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ${DOXYGEN_FOUND})  

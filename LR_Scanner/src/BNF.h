@@ -2,13 +2,12 @@
 * @Author: sxf
 * @Date:   2014-12-31 08:38:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-04-21 15:36:16
+* @Last Modified time: 2015-11-10 19:44:06
 */
 
 #ifndef BNF_H
 #define BNF_H
 
-#include "afx.h"
 #include "State.h"
 #include <vector>
 #include <map>
@@ -37,7 +36,7 @@ public:
     const vector<State*>& getBNFdata() const { return BNFdata; }
     void setID(int _id) { id = _id; }
     int getID() const { return id; }
-    BNFCHAR* getScript() { return bnf_script; }
+    char* getScript() { return bnf_script; }
     int& getScriptCode() { return scriptcode; }
 
 protected:
@@ -49,7 +48,7 @@ private:
     // 一条BNF范式
     State* root;
     vector<State*> BNFdata;
-    BNFCHAR* bnf_script;
+    char* bnf_script;
     int scriptcode;
     
     static int temp_size;
