@@ -2,16 +2,17 @@
 * @Author: sxf
 * @Date:   2015-11-07 13:52:20
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 19:31:33
+* @Last Modified time: 2015-11-11 20:58:18
 */
 
 #include "MetaScriptRunner.h"
+#include "oolua/oolua.h"
 
 
 extern void InitMetaAPI(lua_State*);
 
 void MetaScriptRunner::Init() {
-	L = vm;
+	L = *vm;
 	ScriptRunner::Init();
 	InitMetaAPI(L);
 }
@@ -21,11 +22,11 @@ MetaScriptRunner* MetaScriptRunner::Create() {
 }
 
 MetaScriptRunner::MetaScriptRunner() {
-
+	vm = new OOLUA::Script();
 }
 
 MetaScriptRunner::~MetaScriptRunner() {
-
+	delete vm;
 }
 
 Node* MetaScriptRunner::getRoot() {
@@ -40,14 +41,14 @@ void MetaScriptRunner::Finished() {
 
 
 bool MetaScriptRunner::run_file (std::string const &filename) {
-	vm.run_file(filename);
+	vm->run_file(filename);
 }
 bool MetaScriptRunner::load_file (std::string const &filename) {
-	vm.load_file(filename);
+	vm->load_file(filename);
 }
 bool MetaScriptRunner::load_chunk (std::string const &chunk) {
-	vm.load_chunk(chunk);
+	vm->load_chunk(chunk);
 }
 bool MetaScriptRunner::run_chunk (std::string const &chunk) {
-	vm.run_chunk(chunk);
+	vm->run_chunk(chunk);
 }

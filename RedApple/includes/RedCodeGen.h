@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-09-23 22:55:30
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 19:57:27
+* @Last Modified time: 2015-11-11 20:50:31
 * 
 * 代码生成部分的引导类
 */
@@ -10,7 +10,7 @@
 #ifndef RED_CODE_GEN_H
 #define RED_CODE_GEN_H
 
-#include "Node.h"
+#include "Model/Node.h"
 #include "CodeGen.h"
 
 class CodeGenContext;

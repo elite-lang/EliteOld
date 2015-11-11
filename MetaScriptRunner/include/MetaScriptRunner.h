@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 19:29:45
+* @Last Modified time: 2015-11-11 20:56:00
 */
 
 
@@ -10,9 +10,12 @@
 #define META_SCRIPT_RUNNER_H
 
 #include "ScriptRunner.h"
-#include "oolua/oolua.h"
 
 using namespace std;
+
+namespace OOLUA {
+	class Script;
+}
 
 class MetaScriptRunner : public ScriptRunner
 {
@@ -27,7 +30,7 @@ public:
 	bool load_chunk (string const &chunk);
 	bool run_chunk (string const &chunk);
 protected:
-	OOLUA::Script vm;
+	OOLUA::Script* vm;
 	Node* root;
 
 	MetaScriptRunner();

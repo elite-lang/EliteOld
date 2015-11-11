@@ -2,7 +2,7 @@
 # @Author: sxf
 # @Date:   2015-11-02 13:21:24
 # @Last Modified by:   sxf
-# @Last Modified time: 2015-11-11 13:00:28
+# @Last Modified time: 2015-11-11 20:48:43
 
 # 这个sh脚本是用来生成各个项目依赖库的软链接的
 
@@ -17,6 +17,10 @@ ln -s -T ../../Lex/include         ./Builder/lib/lex
 ln -s -t ./Builder/lib/            ../../Lex/build/liblex.a
 ln -s -T ../../LR_Scanner/includes ./Builder/lib/scanner
 ln -s -t ./Builder/lib/            ../../LR_Scanner/build/libscanner.a
+ln -s -T ../../MetaScriptRunner/include   ./Builder/lib/meta
+ln -s -t ./Builder/lib/   		   ../../MetaScriptRunner/build/libmeta.a
+ln -s -T ../../RedApple/includes   ./Builder/lib/redapple
+ln -s -t ./Builder/lib/   ../../RedApple/build/libred.a
 
 # for MetaScriptRunner
 ln -s -T ../../Lex/include         ./MetaScriptRunner/lib/lex

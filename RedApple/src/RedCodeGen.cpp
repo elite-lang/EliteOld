@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-09-23 22:57:41
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 19:58:34
+* @Last Modified time: 2015-11-11 20:15:56
 */
 
 #include "RedCodeGen.h"
@@ -29,6 +29,7 @@ RedCodeGen* RedCodeGen::Create(Node* node) {
 }
 
 void RedCodeGen::Init(Node* node) {
+    if (context != NULL) delete context;
     context = new CodeGenContext(node); 
 }
 

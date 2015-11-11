@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-10-02 20:30:46
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-08 20:14:21
+* @Last Modified time: 2015-11-11 21:00:12
 */
 #include "LexInterface.h"
 #include <stdio.h>
@@ -29,7 +29,7 @@ public:
     virtual Token* Read();
 
 	// initialize the Lex system, must be called before Read Token, it can also set the pData
-	void Init(const char* pData = NULL);
+	virtual void Init(const char* pData = NULL);
 
 	// read the config, you need to call it manually before init system, it will find the lex.cfg at the ./ path
 	bool ReadConfig(const char* path = NULL);
@@ -50,7 +50,7 @@ public:
 	// getter and setter 
 	// ============================================
 	const char* getData();
-	void setData(const char* pData);
+	virtual void setData(const char* pData);
 
 private:
 
