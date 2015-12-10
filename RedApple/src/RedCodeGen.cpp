@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-09-23 22:57:41
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-10 11:52:48
+* @Last Modified time: 2015-11-25 22:03:20
 */
 
 #include "RedCodeGen.h"
@@ -37,7 +37,6 @@ void RedCodeGen::Init(Node* node) {
         context = NULL;
     }
     this->context = new CodeGenContext(node); 
-    printf("Code Gen Init\n");
 }
 
 RedCodeGen::~RedCodeGen() {

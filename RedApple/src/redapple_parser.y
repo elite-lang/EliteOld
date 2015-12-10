@@ -298,7 +298,7 @@ full_list : '(' list ')' { $$ = Node::Create($2); }
 
 void yyerror(const char* s){
     fprintf(stderr, "%s \n", s);    
-    fprintf(stderr, "Red line %d: ", yylineno);
+    fprintf(stderr, "line %d: ", yylineno);
     fprintf(stderr, "text %s \n", yytext);
     exit(1);
 }
