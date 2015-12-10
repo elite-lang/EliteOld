@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-07 15:46:24
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-10 17:59:27
+* @Last Modified time: 2015-12-10 19:49:05
 */
 
 #include "oolua/oolua.h"
@@ -63,7 +63,7 @@ static Node* new_stringnode_meta_api(const char* str) {
 }
 
 static Node* new_idnode_meta_api(const char* str) {
-	return StringNode::Create(str);
+	return IDNode::Create(str);
 }
 
 
