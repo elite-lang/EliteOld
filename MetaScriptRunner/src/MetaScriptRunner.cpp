@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-07 13:52:20
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-12 18:21:27
+* @Last Modified time: 2015-12-10 18:23:21
 */
 
 #include "MetaScriptRunner.h"
@@ -36,6 +36,7 @@ Node* MetaScriptRunner::getRoot() {
 extern Node* node_root;
 
 void MetaScriptRunner::Finished() {
+	printf("Great! Finished!\n");
 	root = node_root;
 }
 

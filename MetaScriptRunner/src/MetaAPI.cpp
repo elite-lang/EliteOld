@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-07 15:46:24
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 20:42:50
+* @Last Modified time: 2015-12-10 17:59:27
 */
 
 #include "oolua/oolua.h"
@@ -75,11 +75,40 @@ static Node* new_floatnode_meta_api(const char* str) {
 	return FloatNode::Create(str);
 }
 
-static int l_make_pair_meta_api(lua_State* L) {
+static Node* new_typenode_meta_api(const char* str, bool is_const, bool is_source) {
+	return TypeNode::Create(str, is_const, is_source);
+}
 
+
+static void add_brother_meta_api(Node* node1, Node* node2) {
+	node1->addBrother(node2);
+}
+
+static void add_children_meta_api(Node* node1, Node* node2) {
+	node1->addChildren(node2);
+}
+
+static void adddimension_meta_api(Node* node) {
+	if (node->isTypeNode()) {
+		TypeNode* n = (TypeNode*) node;
+		n->addDimension();
+	}
+}
+
+static int l_make_list_meta_api(lua_State* L) {
+	int argc = lua_gettop(L);  
+	Node** plist = new Node* [argc];
+	for (int i = 1 ; i <= argc ; ++i ) {  
+		Node* node = (Node*)lua_touserdata(L, i);
+		plist[i-1] = node;
+	}
+	lua_pop(L, argc);
+	Node* ans = Node::makeList(argc, plist);
+	delete[] plist;
+	lua_pushlightuserdata(L, ans);
 	return 1;
 }
-	
+
 
 static int l_setroot_meta_api(lua_State* vm) {
 	OOLUA_C_FUNCTION(void, setroot_meta_api, light_p< Node* >)
@@ -113,6 +142,21 @@ static int l_new_floatnode_meta_api(lua_State* vm) {
 	OOLUA_C_FUNCTION(light_return< Node* >, new_floatnode_meta_api, const char*)
 }
 
+static int l_addbrother_meta_api(lua_State* vm) {
+	OOLUA_C_FUNCTION(void, add_brother_meta_api, light_p< Node* >, light_p< Node* >)
+}
+
+static int l_addchildren_meta_api(lua_State* vm) {
+	OOLUA_C_FUNCTION(void, add_children_meta_api, light_p< Node* >, light_p< Node* >)
+}
+
+static int l_new_typenode_meta_api(lua_State* vm) {
+	OOLUA_C_FUNCTION(light_return< Node* >, new_typenode_meta_api, const char*, bool, bool)
+}
+
+static int l_adddimension_meta_api(lua_State* vm) {
+	OOLUA_C_FUNCTION(void, adddimension_meta_api, light_p< Node* >)
+}
 
 OOLUA_CFUNC(include_meta_api, l_include_meta_api)
 /*
@@ -125,12 +169,16 @@ OOLUA_CFUNC(newparent_meta_api, l_newparent_meta_api)
 extern void InitMetaAPI(lua_State* L) {
 	OOLUA::set_global(L, "include", l_include_meta_api);
 	OOLUA::set_global(L, "setRoot", l_setroot_meta_api);
-	OOLUA::set_global(L, "makePair", l_make_pair_meta_api);
+	OOLUA::set_global(L, "makeList", l_make_list_meta_api);
 	OOLUA::set_global(L, "newNode", l_newnode_meta_api);
+	OOLUA::set_global(L, "newParent", l_newparent_meta_api);
 	OOLUA::set_global(L, "newStringNode", l_new_stringnode_meta_api);
 	OOLUA::set_global(L, "newIDNode", l_new_idnode_meta_api);
 	OOLUA::set_global(L, "newIntNode", l_new_intnode_meta_api);
 	OOLUA::set_global(L, "newFloatNode", l_new_floatnode_meta_api);
+	OOLUA::set_global(L, "newTypeNode", l_new_typenode_meta_api);
 	OOLUA::set_global(L, "getList", l_getlist_meta_api);
-	OOLUA::set_global(L, "newParent", l_newparent_meta_api); 
+	OOLUA::set_global(L, "addBrother", l_addbrother_meta_api); 
+	OOLUA::set_global(L, "addChildren", l_addchildren_meta_api);  
+	OOLUA::set_global(L, "addDimension", l_adddimension_meta_api);
 }
