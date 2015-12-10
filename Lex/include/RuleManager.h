@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-10-02 23:31:33
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-08 16:42:12
+* @Last Modified time: 2015-12-07 11:52:15
 */
 
 #include <string>
@@ -45,7 +45,10 @@ public:
 	// when you change the Rule, you should run it manually
 	DFA* combineAllDFA();
 
-    void InitCore(const char*);
+    void InitCore();
+    void setData(const char* pData) {
+    	core->setData(pData);
+    }
 	
 	// ====setter and getter =============
     int getRuleSize() { ruleList.size(); }

@@ -25,6 +25,7 @@ struct VMap {
         VtMap[s] = id;
     }
     int getVt(const char* s){
+        if (VtMap.find(s) == VtMap.end()) return -1;
         return VtMap[s];
     }
     

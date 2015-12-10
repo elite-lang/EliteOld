@@ -1,26 +1,33 @@
 /* parser.y */
 %{
-#include <stdio.h>
+
+void yyerror(const char *s);
+
+#include <stdlib.h>
 #include "State.h"
+#include "BNFParser.h"
 
 extern int yylex();
 extern int yylineno;
 extern char* yytext;
 extern int yyleng;
 extern State* root;
+extern BNFParser* bnfparser;
 
-void yyerror(const char *s);
+#define YYERROR_VERBOSE 1
+
+
 
 %}
 
 
 %union {
 	State *s;
-	char *str;
+	char *str = NULL;
 }
 
 
-%token <str> ID STRING SCRIPT
+%token <str> ID STRING SCRIPT LEFT RIGHT
 
 %type <s> list item bnf_item bnf_list symbol_list symbol name
 
@@ -30,12 +37,13 @@ void yyerror(const char *s);
 
 /* 总的混合bnf和脚本的列表 */
 list : item { $$ = new State();  $$->AddChildrenState($1); root = $$; }
-	 | list item { $1->AddChildrenState($2); $$ = $1; }
+	 | list item { if ($2 != NULL) $1->AddChildrenState($2); $$ = $1; }
 	 ;
 
 /* 可以是bnf或脚本 */
 item : bnf_item { $$ = $1; }
 	 | SCRIPT { $$ = new State(); $$->state_type = script; $$->script = $1; }
+	 | priority { $$ = NULL; }
 	 ;
 
 /* 一行bnf的定义 */
@@ -67,10 +75,19 @@ name : ID  { $$ = new State();
 	 				$$->state_class = $1;
 	 				$$->state_var = $3; }
 	 ;
+
+priority : LEFT { bnfparser->NowLeft(); }
+		 | RIGHT { bnfparser->NowRight(); }
+		 | priority STRING { bnfparser->AddToken($2); }
+		 ;
+
+
+
 %%
 
 void yyerror(const char* s){
 	fprintf(stderr, "%s \n", s);    
-	fprintf(stderr, "line %d: ", yylineno);
+	fprintf(stderr, "Parser Cfg line %d: ", yylineno);
 	fprintf(stderr, "error %s \n", yytext);
+	exit(1);
 }

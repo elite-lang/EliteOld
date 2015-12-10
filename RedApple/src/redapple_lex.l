@@ -27,15 +27,39 @@ char* makestring(const char* data, int len, int s);
 
 [ \t\v\n\f]             ; /* 过滤空白字符 */
 
+    /* 一些双元运算符 */
+"++"                    return PP;
+"--"                    return SS;
+"<-"                    return LF;
+"->"                    return RF;
+"&&"                    return AND;
+"||"                    return OR;
+"!"                     return '!';
+"::"                    return NSP;
 
+
+"+="                    return PE;
+"-="                    return SE;
+"*="                    return ME;
+"/="                    return DE;
+"&="                    return AE;
+"|="                    return OE;
+"^="                    return XE;
+"%="                    return MODE;
+"<<="                   return FLE;
+">>="                   return FRE;
+
+
+    /* 比较运算符 */
 "=="                    return CEQ;
 "<="                    return CLE;
 ">="                    return CGE;
 "!="                    return CNE;
-
 "<"                     return '<';
-"="                     return '=';
 ">"                     return '>';
+
+
+    /* 界符 */
 "("                     return '(';
 ")"                     return ')';
 "["                     return '[';
@@ -44,8 +68,14 @@ char* makestring(const char* data, int len, int s);
 "}"                     return '}';
 "."                     return '.';
 ","                     return ',';
+"?"                     return '?';
 ":"                     return ':';
 ";"                     return ';';
+"[]"                    return SZ;
+
+
+    /* 基本运算符 */
+"="                     return '=';
 "+"                     return '+';
 "-"                     return '-';
 "*"                     return '*';
@@ -59,7 +89,7 @@ char* makestring(const char* data, int len, int s);
     /* 宏运算符 */
 "@"                     return '@';
 ",@"                    return MBK;
-
+"`"                     return '`';
     /* 下面声明要用到的关键字 */
 
     /* 控制流 */
@@ -67,6 +97,7 @@ char* makestring(const char* data, int len, int s);
 "else"                  return ELSE;
 "while"                 return WHILE;
 "do"                    return DO;
+"until"                 return UNTIL;
 "goto"                  return GOTO;
 "for"                   return FOR;
 "foreach"               return FOREACH;
@@ -84,9 +115,14 @@ char* makestring(const char* data, int len, int s);
 "delegate"              return DELEGATE;
 "def"                   return DEF;
 "define"                return DEFINE;
+"defmacro"              return DEFMACRO;
 "import"                return IMPORT;
 "using"                 return USING;
 "namespace"             return NAMESPACE;
+"const"                 return CONST;
+"packed"                return PACKED;
+"volatile"              return VOLATILE;
+"woven"                 return WOVEN;
 
 "try"|"catch"|"finally"|"throw"  SAVE_TOKEN; return KWS_ERROR; /* 异常控制 */
 
@@ -96,14 +132,15 @@ char* makestring(const char* data, int len, int s);
 
 "public"|"private"|"protected"  SAVE_TOKEN; return KWS_FWKZ; /* 访问控制 */
 
-"const"|"static"|"extern"|"virtual"|"abstract"|"in"|"out"        SAVE_TOKEN; return KWS_FUNC_XS; /* 函数修饰符 */
+"static"|"extern"|"virtual"|"abstract"|"in"|"out"        SAVE_TOKEN; return KWS_FUNC_XS; /* 函数修饰符 */
 
-"void"|"double"|"int"|"float"|"char"|"bool"|"var"|"auto"  SAVE_TOKEN; return KWS_TYPE; /* 基本类型 */
+"var"|"auto"            SAVE_TOKEN; return KWS_TYPE; /* 基本类型 */
 
 [a-zA-Z_][a-zA-Z0-9_]*  SAVE_TOKEN; return ID; /* 标识符 */
 
-[0-9]*\.[0-9]*          SAVE_TOKEN; return DOUBLE;
-[0-9]+                  SAVE_TOKEN; return INTEGER;
+-?[0-9]*\.[0-9]*        SAVE_TOKEN; return DOUBLE;
+-?[0-9]+                SAVE_TOKEN; return INTEGER;
+0x[0-9A-Fa-f]+          SAVE_TOKEN; return INTEGER;
 
 \"(\\.|[^\\"])*\"       SAVE_STRING; return STRING; /* 字符串 */
 @\"(\\.|[^\\"])*\"      SAVE_STRING_NC; return STRING; /* 无转义字符串 */
@@ -126,9 +163,7 @@ char* makestring(const char* data, int len, int s) {
     strncpy(str, data+s-1, len-s);
     str[len-s] = 0;
     if (s == 3) return str;
-    printf("source: %s\n",str);
     char* ans = CharEscape(str);
-    printf("escape: %s\n",ans);
-    delete[] str; // 非常令人惊讶, 这句析构内存居然会导致程序段错误, 也许程序还隐藏着其他问题
+    delete[] str;
     return ans; 
 }

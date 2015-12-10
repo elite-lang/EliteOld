@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-10-02 20:47:00
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 16:18:26
+* @Last Modified time: 2015-12-07 11:52:25
 */
 #include "Lex.h"
 #include <iostream>
@@ -19,22 +19,17 @@ Lex::~Lex() {
 
 }
 
-Lex::Lex(const char* pData) {
-	setData(pData);
-	ruleManager = new RuleManager();
-}
-
 Token* Lex::Read() {
     return ruleManager->Read();
 }
 
 void Lex::Init(const char* pData){
-    if (pData != NULL)
-	setData(pData);
-    
     // init the lex system
     ruleManager->combineAllDFA();
-    ruleManager->InitCore(pData);
+    ruleManager->InitCore();
+
+    if (pData != NULL)
+        setData(pData);
 }
 
 int Lex::AddRule(const char* pName,const char* pattern){
@@ -51,6 +46,7 @@ const char* Lex::getData(){
 
 void Lex::setData(const char* pData){
 	this->pData = pData;
+    this->ruleManager->setData(pData);
 }
 
 int Lex::getRuleSize() {

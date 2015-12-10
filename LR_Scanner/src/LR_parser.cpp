@@ -99,18 +99,19 @@ void LR_parser::BuildParser()
     printf("Create LR0\n");
     // 创建LR0项集族
     vector<ItemCollection*> vec = ItemCollection::MakeLR0Items(&vmap, mainbnf, bnflist);
-//    printf("======== print LR0 Collection ========\n");
-//    print_ItemCollection(vec);
+   printf("======== print LR0 Collection ========\n");
+   // print_ItemCollection(vec);
     // 构建LALR项集族
     printf("MakeLALRItems\n");
     ItemCollection::MakeLALRItems(vec,bnflist);
     printf("======== print LR1 Collection ========\n");
-    print_ItemCollection(vec);
-    print_GOTO(vec);
+    // print_ItemCollection(vec);
+    // print_GOTO(vec);
 //    printf("test: \t %d %d %d\n",vmap.constMax+1,vec.size(),vmap.constSize);
-    table = (LRTable*)new LALRTable(vmap.constMax+1,vec.size(),vmap.constSize);
+    printf("build table");
+    table = (LRTable*)new LALRTable(vmap.constMax+1,vec.size(),vmap.constSize, bnfparser);
     table->BuildTable(vec);
-//    table->printTable();
+    // table->printTable();
 }
 
 void LR_parser::BuildParser(const char* filename) {
@@ -131,7 +132,7 @@ void LR_parser::AddBNF(const char* filename) {
         printf("VMap: %s %d\n",lex->getRule(i), i);
         vmap.InsertVt(lex->getRule(i), i);
     }
-    BNFParser* bnfparser = new BNFParser();
+    bnfparser = new BNFParser();
     State* root = bnfparser->Analysis(filename);
     if (root == NULL) {
         printf("Error State\n");
@@ -141,7 +142,7 @@ void LR_parser::AddBNF(const char* filename) {
     bnfparser->printTree();
     bnflist = BNF::BuildAllBNF(root,vmap);
     printf("BuildAllBNF");
-    delete bnfparser;
+    bnfparser->MakePrecedence(vmap);
 }
 
 int LR_parser::Parse(Grammer_Node* root)

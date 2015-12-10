@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-10-02 20:30:46
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 21:00:12
+* @Last Modified time: 2015-12-07 11:49:03
 */
 #include "LexInterface.h"
 #include <stdio.h>
@@ -20,9 +20,6 @@ class Lex : public LexInterface
 public:
 	Lex();
 	~Lex();
-
-	// data is the buffer pointer, isCopy means to copy the buffer for a new one
-	Lex(const char* pData);
 
 	// get the next token ,if it is done ,will return NULL
 	// it may throw exception, please try and catch it 

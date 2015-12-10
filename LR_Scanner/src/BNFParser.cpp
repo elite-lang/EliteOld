@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-04-17 10:30:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-04-17 14:06:04
+* @Last Modified time: 2015-11-28 16:53:56
 */
 
 #include "BNFParser.h"
@@ -10,8 +10,10 @@
 #include <stdio.h>
 extern FILE* yyin;
 State* root = NULL;
+BNFParser* bnfparser = NULL;
 
 State* BNFParser::Analysis(const char* filename) {
+	bnfparser = this;
 	/* open the file and change the yyin stream. */
 	FILE* file_in;
 	if ((file_in=fopen(filename,"r"))==NULL) {
@@ -27,6 +29,42 @@ State* BNFParser::Analysis(const char* filename) {
 	return root;
 }
 
+void BNFParser::NowLeft() {
+	++now_precedence;
+	now_associativity = true;
+}
+
+void BNFParser::NowRight() {
+	++now_precedence;
+	now_associativity = false;
+}
+
+void BNFParser::AddToken(const char* token) {
+	precedence_map.insert(make_pair(token, now_precedence));
+	associativity_map.insert(make_pair(token, now_associativity));
+}
+
+void BNFParser::MakePrecedence(VMap& vmap) {
+	for (auto p : precedence_map) {
+		int id = vmap.getConst(p.first.c_str());
+		if (id == -1) id = vmap.getVt(p.first.c_str());
+		id_precedence_map.insert(make_pair(id, p.second));
+		id_associativity_map.insert(make_pair(id, associativity_map[p.first]));
+		printf("%d - %d\n", id, p.second);
+	}
+}
+
+int BNFParser::getPrecedence(int id) {
+	const auto& p = id_precedence_map.find(id);
+	if (p != id_precedence_map.end()) return p->second;
+	return -1;
+}
+
+bool BNFParser::getAssociativity(int id) {
+	const auto& p = id_associativity_map.find(id);
+	if (p != id_associativity_map.end()) return p->second;
+	return false;
+}
 
 void BNFParser::printNode(State* s,int d)
 {

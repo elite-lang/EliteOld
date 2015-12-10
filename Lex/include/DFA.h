@@ -30,9 +30,11 @@ public:
 	
 	// used to get the next state
 	int nextState(int s,wchar_t a);
-	// add a new edge fo
+	
+	// add a new edge
 	void addEdge(int s, int obj, wchar_t a);
-    // is the stop state
+
+    // is the stop state, 返回对应的token id
     int isStopState(int s);
 
 	// === setter and getter ===

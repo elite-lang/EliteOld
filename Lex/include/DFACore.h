@@ -10,13 +10,17 @@ public:
     DFACore() {}
     ~DFACore() { if (t != NULL) delete t; }
     
-    DFACore(DFA* _dfa, const char* _d, EquivalenceClass* _pEClass) { 
-        Init(_dfa,_d,_pEClass); 
+    DFACore(DFA* _dfa, EquivalenceClass* _pEClass) { 
+        Init(_dfa, _pEClass); 
     }
 
-    void Init(DFA* _dfa, const char* _d, EquivalenceClass* _pEClass) {
-        dfa = _dfa; data = _d; pEClass = _pEClass;
+    void Init(DFA* _dfa, EquivalenceClass* _pEClass) {
+        dfa = _dfa; pEClass = _pEClass;
         point = 0; row_point =1; line_point = 0;
+    }
+
+    void setData(const char* pData) {
+        data = pData;
     }
 
     Token* Read();

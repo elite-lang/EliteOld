@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 20:56:00
+* @Last Modified time: 2015-11-12 18:21:51
 */
 
 
@@ -21,7 +21,7 @@ class MetaScriptRunner : public ScriptRunner
 {
 public:
 	virtual void Init();
-	virtual Node* getRoot();
+    virtual Node* getRoot(); // 仅支持后端为RedApple的宏翻译系统，其余系统返回NULL
 	virtual void Finished();
 	static MetaScriptRunner* Create();
 
@@ -29,6 +29,7 @@ public:
 	bool load_file (string const &filename);
 	bool load_chunk (string const &chunk);
 	bool run_chunk (string const &chunk);
+
 protected:
 	OOLUA::Script* vm;
 	Node* root;

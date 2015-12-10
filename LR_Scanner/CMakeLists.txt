@@ -18,11 +18,12 @@ bison_target(PARSER src/parser.y  ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp)
 ADD_FLEX_BISON_DEPENDENCY(SCANNER PARSER)
 
 # src files and make exe
-file(GLOB_RECURSE source_files "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+list(REMOVE_ITEM  source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
+
 add_executable(scannertest
-	${source_files}
-	${BISON_PARSER_OUTPUTS}
-	${FLEX_SCANNER_OUTPUTS})
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+)
 
 add_library(scanner STATIC ${source_files} ${BISON_PARSER_OUTPUTS} ${FLEX_SCANNER_OUTPUTS})
 
@@ -31,7 +32,7 @@ pkg_check_modules(GLIBMM glibmm-2.4)
 link_directories(${GLIBMM_LIBRARY_DIRS})
 include_directories(${GLIBMM_INCLUDE_DIRS})
 
-TARGET_LINK_LIBRARIES(scannertest lex lua dl ${GLIBMM_LIBRARIES})
+TARGET_LINK_LIBRARIES(scannertest scanner lex lua dl ${GLIBMM_LIBRARIES})
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 

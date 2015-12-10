@@ -344,14 +344,12 @@ void DFA::print_func(){
 
 int DFA::nextState(int s, wchar_t a)
 {
+	if (s == -1) return -1;
     if ((m_base[s] + a >= 0) && (m_base[s] + a < Top) && (m_check[m_base[s] + a] == s))
 		return m_next[m_base[s] + a];
 	else
 	{
-		if (m_default[s] == 0)
-			return -1;
-		else
-			return -1;
+		return -1;
 	}
 }
 
@@ -359,7 +357,7 @@ void DFA::addEdge(int s, int obj, wchar_t a)
 {
 	int t = m_base[s] + a;
 	Top = t + 1;
-	if (t >= m_next.size()) m_next.resize(t + 1);
+	if (t >= m_next.size()) m_next.resize(t + 1, -1);
 	m_next[t] = obj;
 	if (t >= m_check.size()) m_check.resize(t + 1);
 	m_check[t] = s;

@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-01 19:40:28
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-10 19:41:20
+* @Last Modified time: 2015-11-28 13:27:50
 */
 
 #ifndef LR_PARSER_H
@@ -17,6 +17,8 @@
 #include "VMap.h"
 #include "Grammer_Node.h"
 using namespace std;
+
+class BNFParser;
 
 class LR_parser : public Parser
 {
@@ -61,6 +63,9 @@ private:
     LRCore core;
     // LR分析表
     LRTable* table;
+
+    // BNF解析器
+    BNFParser* bnfparser;
     
     // 扩展 BNF，增加根元素
     void ExtendBNF();

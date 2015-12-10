@@ -6,7 +6,7 @@ Token* DFACore::Read() {
     if (t != NULL) delete t;
     t = new Token();
     gunichar nowdata, lastdata;
-    while (point == data.size()) {
+    while ((nowdata = data[point]) != 0) {
         // for each word ,may get it Equal Class
         gunichar c = pEClass->getClass(nowdata);
 
@@ -30,6 +30,7 @@ Token* DFACore::Read() {
                     return t;
                 }
             } else {
+                printf("Token: %s\n", tokendata.c_str());
                 printf("ERROR STATE %d row: %d line: %d \n",state, row_point,line_point);
                 return t;
             }
@@ -47,7 +48,6 @@ Token* DFACore::Read() {
         ++line_point;
         lastdata = nowdata;
     }
-    t->pToken = NULL;
     t->type = 0;// 0 is the error type
     return t;
 }

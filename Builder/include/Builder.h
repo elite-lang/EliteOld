@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 09:06:35
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-08 10:19:41
+* @Last Modified time: 2015-12-07 11:39:38
 */
 
 
@@ -10,7 +10,9 @@
 #define BUILDER_H
 
 #include <string>
-#include "Parser.h"
+
+class Worker;
+
 /**
  * @brief 项目构建器
  */
@@ -23,6 +25,9 @@ public:
 	// 构建其中指定的路径
 	int BuildPath(std::string filepath, bool isRecursive = false);
 
+	// 设置构建路径
+	int SetBuildPath(std::string path);
+
 	// 扫描SearchPath下的全部符号
 	int PreBuildAll();
 
@@ -32,16 +37,21 @@ public:
 	// 添加库路径
 	int AddLibPath(std::string path);
 
-	void setParser(Parser* parser);
+	// 设置工作器
+	void setWorker(Worker* worker);
 
-	// 构建Builder，需要初始化好的Parser
-	static Builder* Create(Parser* parser);
+	// 构建Builder，需要初始化好的Worker
+	static Builder* Create(Worker* worker = 0);
+	void Close();
 
 protected:
-	Builder();
+	Builder(Worker* worker = 0);
 	~Builder();
 
-	Parser* parser;
+	Worker* worker = 0;
+	std::string buildpath;
+	static char* fileReader(const char* path, int& flen);
+	static char* make_default_name(const char* filename);
 };
 
 

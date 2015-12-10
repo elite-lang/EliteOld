@@ -1,6 +1,15 @@
 cmake_minimum_required(VERSION 2.8)
 project(Elite)
 
+set(LLVM_TARGETS_TO_BUILD X86)
+set(LLVM_BUILD_RUNTIME OFF)
+set(LLVM_BUILD_TOOLS OFF)
+
+find_package(LLVM REQUIRED CONFIG)
+message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
+message(STATUS "Using LLVMConfig.cmake in: ${LLVM_DIR}")
+
+
 SET (CMAKE_CXX_COMPILER_ENV_VAR "clang++")
 SET (CMAKE_CXX_FLAGS "-std=c++11")
 SET (CMAKE_CXX_FLAGS_DEBUG   "-g")
@@ -10,7 +19,7 @@ SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
-include_directories(src extlib/lua extlib/lex extlib/scanner extlib/redapple)
+include_directories(src extlib/lua extlib/oolua extlib/lex extlib/scanner extlib/redapple extlib/builder extlib/meta)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extlib)
 
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
@@ -24,8 +33,14 @@ pkg_check_modules(GLIBMM glibmm-2.4)
 link_directories(${GLIBMM_LIBRARY_DIRS})
 include_directories(${GLIBMM_INCLUDE_DIRS})
 
+# Find the libraries that correspond to the LLVM components
+# that we wish to use
+llvm_map_components_to_libnames(llvm_libs 
+    support core irreader executionengine interpreter 
+    mc mcjit bitwriter x86codegen target)
 
-target_link_libraries(elite lex scanner red lua dl ${GLIBMM_LIBRARIES})
+
+target_link_libraries(elite builder meta red scanner lex oolua lua dl ${GLIBMM_LIBRARIES} ${llvm_libs})
 
 
 FIND_PACKAGE(Doxygen)  

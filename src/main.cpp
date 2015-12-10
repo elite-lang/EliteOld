@@ -2,71 +2,99 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 13:02:32
+* @Last Modified time: 2015-12-07 11:28:51
 */
 
-
-#include <stdio.h>
 #include <iostream>
-#include "Lex.h"
-#include <fstream>
-#include "Parser.h"
-#include "Grammer_Node.h"
-#include "EliteScriptRunner.h"
-#include <unistd.h>
+#include "Builder.h"
+#include "Worker.h"
+#include "PathGetter.h"
+#include <string>
+#include "help.h"
+using namespace std;
 
-#define maxpath 1000
-using namespace std;  
-
-char* fileReader(const char* path, int& flen) {
-    fstream file;
-    locale::global(locale("zh_CN.UTF-8"));
-    file.open(path);//打开文件
-    if(!file.is_open())
-    {
-        printf("can not open BNF file!\n");
-        return NULL;
-    }
-    file.seekg(0,ios::end);
-    flen = file.tellg();
-    file.seekg(0,ios::beg);
-    char* data = new char[flen+1];
-    file.read(data,flen);
-    file.close();
-    data[flen] = 0;
-    return data;
+const char* safe_getNext(int argc, const char *argv[], int& i) {
+	if (++i < argc) {
+		return argv[i];
+	} else {
+		printf("缺少正确的参数\n");
+		exit(0);
+	}
 }
 
-int main(int argc,const char *argv[])
+int is_show_time = 0;
+
+const char* cscw = "-s参数不能和-i参数同时使用, 请选其一指定单独编译或编译文件夹\n";
+
+int main(int argc, const char *argv[])
 {
-	char buffer[maxpath]; int flen;
-    getcwd(buffer, sizeof(buffer));
-	
-	if (argc <= 1) printf("Elite Complier\n");
+    string nowdir = PathGetter::getNowPath();
+	string dir = "build"; // 默认构建位置，当前目录下新建build
+	string srcdir = "src"; // 默认源文件目录
+	string onlyfile; // 单独只构建一个文件
+	string defalut_lex = PathGetter::getDefaultLexCfg();
+	string defalut_parser = PathGetter::getDefaultParserCfg();
+	int only_one_file = -1;
+	int close_link = 0;
+	if (argc <= 1) printf(help_message);
 	else {
-		/* init lex */
-		Lex* lexParser = new Lex();
-	    Parser* parser = Parser::NewLRParser();
-		ScriptRunner* sr = new EliteScriptRunner();
-	    parser->setLex(lexParser);
-	    parser->setScriptRunner(sr);
+		int i = 1;
+		while (i < argc) {
+			string opt(argv[i]);
+			if (opt == "-h" || opt == "--help") {
+				printf(help_message);
+				exit(0);
+			}
+			if (opt == "-d" || opt == "--dir") {
+				dir = safe_getNext(argc, argv, i);
+				continue;
+			}
+			if (opt == "--show") {
+				is_show_time = 1; continue;
+			}
+			if (opt == "-c") {
+				close_link = 1; continue;
+			}
+			if (opt == "-s" || opt == "--src") {
+				if (only_one_file == 1) {
+					printf(cscw);
+					exit(0);
+				}
+				srcdir = safe_getNext(argc, argv, i);
+				only_one_file = 0;
+				continue;
+			}
+			if (opt == "-i" || opt == "--in") {
+				if (only_one_file == 0) {
+					printf(cscw);
+					exit(0);
+				}
+				onlyfile = safe_getNext(argc, argv, i);
+				only_one_file = 1; continue;
+			}
+			if (opt == "-p" || opt == "--parser") {
+				string parser = safe_getNext(argc, argv, i);
+				defalut_parser = nowdir + parser;	
+			}
+			if (opt == "-l" || opt == "--lex") {
+				string lex = safe_getNext(argc, argv, i);
+				defalut_lex = nowdir + lex;
+			}
+			++i;
+		}
+		if (only_one_file == -1)
+			only_one_file = 0;
 
-	    const char *file_in_name = argv[1];
-
-		char* data = fileReader(file_in_name,flen);
-	    if (data == NULL) {
-	        printf(file_in_name);
-	        printf("找不到程序源文件");
-	        return -1;
-	    }
-	    
-	    bool b = lexParser->ReadConfig("lex.cfg");
-	    lexParser->Init(data);
-	    printf("lex done.\n");
-	    parser->BuildParser("lrparser.cfg");
-	    printf("parser done.\n");
-	    Grammer_Node* root = Grammer_Node::NewNode();
-	    parser->Parse(root);
+		// 创建Worker和Builder
+		Worker* worker = Worker::CreateDefault(
+			defalut_lex.c_str(), defalut_parser.c_str());
+		Builder* builder = Builder::Create(worker);
+		if (only_one_file == 1) {
+			builder->BuildFile(onlyfile);
+		} else {
+			builder->BuildPath(srcdir);
+		}
+		builder->Close();
 	}
 	return 0;
 }

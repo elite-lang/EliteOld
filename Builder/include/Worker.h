@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 13:52:11
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-11 20:56:28
+* @Last Modified time: 2015-12-07 10:27:04
 */
 #ifndef WORKER_H
 #define WORKER_H
@@ -25,16 +25,14 @@ public:
 	Parser* getParser() { return parser; }
 	ScriptRunner* getScriptRunner() { return script_runner; }
 	CodeGen* getCodegen() { return codegen; }
-
+	
+	Worker();
+	~Worker();
 protected:
 	LexInterface* lex;
 	Parser* parser;
 	ScriptRunner* script_runner;
 	CodeGen* codegen;
-
-private:
-	Worker();
-	~Worker();
 };
 
 

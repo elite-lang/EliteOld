@@ -47,6 +47,10 @@ char* makescript(const char* data, int len);
 
 ";"                     return ';';
 
+"%left"					return LEFT;
+
+"%right"				return RIGHT;
+
 [a-zA-Z_][a-zA-Z0-9_]*  SAVE_TOKEN; return ID;
 
 %%

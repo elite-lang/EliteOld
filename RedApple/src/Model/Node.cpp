@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-09-22 19:21:40
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-02 15:33:52
+* @Last Modified time: 2015-11-19 19:43:22
 */
 
 #include "Node.h"
@@ -12,7 +12,6 @@
 #include <iostream>
 
 void Node::init() {
-	llvm_type = NULL;
 	next = child = NULL; 
 }
 
@@ -37,6 +36,65 @@ Node* Node::Create() {
 	return new Node();
 }
 
+void Node::Free(Node*& p) {
+	if (p != NULL) {
+		delete p;
+		p = NULL;
+	}
+}
+
+void Node::FreeAll(Node*& p) {
+	if (p != NULL) {
+		Node::FreeAll(p->next);
+		Node::FreeAll(p->child);	
+		delete p;
+		p = NULL;
+	}
+}
+
+Node* Node::copy() {
+	return new Node(*this);
+}
+
+Node* Node::copyAll() {
+	Node* n = copy();
+	if (next != NULL) n->next = next->copyAll();
+	if (child != NULL) n->child = child->copyAll();
+	return n;
+}
+
+Node* Node::copyChild() {
+	Node* n = copy();
+	n->next = NULL;
+	if (child != NULL) n->child = child->copyAll();
+	return n;
+}
+
+
+void Node::replaceNext(Node* node) {
+	Node* n = this->next;
+	if (n == NULL) { printf("替换失败\n"); return; }
+	next = node;
+	node->next = n->next;
+	Node::FreeAll(n->child);
+	Node::Free(n);
+}
+
+void Node::replaceChild(Node* node) {
+	Node* n = this->child;
+	if (n == NULL) { printf("替换失败\n"); return; }
+	child = node;
+	Node::FreeAll(n);
+}
+
+void Node::replaceChildFirst(Node* node) {
+	Node* n = this->child;
+	if (n == NULL) { printf("替换失败\n"); return; }
+	child = node;
+	node->next = n->next;
+	Node::FreeAll(n->child);
+	Node::Free(n);
+}
 
 void Node::addChildren(Node* n) {
 	if (child == NULL) {
@@ -101,14 +159,6 @@ Node* Node::getList(Node* node) {
 	return node;
 }
 
-Type* Node::getLLVMType() {
-	return llvm_type;
-}
-
-void  Node::setLLVMType(Type* t) {
-	llvm_type = t;
-}
-
 bool Node::isNode() {
 	return getType() == node_t;
 }
@@ -133,6 +183,11 @@ bool Node::isCharNode() {
 	return getType() == char_node_t;
 }
 
+bool Node::isTypeNode() {
+	return getType() == type_node_t;
+}
+
+
 std::string Node::getTypeName() {
 	switch (getType()) {
 		case node_t: return "Node";
@@ -141,18 +196,11 @@ std::string Node::getTypeName() {
 		case id_node_t: return "IDNode";
 		case char_node_t: return "CharNode";
 		case float_node_t: return "FloatNode";
+		case type_node_t: return "TypeNode";
 	}
 }
 
 std::string& Node::getStr() {
-	if (this->isStringNode()) {
-		StringNode* string_this = (StringNode*)this;
-		return string_this->getStr();
-	} 
-	if (this->isIDNode()) {
-		IDNode* string_this = (IDNode*)this;
-		return string_this->getStr();
-	} 
 	std::cerr << "getStr() - 获取字符串错误, 该类型不正确：" << getTypeName() << std::endl;
 	exit(1);
 }

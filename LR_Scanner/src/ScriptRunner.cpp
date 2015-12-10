@@ -29,7 +29,7 @@ static int getLuaFunc(lua_State * L)
 
 ScriptRunner::ScriptRunner()
 {
-    
+    runMeta = false;
 }
 
 ScriptRunner::~ScriptRunner() {
@@ -88,6 +88,7 @@ char* ScriptRunner::addFunction(char* data) {
 
 
 void ScriptRunner::RunLine(const char* line) {
+    if (!runMeta) return;
     int size;
     const char* buff = line + 1;
     int error = luaL_loadbuffer(L, buff, size ,"chunk") //加载当前script

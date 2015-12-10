@@ -2,13 +2,15 @@
 * @Author: sxf
 * @Date:   2015-01-03 18:43:13
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-10 20:45:15
+* @Last Modified time: 2015-12-10 11:50:25
 */
 
 #include "LRCore.h"
 
 
 Grammer_Node* LRCore::Run(){
+    printf("LRCore Run\n");
+
     script_runner->Init();
     Token* t = TokenFliter(lex->Read());
 

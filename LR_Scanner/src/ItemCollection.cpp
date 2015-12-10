@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2014-12-31 18:46:08
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-10 19:52:45
+* @Last Modified time: 2015-12-10 12:01:55
 */
 
 #include "ItemCollection.h"
@@ -317,6 +317,7 @@ void ItemCollection::MakeNULLANDFRIST(const vector<BNF*>& bnfs) {
 
 
     // ==== for debug ====
+    /*
     for (int i = vmap->constMax+1; i < vmap->constSize; ++i) {
         printf("------------------------\n");
         auto itemset = findItems(i,bnfs);
@@ -331,7 +332,7 @@ void ItemCollection::MakeNULLANDFRIST(const vector<BNF*>& bnfs) {
         }
         printf("}\n");
     }
-
+    */
 }
 
 

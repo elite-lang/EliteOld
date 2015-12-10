@@ -30,17 +30,21 @@ BISON_TARGET(MyParser ${CMAKE_CURRENT_SOURCE_DIR}/src/redapple_parser.y
 					  ${CMAKE_CURRENT_BINARY_DIR}/redapple_parser.cpp)
 ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
-include_directories(Debug Release build includes includes/Model includes/Utils)
+include_directories(Debug Release build includes includes/Model src src/Utils src/MetaModel src/cJSON 
+    src/LLCG/ src/LLCG/LLVMLIB)
 
 file(GLOB_RECURSE source_files	${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
 								${CMAKE_CURRENT_SOURCE_DIR}/src/Model/*.cpp
 								${CMAKE_CURRENT_SOURCE_DIR}/src/Macro/*.cpp
-								${CMAKE_CURRENT_SOURCE_DIR}/src/Utils/*.cpp)
+								${CMAKE_CURRENT_SOURCE_DIR}/src/Utils/*.cpp
+                                ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaModel/*.cpp
+                                ${CMAKE_CURRENT_SOURCE_DIR}/src/LLCG/*.cpp
+                                ${CMAKE_CURRENT_SOURCE_DIR}/src/LLCG/*/*.cpp
+                                ${CMAKE_CURRENT_SOURCE_DIR}/src/cJSON/*.c)
+list(REMOVE_ITEM  source_files  ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
-add_library(red STATIC ${source_files} ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS})
-add_executable(redapple ${source_files} 
-						${BISON_MyParser_OUTPUTS} 
-						${FLEX_MyScanner_OUTPUTS})
+add_library(red STATIC ${source_files})
+add_executable(redapple ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp ${BISON_MyParser_OUTPUTS} ${FLEX_MyScanner_OUTPUTS})
 
 
 install(TARGETS redapple RUNTIME DESTINATION bin)
@@ -52,7 +56,13 @@ llvm_map_components_to_libnames(llvm_libs
 	mc mcjit bitwriter x86codegen target)
 
 # Link against LLVM libraries
-target_link_libraries(redapple ${llvm_libs})
+target_link_libraries(redapple red ${llvm_libs})
+
+
+add_subdirectory(runtime)
+
+
+
 
 FIND_PACKAGE(Doxygen)  
 OPTION(BUILD_DOCUMENTATION "Create and install the HTML based API documentation (requires Doxygen)" ${DOXYGEN_FOUND})  
