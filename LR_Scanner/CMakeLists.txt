@@ -1,14 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 project(scanner)
-SET (CMAKE_CXX_COMPILER_ENV_VAR "clang++")
-SET (CMAKE_CXX_FLAGS "-std=c++11")
-SET (CMAKE_CXX_FLAGS_DEBUG   "-g")
-SET (CMAKE_CXX_FLAGS_MINSIZEREL  "-Os -DNDEBUG")
-SET (CMAKE_CXX_FLAGS_RELEASE  "-O4 -DNDEBUG")
-SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
-include_directories(includes build src lib/lua_include lib/lex_include)
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
+
 
 # bison and flex
 find_package(BISON)
@@ -21,20 +14,30 @@ ADD_FLEX_BISON_DEPENDENCY(SCANNER PARSER)
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 list(REMOVE_ITEM  source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
-add_executable(scannertest
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-)
-
-add_library(scanner STATIC ${source_files} ${BISON_PARSER_OUTPUTS} ${FLEX_SCANNER_OUTPUTS})
-
 find_package(PkgConfig)
-pkg_check_modules(GLIBMM glibmm-2.4)
+pkg_check_modules(GLIBMM REQUIRED glibmm-2.4 giomm-2.4)  
 link_directories(${GLIBMM_LIBRARY_DIRS})
 include_directories(${GLIBMM_INCLUDE_DIRS})
 
+
+SET (CMAKE_CXX_COMPILER_ENV_VAR "clang++")
+SET (CMAKE_CXX_FLAGS "-std=c++11")
+SET (CMAKE_CXX_FLAGS_DEBUG "-g")
+SET (CMAKE_CXX_FLAGS_MINSIZEREL  "-Os -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELEASE  "-O4 -DNDEBUG")
+SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+
+include_directories(includes build src lib/lua_include lib/lex_include lib/cereal-1.1.2)
+link_directories(${PROJECT_SOURCE_DIR}/lib)
+
+
+add_library(scanner STATIC ${source_files} ${BISON_PARSER_OUTPUTS} ${FLEX_SCANNER_OUTPUTS})
+add_executable(scannertest
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+)
 TARGET_LINK_LIBRARIES(scannertest scanner lex lua dl ${GLIBMM_LIBRARIES})
 
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 # doxygen
 FIND_PACKAGE(Doxygen)  

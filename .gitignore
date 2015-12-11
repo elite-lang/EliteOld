@@ -2,6 +2,7 @@
 *.bc
 .fuse*
 *.sublime-*
+*.lrsave
 bin/
 build/
 Lex/bin/

@@ -2,10 +2,14 @@
 * @Author: sxf
 * @Date:   2015-01-03 13:21:45
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-28 14:12:23
+* @Last Modified time: 2015-12-11 18:27:37
 */
 
 #include "LALRTable.h"
+#include <fstream>
+#include <cereal/archives/portable_binary.hpp>
+
+
 
 LALRTable::LALRTable(int _constSum, int _stateSum, int _VSum, BNFParser* bnfparser) {
     constSum = _constSum; stateSum = _stateSum; VSum = _VSum;
@@ -119,4 +123,17 @@ void LALRTable::printTable() {
         }
         printf("\n");
     }
+}
+
+
+void LALRTable::Save(const char* path) {
+    std::ofstream os(path, std::ios::out | std::ios::binary | std::ios::trunc );
+    cereal::PortableBinaryOutputArchive oarchive(os);
+    oarchive( cereal::make_nvp("myData", *this) );
+}
+
+void LALRTable::Load(const char* path) {
+    std::ifstream is(path, std::ios::in | std::ios::binary);
+    cereal::PortableBinaryInputArchive iarchive(is);
+    iarchive( cereal::make_nvp("myData", *this) );
 }

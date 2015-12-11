@@ -3,7 +3,7 @@
 #include "LALRTable.h"
 #include "ScriptRunner.h"
 #include "Grammer_Node.h"
-
+#include "FileUtils.h"
 
 LR_parser::LR_parser()
 {
@@ -81,11 +81,9 @@ void LR_parser::print_GOTO(vector<ItemCollection*> vec) {
         printf("\n");
     }
 
-
     printf("======= Spread =======\n");
     for (auto p = vec.begin(); p != vec.end(); ++p) {
         ItemCollection* items = *p;
-
         items->printSpread();
         printf("\n");
     }
@@ -94,23 +92,33 @@ void LR_parser::print_GOTO(vector<ItemCollection*> vec) {
 
 void LR_parser::BuildParser()
 {
-    ExtendBNF();
-    MakeID(); // for each state, make a ID for it
+    string save_filepath = cfg_filepath + ".lrsave";
+    if (!FileUtils::isNeedUpdate(cfg_filepath, save_filepath)) {
+        // 读取并加载该缓存
+        printf("加载缓存\n");
+        LALRTable* lalr_table = new LALRTable(vmap.constMax+1, 0, vmap.constSize, bnfparser);
+        lalr_table->Load(save_filepath.c_str());
+        table = (LRTable*) lalr_table;
+        return;
+    }
+
     printf("Create LR0\n");
     // 创建LR0项集族
     vector<ItemCollection*> vec = ItemCollection::MakeLR0Items(&vmap, mainbnf, bnflist);
-   printf("======== print LR0 Collection ========\n");
-   // print_ItemCollection(vec);
+    printf("======== print LR0 Collection ========\n");
+    // print_ItemCollection(vec);
     // 构建LALR项集族
     printf("MakeLALRItems\n");
     ItemCollection::MakeLALRItems(vec,bnflist);
     printf("======== print LR1 Collection ========\n");
     // print_ItemCollection(vec);
     // print_GOTO(vec);
-//    printf("test: \t %d %d %d\n",vmap.constMax+1,vec.size(),vmap.constSize);
+    // printf("test: \t %d %d %d\n",vmap.constMax+1,vec.size(),vmap.constSize);
     printf("build table");
-    table = (LRTable*)new LALRTable(vmap.constMax+1,vec.size(),vmap.constSize, bnfparser);
-    table->BuildTable(vec);
+    LALRTable* lalr_table = new LALRTable(vmap.constMax+1, vec.size(), vmap.constSize, bnfparser);
+    lalr_table->BuildTable(vec);
+    lalr_table->Save(save_filepath.c_str());
+    table = (LRTable*) lalr_table;
     // table->printTable();
 }
 
@@ -123,6 +131,7 @@ void LR_parser::BuildParser(const char* filename) {
 
 
 void LR_parser::AddBNF(const char* filename) {
+    cfg_filepath = filename;
     // ask the ID name from the lex
     int size = lex->getRuleSize();
     vmap.constSize = size-1;
@@ -143,6 +152,8 @@ void LR_parser::AddBNF(const char* filename) {
     bnflist = BNF::BuildAllBNF(root,vmap);
     printf("BuildAllBNF");
     bnfparser->MakePrecedence(vmap);
+    ExtendBNF();
+    MakeID(); // for each state, make a ID for it
 }
 
 int LR_parser::Parse(Grammer_Node* root)

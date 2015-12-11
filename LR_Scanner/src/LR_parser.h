@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-01-01 19:40:28
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-28 13:27:50
+* @Last Modified time: 2015-12-11 18:53:16
 */
 
 #ifndef LR_PARSER_H
@@ -14,6 +14,7 @@
 #include "LRCore.h"
 #include <vector>
 #include <map>
+#include <string>
 #include "VMap.h"
 #include "Grammer_Node.h"
 using namespace std;
@@ -66,6 +67,9 @@ private:
 
     // BNF解析器
     BNFParser* bnfparser;
+
+    // 配置文件路径
+    std::string cfg_filepath;
     
     // 扩展 BNF，增加根元素
     void ExtendBNF();

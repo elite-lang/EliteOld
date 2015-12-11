@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-10 13:08:26
+* @Last Modified time: 2015-12-11 22:08:02
 */
 
 #include "Builder.h"
@@ -107,8 +107,10 @@ char* Builder::fileReader(const char* path, int& flen) {
     return data;
 }
 char* Builder::make_default_name(const char* filename) {
-	const char* file = strrchr(filename, '/');
-	++file;
+	const char* ans = strrchr(filename, '/');
+	const char* file;
+	if (ans == 0) file = filename;
+	else file = ans+1;
 	int size = 0;
 	for (const char* p = file; *p != 0; ++p, ++size)
 		if (*p == '.') break;
