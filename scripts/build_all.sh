@@ -13,28 +13,28 @@ cd ../
 
 cd ./Lex/build
 cmake ..
-make lex
+make lex -j8
 cd ../../
 
 cd ./LR_Scanner/build
 cmake ..
-make scanner
+make scanner -j8
 cd ../../
 
 cd ./RedApple/build
 cmake ..
-make red
+make red -j8
 cd ../../
 
 cd ./MetaScriptRunner/build
 cmake ..
-make meta
+make meta -j8
 cd ../../
 
 cd ./Builder/build
 cmake ..
-make builder
+make builder -j8
 cd ../../
 
 
-./build.sh
+./scripts/build.sh

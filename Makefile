@@ -8,9 +8,10 @@ self:
 	./scripts/build.sh
 
 
-
+.PHONY:
 rm:
 	-rm -rf ./build
 
+.PHONY:
 rm-all:
-	./scripts/clear_all.sh
+	./scripts/clean_all.sh

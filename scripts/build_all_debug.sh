@@ -2,7 +2,7 @@
 # @Author: sxf
 # @Date:   2015-11-02 13:23:31
 # @Last Modified by:   sxf
-# @Last Modified time: 2015-12-10 12:09:58
+# @Last Modified time: 2015-12-12 09:41:40
 
 # 整体构建脚本
 
@@ -13,32 +13,32 @@ cd ../
 
 cd ./Lex/build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
-make lex
+make lex -j8
 cd ../../
 
 cd ./LR_Scanner/build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
-make scanner
+make scanner -j8
 cd ../../
 
 cd ./RedApple/build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
-make red
+make red -j8
 cd ../../
 
 cd ./MetaScriptRunner/build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
-make meta
+make meta -j8
 cd ../../
 
 cd ./Builder/build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
-make builder
+make builder -j8
 cd ../../
 
 
 mkdir ./build
 cd ./build
 cmake -DCMAKE_BUILD_TYPE=Debug ..
-make
+make -j8
 cd ..
