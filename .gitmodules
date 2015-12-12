@@ -1,0 +1,11 @@
+[submodule "Lex"]
+	path = Lex
+	url = git@github.com:elite-lang/Lex.git
+
+[submodule "LR_Scanner"]
+	path = LR_Scanner
+	url = git@github.com:elite-lang/LR_Scanner.git
+
+[submodule "RedApple"]
+	path = RedApple
+	url = git@github.com:elite-lang/RedApple.git
