@@ -30,7 +30,7 @@ make all
 ```
 # for elite 
 export ELITE_HOME=【您的Elite仓库地址】
-export PATH=$ELITE_HOME/bin:$PATH
+export PATH=$ELITE_HOME/bin:$ELITE_HOME/tools:$PATH
 ```
 
 
