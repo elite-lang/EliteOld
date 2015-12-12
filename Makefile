@@ -1,11 +1,13 @@
-build_all:
+all:
 	./scripts/build_all.sh
 
-build_all_debug:
+all-debug:
 	./scripts/build_all_debug.sh
 
-build_self:
+self:
 	./scripts/build.sh
+
+
 
 rm:
 	-rm -rf ./build
