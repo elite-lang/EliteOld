@@ -6,11 +6,11 @@
                              @PROJECT_SOURCE_DIR@ \  
                              @PROJECT_BINARY_DIR@  
     FILE_PATTERNS          = *.h \  
-                             *.c
+                             *.cpp
     OUTPUT_LANGUAGE  	   = Chinese
     RECURSIVE              = YES  
     EXTRACT_ALL            = YES  
     EXTRACT_PRIVATE        = YES  
     EXTRACT_STATIC         = YES  
-    EXCLUDE_PATTERNS       = */thirdparty/*  
+    EXCLUDE_PATTERNS       = lua oolua  
     USE_MDFILE_AS_MAINPAGE = @doxy_main_page@  

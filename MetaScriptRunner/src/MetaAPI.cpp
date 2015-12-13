@@ -2,11 +2,12 @@
 * @Author: sxf
 * @Date:   2015-11-07 15:46:24
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-10 19:49:05
+* @Last Modified time: 2015-12-13 11:24:49
 */
 
 #include "oolua/oolua.h"
 #include "Model/nodes.h"
+#include "assert.h"
 
 using namespace OOLUA;
 
@@ -99,11 +100,12 @@ static int l_make_list_meta_api(lua_State* L) {
 	int argc = lua_gettop(L);  
 	Node** plist = new Node* [argc];
 	for (int i = 1 ; i <= argc ; ++i ) {  
-		Node* node = (Node*)lua_touserdata(L, i);
-		plist[i-1] = node;
+		Node* node = (Node*)lua_touserdata(L, -i);
+		plist[argc-i] = node;
 	}
 	lua_pop(L, argc);
 	Node* ans = Node::makeList(argc, plist);
+	assert(ans != NULL);
 	delete[] plist;
 	lua_pushlightuserdata(L, ans);
 	return 1;

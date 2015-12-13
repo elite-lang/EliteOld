@@ -17,7 +17,7 @@
 LLVM3.6平台
 Lua5.2
 glibmm giomm
-
+flex bison
 
 # 目前需要进行的工作
 

@@ -12,10 +12,10 @@ clone全部仓库，注意添加`--recursive`参数来下载全部子项目
 git clone --depth=1 --recursive git@github.com:elite-lang/Elite.git 
 ```
 
-本项目是在Ubuntu14.04 64位系统下开发的，依赖cmake, LLVM-3.6和glibmm-2.4、giomm-2.4
+本项目是在Ubuntu14.04 64位系统下开发的，依赖cmake-2.8, LLVM-3.6和glibmm-2.4、giomm-2.4, flex-2.5 bison-3.0
 
 ```
-sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev 
+sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev flex bison
 ```
 
 然后在项目根目录下执行：
