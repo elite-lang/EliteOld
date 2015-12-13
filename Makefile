@@ -1,17 +1,12 @@
 all:
-	./scripts/build_all.sh
+	-mkdir build
+	cd build && cmake .. && make
 
-all-debug:
-	./scripts/build_all_debug.sh
-
-self:
-	./scripts/build.sh
-
+release:
+	-mkdir build
+	cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make
 
 .PHONY:
 rm:
 	-rm -rf ./build
 
-.PHONY:
-rm-all:
-	./scripts/clean_all.sh
