@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-10 18:25:22
+* @Last Modified time: 2015-12-13 14:03:04
 */
 
 
@@ -29,6 +29,10 @@ void Worker::Run(const char* input, const char* output) {
 	Grammer_Node* root = Grammer_Node::NewNode();
 	parser->Parse(root);
 	Node* node = script_runner->getRoot();
+	if (node == NULL) {
+		printf("分析器异常，返回为NULL\n");
+		exit(1);
+	}
 	node->print(0);
 	codegen->PreScan(node);
 	codegen->Make(node, output, "Main");
