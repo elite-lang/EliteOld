@@ -11,4 +11,5 @@ LR_Scanner/bin/
 LR_Scanner/build/
 RedApple/bin/
 RedApple/build/
-
+third_party/
+extlib/

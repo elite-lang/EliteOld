@@ -11,6 +11,12 @@ elseif(WIN32)
 	include(cmake/MSVCConf.cmake) # 使用MSVC编译
 endif()
 
+
+
+## 下载第三方库
+include(cmake/ThirdPartyBuild.cmake)
+
+
 ## 配置输出目录
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
@@ -38,3 +44,4 @@ target_link_libraries(elite builder meta red scanner lex oolua lua dl
 install(TARGETS elite RUNTIME DESTINATION bin)
 
 include(cmake/Doxygen.cmake)
+
