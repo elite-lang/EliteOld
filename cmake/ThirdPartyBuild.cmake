@@ -1,6 +1,4 @@
-if(UNIX)
-	include(/usr/share/cmake/Modules/ExternalProject.cmake)
-endif()
+include(cmake/ExternalProject.cmake)
 
 set (third_party_install_path ${CMAKE_CURRENT_SOURCE_DIR}/extlib)
 
@@ -65,7 +63,7 @@ ExternalProject_Add(liboolua
 
 if (UNIX)
 	set(COPY_OOLUA_LIB_COMMAND "./cp_unix.sh")
-elseif(WIN32) 
+elseif(WIN32)
 	set(COPY_OOLUA_LIB_COMMAND "cp_win32.bat")
 endif()
 
@@ -95,4 +93,3 @@ ExternalProject_Add(libdyncall
 
 ADD_CUSTOM_TARGET(deps
 	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall)
-
