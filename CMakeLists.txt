@@ -13,10 +13,6 @@ endif()
 
 
 
-## 下载第三方库
-include(cmake/ThirdPartyBuild.cmake)
-
-
 ## 配置输出目录
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
@@ -43,5 +39,10 @@ target_link_libraries(elite builder meta red scanner lex oolua lua dl
 
 install(TARGETS elite RUNTIME DESTINATION bin)
 
+
+## 下载第三方库
+include(cmake/ThirdPartyBuild.cmake)
+
 include(cmake/Doxygen.cmake)
+
 

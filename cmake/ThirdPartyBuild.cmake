@@ -37,8 +37,9 @@ ExternalProject_Add(liblua
 	BUILD_ALWAYS 0
 	)
 
-ADD_CUSTOM_TARGET(deps
-	DEPENDS liblua libiconv libcharsetdetect copy-liboolua)
+
+
+
 
 
 ## oolua的构建
@@ -74,3 +75,24 @@ add_custom_command(OUTPUT copy-liboolua
   COMMAND ${COPY_OOLUA_LIB_COMMAND}
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
   COMMENT "comment")
+
+
+
+
+
+ExternalProject_Add(libdyncall
+	DOWNLOAD_DIR third_party/
+	GIT_REPOSITORY https://github.com/elite-lang/dyncall
+	SOURCE_DIR third_party/dyncall/
+	CMAKE_COMMAND cmake
+	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
+	# INSTALL_COMMAND ""
+	BUILD_IN_SOURCE 0
+	BUILD_ALWAYS 0
+	)
+
+
+
+ADD_CUSTOM_TARGET(deps
+	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall)
+

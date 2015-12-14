@@ -21,9 +21,19 @@ sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev flex bison
 
 然后在项目根目录下执行：
 ```
-make all
+make release
 ```
 即可编译整个项目
+
+或者手动进行如下步骤：
+```
+mkdir build
+cmake ..   //cmake配置
+make deps  //下载并构建依赖项目 
+make       //构建项目
+```
+
+
 
 ## 配置环境变量
 
