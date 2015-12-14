@@ -21,9 +21,9 @@ include(cmake/ThirdPartyBuild.cmake)
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 ## 路径配置
-include_directories(src extlib/lua extlib/oolua extlib
+include_directories(src extlib/include
     Lex/include LR_Scanner/includes RedApple/includes Builder/include MetaScriptRunner/include)
-link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extlib)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extlib/lib)
 
 OPTION(BUILD_ALL "构建全部项目 / Build all component together." ON)
 OPTION(USE_DYNAMIC "使用动态库 / Build with dynamic libraries." OFF)

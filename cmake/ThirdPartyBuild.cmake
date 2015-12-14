@@ -38,12 +38,39 @@ ExternalProject_Add(liblua
 	)
 
 ADD_CUSTOM_TARGET(deps
-	DEPENDS liblua libiconv libcharsetdetect)
+	DEPENDS liblua libiconv libcharsetdetect copy-liboolua)
 
 
+## oolua的构建
+if (APPLE)
+	set(OOLUA_BUILD_COMMAND "./xcode_build.sh")
+elseif (UNIX)
+	set(OOLUA_BUILD_COMMAND "./gnu_build.sh")
+elseif (WIN32)
+	set(OOLUA_BUILD_COMMAND "vs2010x86_build.bat")
+endif()
 
-ADD_CUSTOM_TARGET(copy-deps
-	COMMAND 
-	DEPENDS liblua libiconv libcharsetdetect
-
+ExternalProject_Add(liboolua
+	DEPENDS liblua
+	DOWNLOAD_DIR third_party/
+	GIT_REPOSITORY https://github.com/elite-lang/oolua
+	SOURCE_DIR third_party/oolua/
+	CONFIGURE_COMMAND ""
+	BUILD_COMMAND ${OOLUA_BUILD_COMMAND}
+	BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
+	INSTALL_COMMAND ""
+	INSTALL_DIR ${third_party_install_path}
 	)
+
+if (UNIX)
+	set(COPY_OOLUA_LIB_COMMAND "./cp_unix.sh")
+elseif(WIN32) 
+	set(COPY_OOLUA_LIB_COMMAND "cp_win32.bat")
+endif()
+
+## 在完成编译后，复制库
+add_custom_command(OUTPUT copy-liboolua
+  DEPENDS liboolua
+  COMMAND ${COPY_OOLUA_LIB_COMMAND}
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
+  COMMENT "comment")
