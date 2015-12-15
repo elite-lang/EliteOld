@@ -5,7 +5,7 @@ git:
 
 install:
   - sudo apt-get install llvm-3.6-dev libglibmm-2.4-dev flex bison -y 
-  - ./scripts/fix_ubuntu_llvm.sh
+  - sudo sh ./scripts/fix_ubuntu_llvm.sh
 
 script:
   - make release
