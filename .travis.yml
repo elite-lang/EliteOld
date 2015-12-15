@@ -1,11 +1,11 @@
 
 language: cpp
 git:
-	depth: 3
+  depth: 3
 
 install:
-	- sudo apt-get install llvm-3.6-dev libglibmm-2.4-dev flex bison
+  - sudo apt-get install llvm-3.6-dev libglibmm-2.4-dev flex bison
 
 script:
-	- make release
+  - make release
 
