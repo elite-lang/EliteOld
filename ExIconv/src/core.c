@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-04 15:17:26
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-15 09:04:22
+* @Last Modified time: 2015-12-15 09:34:43
 */
 
 #include "iconv.h"
@@ -14,9 +14,9 @@
 extern char* 
 echar2code (const echar_t* data, size_t* outsize, const char* encode) {
 	assert (data != NULL);
-	iconv_t cd = iconv_open (encode, "UTF-32"); // tocode, fromcode
+	iconv_t cd = iconv_open (encode, "UTF-16"); // tocode, fromcode
 	if ((iconv_t)-1 == cd) { 
-		printf("不能从编码 %s 转换到 %s！\n", "UTF-32", encode);
+		printf("不能从编码 %s 转换到 %s！\n", "UTF-16", encode);
 		return NULL; 
 	} 
 	size_t in_size = sizeof(echar_t) * estrlen(data);
@@ -43,9 +43,9 @@ echar2code (const echar_t* data, size_t* outsize, const char* encode) {
 extern echar_t*
 code2echar (const char* data, size_t* outsize, const char* encode) {
 	assert (data != NULL);
-	iconv_t cd = iconv_open ("UTF-32", encode); // tocode, fromcode
+	iconv_t cd = iconv_open ("UTF-16", encode); // tocode, fromcode
 	if ((iconv_t)-1 == cd) { 
-		printf("不能从编码 %s 转换到 %s！\n", encode, "UTF-32");
+		printf("不能从编码 %s 转换到 %s！\n", encode, "UTF-16");
 		return NULL; 
 	} 
 	size_t in_size = strlen(data);
