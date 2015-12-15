@@ -2,12 +2,12 @@
 * @Author: sxf
 * @Date:   2015-11-04 15:17:26
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-05 08:21:32
+* @Last Modified time: 2015-12-15 09:04:22
 */
 
 #include "iconv.h"
 #include "exiconv.h"
-#include <malloc.h>
+#include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
