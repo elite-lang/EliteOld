@@ -24,6 +24,7 @@ link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extlib/lib)
 OPTION(BUILD_ALL "构建全部项目 / Build all component together." ON)
 OPTION(USE_DYNAMIC "使用动态库 / Build with dynamic libraries." OFF)
 
+add_subdirectory(ExIconv)
 add_subdirectory(Lex)
 add_subdirectory(LR_Scanner)
 add_subdirectory(RedApple)

@@ -9,5 +9,5 @@ install:
   - sudo sh ./scripts/fix_ubuntu_llvm.sh
 
 script:
-  - make release
+  - make test
 
