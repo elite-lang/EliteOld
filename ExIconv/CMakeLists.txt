@@ -25,6 +25,6 @@ add_library(exiconv STATIC ${source_files})
 target_link_libraries(exiconv iconv charsetdetect)
 
 
-if(NOT BUILD_ALL)
+if(BUILD_TEST)
     add_subdirectory(test)
 endif()
