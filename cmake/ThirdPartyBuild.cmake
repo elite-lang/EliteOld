@@ -42,9 +42,9 @@ ExternalProject_Add(liblua
 
 ## oolua的构建
 if (APPLE)
-	set(OOLUA_BUILD_COMMAND "./xcode_build.sh")
+	set(OOLUA_BUILD_COMMAND "sh ./xcode_build.sh")
 elseif (UNIX)
-	set(OOLUA_BUILD_COMMAND "./gnu_build.sh")
+	set(OOLUA_BUILD_COMMAND "sh ./gnu_build.sh")
 elseif (WIN32)
 	set(OOLUA_BUILD_COMMAND "vs2010x86_build.bat")
 endif()
