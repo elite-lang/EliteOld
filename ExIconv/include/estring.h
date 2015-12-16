@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-15 09:43:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-15 13:31:14
+* @Last Modified time: 2015-12-16 12:14:37
 */
 #ifndef ESTRING_H
 #define ESTRING_H
@@ -27,15 +27,15 @@ public:
 
 	void autoreadfile(const std::string& path);
 	void autoreadstr(const std::string& str);
-	void readfile(const std::string& path, const string& encode);
-	void readstr (const std::string& str,  const string& encode);
-	void readstr (const char* data,  const string& encode);
+	void readfile(const std::string& path, const std::string& encode);
+	void readstr (const std::string& str,  const std::string& encode);
+	void readstr (const char* data,  const std::string& encode);
 
 	const char* c_str();
 	const echar_t* ec_str();
 
 	std::string to_utf8();
-	std::string to_str(const string& encode);
+	std::string to_str(const std::string& encode);
 
 	int find(echar_t c);
 	int length();
@@ -48,7 +48,7 @@ public:
 	static const char* encodedetect (const char* data);
 
 private:
-	static std::string load_full_file(const string& path);
+	static std::string load_full_file(const std::string& path);
 
 	std::basic_string<echar_t> data;
 
