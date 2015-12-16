@@ -17,7 +17,7 @@ git clone --depth=1 --recursive git@github.com:elite-lang/Elite.git
 lua  oolua  dyncall
 
 ```
-sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev flex bison
+sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev flex bison libedit-dev 
 ```
 
 然后在项目根目录下执行：
@@ -28,7 +28,7 @@ make release
 
 或者手动进行如下步骤：
 ```
-mkdir build
+mkdir build && cd build
 cmake ..   //cmake配置
 make deps  //下载并构建依赖项目 
 make       //构建项目
