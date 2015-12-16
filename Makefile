@@ -6,6 +6,10 @@ release:
 	-mkdir build
 	cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make deps && make
 
+test:
+	-mkdir build
+	cd build && cmake .. -DBUILD_TEST=ON && make deps && make
+
 deps:
 	-mkdir build
 	cd build && cmake .. && make deps

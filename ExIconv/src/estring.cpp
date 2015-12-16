@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-15 10:46:34
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-16 12:20:11
+* @Last Modified time: 2015-12-16 18:11:03
 */
 
 #include "estring.h"
@@ -21,23 +21,51 @@ estring::estring() {
 }
 
 estring::estring(const std::string& str) {
-	autoreadstr(str);
+	*this = str;
 }
 
 estring::estring(const estring& estr) {
-	this->data = estr.data;
+	*this = estr;
 }
 
 estring::estring(const char* cstr) {
-	autoreadstr(cstr);
+	*this = cstr;
 }
 
 estring::estring(const echar_t* ecstr) {
-	this->data = ecstr;
+	*this = ecstr;
 }
 
 estring::~estring() {
 
+}
+
+echar_t& estring::operator[] (size_t k) {
+	return data.at(k);
+}
+
+const echar_t& estring::operator[] (size_t k) const {
+	return data.at(k);
+}
+
+const estring& estring::operator= (const estring& estr) {
+	this->data = estr.data;
+}
+
+const estring& estring::operator= (const std::string& str) {
+	autoreadstr(str);
+}
+
+const estring& estring::operator= (const char* cstr) {
+	autoreadstr(cstr);
+}	
+
+const estring& estring::operator= (const echar_t* ecstr) {
+	this->data = ecstr;
+}
+
+bool estring::operator== (const estring& estr) {
+	return this->data == estr.data;
 }
 
 

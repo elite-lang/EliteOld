@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-15 09:43:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-16 12:14:37
+* @Last Modified time: 2015-12-16 18:10:36
 */
 #ifndef ESTRING_H
 #define ESTRING_H
@@ -30,6 +30,14 @@ public:
 	void readfile(const std::string& path, const std::string& encode);
 	void readstr (const std::string& str,  const std::string& encode);
 	void readstr (const char* data,  const std::string& encode);
+
+	echar_t& operator[] (size_t k);
+	const echar_t& operator[] (size_t k) const;
+	const estring& operator= (const estring& estr);
+	const estring& operator= (const std::string& str);
+	const estring& operator= (const char* cstr);
+	const estring& operator= (const echar_t* ecstr);
+	bool operator== (const estring& estr);
 
 	const char* c_str();
 	const echar_t* ec_str();

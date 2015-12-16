@@ -20,6 +20,11 @@ lua  oolua  dyncall
 sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev flex bison libedit-dev 
 ```
 
+修复ubuntu源中LLVM-3.6的bug:
+```
+	sudo sh ./scripts/fix_ubuntu_llvm.sh
+```
+
 然后在项目根目录下执行：
 ```
 make release
