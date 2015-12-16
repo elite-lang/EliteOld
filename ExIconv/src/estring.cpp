@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-15 10:46:34
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-16 18:11:03
+* @Last Modified time: 2015-12-16 20:38:35
 */
 
 #include "estring.h"
@@ -91,9 +91,9 @@ void estring::readstr (const std::string& str,  const std::string& encode) {
 
 void estring::readstr (const char* data,  const std::string& encode) {
 	assert (data != NULL);
-	iconv_t cd = iconv_open ("UTF-16", encode.c_str()); // tocode, fromcode
+	iconv_t cd = iconv_open ("UTF-16LE", encode.c_str()); // tocode, fromcode
 	if ((iconv_t)-1 == cd) { 
-		printf("不能从编码 %s 转换到 %s！\n", encode.c_str(), "UTF-16");
+		printf("不能从编码 %s 转换到 %s！\n", encode.c_str(), "UTF-16LE");
 		return; 
 	} 
 	size_t in_size = strlen(data);
@@ -144,9 +144,9 @@ std::string estring::to_utf8() {
 }
 
 std::string estring::to_str(const std::string& encode) {
-	iconv_t cd = iconv_open (encode.c_str(), "UTF-16"); // tocode, fromcode
+	iconv_t cd = iconv_open (encode.c_str(), "UTF-16LE"); // tocode, fromcode
 	if ((iconv_t)-1 == cd) { 
-		printf("不能从编码 %s 转换到 %s！\n", encode.c_str(), "UTF-16");
+		printf("不能从编码 %s 转换到 %s！\n", encode.c_str(), "UTF-16LE");
 		return ""; 
 	} 
 	std::string _ToStr;
