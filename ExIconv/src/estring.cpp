@@ -2,12 +2,14 @@
 * @Author: sxf
 * @Date:   2015-12-15 10:46:34
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-15 13:34:41
+* @Last Modified time: 2015-12-16 12:20:11
 */
 
 #include "estring.h"
-#include <cstdio>
+extern "C" {
 #include "iconv.h"
+#include "charsetdetect.h"
+}
 #include <cstdlib>
 #include <cstring>
 #include <cassert>
@@ -23,7 +25,7 @@ estring::estring(const std::string& str) {
 }
 
 estring::estring(const estring& estr) {
-	this.data = estr.data;
+	this->data = estr.data;
 }
 
 estring::estring(const char* cstr) {
@@ -31,7 +33,7 @@ estring::estring(const char* cstr) {
 }
 
 estring::estring(const echar_t* ecstr) {
-	this.data = ecstr;
+	this->data = ecstr;
 }
 
 estring::~estring() {
@@ -48,18 +50,18 @@ void estring::autoreadstr(const std::string& str) {
 	readstr(str.c_str(), encodedetect(str.c_str()));
 }
 
-void estring::readfile(const std::string& path, const string& encode) {
+void estring::readfile(const std::string& path, const std::string& encode) {
 	std::string str = load_full_file(path);
 	readstr(str.c_str(), encode);
 }
 
-void estring::readstr (const std::string& str,  const string& encode) {
+void estring::readstr (const std::string& str,  const std::string& encode) {
 	readstr(str.c_str(), encode);
 }
 
 #define BUFFER_SIZE 4096
 
-void estring::readstr (const char* data,  const string& encode) {
+void estring::readstr (const char* data,  const std::string& encode) {
 	assert (data != NULL);
 	iconv_t cd = iconv_open ("UTF-16", encode.c_str()); // tocode, fromcode
 	if ((iconv_t)-1 == cd) { 
@@ -70,7 +72,7 @@ void estring::readstr (const char* data,  const string& encode) {
 	size_t out_size = BUFFER_SIZE;
 	size_t malloc_size = out_size;
 	char* outbuf = (char*) malloc (out_size);
-	const char* inptr = data;
+	char* inptr = (char*) data;
 	char* outptr = outbuf;
 
 	while(in_size != 0) {
@@ -80,7 +82,7 @@ void estring::readstr (const char* data,  const string& encode) {
 				echar_t* buf = (echar_t*) outbuf;
 				int buf_size = (BUFFER_SIZE-out_size)/2;
 				for (int i = 0; i < buf_size; ++i) {
-					this.data.append(buf[i]);
+					this->data.push_back(buf[i]);
 				}
 				outptr = outbuf;
 				out_size = BUFFER_SIZE;
@@ -95,7 +97,7 @@ void estring::readstr (const char* data,  const string& encode) {
 	echar_t* buf = (echar_t*) outbuf;
 	int buf_size = (BUFFER_SIZE-out_size)/2;
 	for (int i = 0; i < buf_size; ++i) {
-		this.data.push_back(buf[i]);
+		this->data.push_back(buf[i]);
 	}
 	free (outbuf);
 }
@@ -113,19 +115,19 @@ std::string estring::to_utf8() {
 	return to_str("UTF-8");
 }
 
-std::string estring::to_str(const string& encode) {
+std::string estring::to_str(const std::string& encode) {
 	iconv_t cd = iconv_open (encode.c_str(), "UTF-16"); // tocode, fromcode
 	if ((iconv_t)-1 == cd) { 
 		printf("不能从编码 %s 转换到 %s！\n", encode.c_str(), "UTF-16");
-		return; 
+		return ""; 
 	} 
 	std::string _ToStr;
-	const char* data = this.data.data();
-	size_t in_size = this.data.size() * 2;
+	char* data = (char*)(this->data.data());
+	size_t in_size = this->data.size() * 2;
 	size_t out_size = BUFFER_SIZE;
 	size_t malloc_size = out_size;
 	char* outbuf = (char*) malloc (out_size);
-	const char* inptr = data;
+	char* inptr = data;
 	char* outptr = outbuf;
 
 	while(in_size != 0) {
@@ -134,21 +136,21 @@ std::string estring::to_str(const string& encode) {
 			if (errno == E2BIG) {
 				int buf_size = BUFFER_SIZE-out_size;
 				for (int i = 0; i < buf_size; ++i) {
-					_ToStr.append(outbuf[i]);
+					_ToStr.push_back(outbuf[i]);
 				}
 				outptr = outbuf;
 				out_size = BUFFER_SIZE;
 			} else {
 				printf ("%s\n", strerror(errno));
 				free (outbuf);
-				return; 
+				return _ToStr = ""; 
 			}
 		}
 	}
 	iconv_close (cd);
 	int buf_size = BUFFER_SIZE-out_size;
 	for (int i = 0; i < buf_size; ++i) {
-		_ToStr.append(outbuf[i]);
+		_ToStr.push_back(outbuf[i]);
 	}
 	free (outbuf);
 	return _ToStr;
@@ -202,7 +204,7 @@ estring::encodedetect (const char* data) {
 }
 
 std::string 
-estring::load_full_file(const string& path) {
+estring::load_full_file(const std::string& path) {
 	std::ifstream t(path);
 	std::string str;
 

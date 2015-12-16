@@ -1,6 +1,6 @@
 [![Travis](https://travis-ci.org/elite-lang/Elite.svg)](https://travis-ci.org/elite-lang/Elite)
 # Elite - 精锐编译器
-# CMake project
+
 Elite是一款脚本化驱动的编译器，一般的编程语言，语法是固定的，只能使用有限的表达方式，而Elite的语法并非固定，而是由脚本配置而成的，如果需要，随时都可以自由更改。
 
 这个特点，使得Elite非常容易自由开发，成为一款领域专业语言（DSL），在自由配置后，方便地表达专业的相关内容。

@@ -19,12 +19,12 @@ endif()
 
 include_directories(src include)
 
-file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
+file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
 add_library(exiconv STATIC ${source_files})
 target_link_libraries(exiconv iconv charsetdetect)
 
 
 if(NOT BUILD_ALL)
-    
+    add_subdirectory(test)
 endif()
