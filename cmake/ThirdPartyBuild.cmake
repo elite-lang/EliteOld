@@ -42,11 +42,11 @@ ExternalProject_Add(liblua
 
 ## oolua的构建
 if (APPLE)
-	set(OOLUA_BUILD_COMMAND "sh ./xcode_build.sh")
+	set(OOLUA_BUILD_COMMAND "mac")
 elseif (UNIX)
-	set(OOLUA_BUILD_COMMAND "sh ./gnu_build.sh")
+	set(OOLUA_BUILD_COMMAND "linux")
 elseif (WIN32)
-	set(OOLUA_BUILD_COMMAND "vs2010x86_build.bat")
+	set(OOLUA_BUILD_COMMAND "win32")
 endif()
 
 ExternalProject_Add(liboolua
@@ -55,22 +55,22 @@ ExternalProject_Add(liboolua
 	GIT_REPOSITORY https://github.com/elite-lang/oolua
 	SOURCE_DIR third_party/oolua/
 	CONFIGURE_COMMAND ""
-	BUILD_COMMAND ${OOLUA_BUILD_COMMAND}
+	BUILD_COMMAND make ${OOLUA_BUILD_COMMAND}
 	BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
 	INSTALL_COMMAND ""
 	INSTALL_DIR ${third_party_install_path}
 	)
 
 if (UNIX)
-	set(COPY_OOLUA_LIB_COMMAND "./cp_unix.sh")
+	set(COPY_OOLUA_LIB_COMMAND "cp-unix")
 elseif(WIN32)
-	set(COPY_OOLUA_LIB_COMMAND "cp_win32.bat")
+	set(COPY_OOLUA_LIB_COMMAND "cp-win32")
 endif()
 
 ## 在完成编译后，复制库
 add_custom_command(OUTPUT copy-liboolua
   DEPENDS liboolua
-  COMMAND ${COPY_OOLUA_LIB_COMMAND}
+  COMMAND make ${COPY_OOLUA_LIB_COMMAND}
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
   COMMENT "comment")
 
