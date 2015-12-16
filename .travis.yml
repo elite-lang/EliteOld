@@ -3,9 +3,8 @@ language: cpp
 git:
   depth: 3
 
-cache: apt
-
 install:
+  - sudo apt-get update
   - sudo apt-get install -y llvm-3.6-dev libglibmm-2.4-dev flex bison 
   - sudo sh ./scripts/fix_ubuntu_llvm.sh
 
