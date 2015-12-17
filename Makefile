@@ -10,7 +10,6 @@ test:
 	-mkdir build
 	cd build && cmake .. -DBUILD_TEST=ON && make deps && make elite
 
-
 only_test:
 	-mkdir build
 	cd build && cmake .. -DBUILD_TEST=ON && make elite

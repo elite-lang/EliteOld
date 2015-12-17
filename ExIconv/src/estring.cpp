@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-15 10:46:34
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-16 20:38:35
+* @Last Modified time: 2015-12-17 15:30:00
 */
 
 #include "estring.h"
@@ -130,9 +130,9 @@ void estring::readstr (const char* data,  const std::string& encode) {
 	free (outbuf);
 }
 
-const char* estring::c_str() {
-	return (const char*)(data.data());
-}
+// const char* estring::c_str() {
+// 	return (const char*)(data.data());
+// }
 
 const echar_t* estring::ec_str() {
 	return data.data();
@@ -185,7 +185,7 @@ std::string estring::to_str(const std::string& encode) {
 }
 
 
-int estring::find(echar_t c) {
+int estring::find(echar_t c) const {
 	int i = 0;
 	for (auto p : data) {
 		if (p == c) return i;
@@ -194,7 +194,7 @@ int estring::find(echar_t c) {
 	return -1;
 }
 
-int estring::length() {
+int estring::length() const {
 	return data.size();
 }
 
@@ -243,4 +243,16 @@ estring::load_full_file(const std::string& path) {
 	str.assign((std::istreambuf_iterator<char>(t)),
 	            std::istreambuf_iterator<char>());
 	return str;
+}
+
+estring::iterator estring::begin() {
+	return data.begin();
+}
+
+estring::iterator estring::end() {
+	return data.end();
+}
+
+void estring::push_back(echar_t c) {
+	data.push_back(c);
 }
