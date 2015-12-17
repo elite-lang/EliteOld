@@ -16,9 +16,17 @@ endif()
 ## 配置输出目录
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
-## 路径配置
+## include路径配置
 include_directories(src extlib/include
-    Lex/include LR_Scanner/includes RedApple/includes Builder/include MetaScriptRunner/include)
+    Lex/include 
+    LR_Scanner/includes 
+    RedApple/includes 
+    Builder/include 
+    MetaScriptRunner/include
+    ExIconv/include
+)
+
+## 链接目录
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extlib/lib)
 
 OPTION(BUILD_ALL "构建全部项目 / Build all component together." ON)
@@ -32,13 +40,10 @@ add_subdirectory(MetaScriptRunner)
 add_subdirectory(Builder)
 
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
-
 add_executable(elite ${source_files})
 
 target_link_libraries(elite builder meta red scanner lex oolua lua dl 
 						${GLIBMM_LIBRARIES} ${LLVM_LIBS})
-
-install(TARGETS elite RUNTIME DESTINATION bin)
 
 
 ## 下载第三方库

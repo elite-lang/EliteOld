@@ -72,7 +72,8 @@ add_custom_command(OUTPUT copy-liboolua
   DEPENDS liboolua
   COMMAND make ${COPY_OOLUA_LIB_COMMAND}
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
-  COMMENT "comment")
+  COMMENT "comment"
+  ) 
 
 
 
@@ -92,4 +93,5 @@ ExternalProject_Add(libdyncall
 
 
 ADD_CUSTOM_TARGET(deps
-	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall)
+	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall
+	)  
