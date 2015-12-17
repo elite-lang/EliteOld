@@ -2,23 +2,23 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:16:04
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-10 11:00:06
+* @Last Modified time: 2015-12-17 20:42:31
 */
 
 #include <stdlib.h>
 #include "PathGetter.h"
-#include <glibmm.h>
+#include "FileUtils.h"
 #include <unistd.h>  
 
 class PathGetter_Private {
 public:
 	void setPath();
-	Glib::ustring elite_home;
-	Glib::ustring elite_lib_path;
-	Glib::ustring elite_cfg_path;
-	Glib::ustring elite_lex_path;
-	Glib::ustring elite_parser_path;
-	Glib::ustring elite_now_path;
+	string elite_home;
+	string elite_lib_path;
+	string elite_cfg_path;
+	string elite_lex_path;
+	string elite_parser_path;
+	string elite_now_path;
 };
 
 
@@ -62,7 +62,7 @@ void PathGetter_Private::setPath() {
 		exit(1);
 	}
 	elite_home = home_path;
-	if (!Glib::file_test(elite_home, Glib::FILE_TEST_EXISTS | Glib::FILE_TEST_IS_DIR)) {
+	if (!FileUtils::test_dir(elite_home)) {
 		printf("ELITE_HOME 环境变量配置错误: %s 路径不存在\n", elite_home.c_str());
 		exit(1);
 	}
@@ -70,11 +70,11 @@ void PathGetter_Private::setPath() {
 	elite_cfg_path = elite_home;
 	elite_lib_path.append("/libs");
 	elite_cfg_path.append("/conf");
-	if (!Glib::file_test(elite_lib_path, Glib::FILE_TEST_EXISTS | Glib::FILE_TEST_IS_DIR)) {
+	if (!FileUtils::test_dir(elite_lib_path)) {
 		printf("%s 目录找不到\n", elite_lib_path.c_str());
 		exit(1);
 	}
-	if (!Glib::file_test(elite_cfg_path, Glib::FILE_TEST_EXISTS | Glib::FILE_TEST_IS_DIR)) {
+	if (!FileUtils::test_dir(elite_cfg_path)) {
 		printf("%s 目录找不到\n", elite_cfg_path.c_str());
 		exit(1);
 	}
@@ -84,19 +84,19 @@ void PathGetter_Private::setPath() {
 	elite_lex_path.append("/lex.cfg");
 	elite_parser_path.append("/parser.cfg");
 	elite_now_path = getcwd(NULL,0); 
-	if (!Glib::file_test(elite_lex_path, Glib::FILE_TEST_EXISTS | Glib::FILE_TEST_IS_REGULAR)) {
+	if (!FileUtils::test_file(elite_lex_path)) {
 		printf("%s 文件找不到\n", elite_lex_path.c_str());
 		exit(1);
 	}
-	if (!Glib::file_test(elite_parser_path, Glib::FILE_TEST_EXISTS | Glib::FILE_TEST_IS_REGULAR)) {
-		printf("%s 目录找不到\n", elite_parser_path.c_str());
+	if (!FileUtils::test_file(elite_parser_path)) {
+		printf("%s 文件找不到\n", elite_parser_path.c_str());
 		exit(1);
 	}
 }
 
 bool PathGetter::testFile(const char* file) {
-	Glib::ustring filepath = file;
-	if (!Glib::file_test(filepath, Glib::FILE_TEST_EXISTS | Glib::FILE_TEST_IS_REGULAR) ) {
+	string filepath = file;
+	if (!FileUtils::test_file(filepath)) {
 		printf("%s 文件找不到\n", file);
 		return false;
 	}

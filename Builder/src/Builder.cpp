@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-11 22:08:02
+* @Last Modified time: 2015-12-17 20:57:13
 */
 
 #include "Builder.h"
@@ -11,7 +11,7 @@
 #include <cstring>
 #include <iostream>
 #include <fstream>
-#include <glibmm.h>
+#include <streambuf>
 using namespace std;
 
 // 构建一个文件
@@ -26,7 +26,7 @@ int Builder::BuildFile(std::string filename) {
 	buildpath += outname;
 	delete[] outname;
 
-	string data = Glib::file_get_contents(filename) ;
+	string data = fileReader(filename.c_str());
 	printf("输入文件: %s \n输出文件: %s\n", filename.c_str(), buildpath.c_str());
 	worker->Run(data.c_str(), buildpath.c_str());
 
@@ -88,23 +88,17 @@ void Builder::Close() {
 	delete this;
 }
 
-char* Builder::fileReader(const char* path, int& flen) {
-    fstream file;
-    locale::global(locale("zh_CN.UTF-8"));
-    file.open(path);//打开文件
-    if(!file.is_open())
-    {
-        printf("can not open BNF file!\n");
-        return NULL;
-    }
-    file.seekg(0,ios::end);
-    flen = file.tellg();
-    file.seekg(0,ios::beg);
-    char* data = new char[flen+1];
-    file.read(data,flen);
-    file.close();
-    data[flen] = 0;
-    return data;
+std::string Builder::fileReader(const char* path) {
+    std::ifstream t(path, std::ios::binary);
+	std::string str;
+
+	t.seekg(0, std::ios::end);   
+	str.reserve(t.tellg());
+	t.seekg(0, std::ios::beg);
+
+	str.assign((std::istreambuf_iterator<char>(t)),
+	            std::istreambuf_iterator<char>());
+    return str;
 }
 char* Builder::make_default_name(const char* filename) {
 	const char* ans = strrchr(filename, '/');

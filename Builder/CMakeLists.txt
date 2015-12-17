@@ -18,11 +18,9 @@ link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 endif()
 
 
-
 # 核心路径配置
 include_directories(src include)
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
-list(REMOVE_ITEM  source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 if(USE_DYNAMIC)
 	add_library(builder SHARED ${source_files}) # 使用动态库
 else()
@@ -30,11 +28,3 @@ else()
 endif()
 
 
-if(NOT BUILD_ALL)
-find_package(PkgConfig)
-pkg_check_modules(GLIBMM glibmm-2.4)
-link_directories(${GLIBMM_LIBRARY_DIRS})
-include_directories(${GLIBMM_INCLUDE_DIRS})
-add_executable(builder_test ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
-target_link_libraries(builder_test builder lex scanner meta red ${GLIBMM_LIBRARIES})
-endif()
