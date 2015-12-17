@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 09:06:35
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-07 11:39:38
+* @Last Modified time: 2015-12-17 20:57:34
 */
 
 
@@ -50,7 +50,7 @@ protected:
 
 	Worker* worker = 0;
 	std::string buildpath;
-	static char* fileReader(const char* path, int& flen);
+	static std::string fileReader(const char* path);
 	static char* make_default_name(const char* filename);
 };
 
