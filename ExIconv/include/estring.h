@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-15 09:43:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-16 18:10:36
+* @Last Modified time: 2015-12-17 15:28:55
 */
 #ifndef ESTRING_H
 #define ESTRING_H
@@ -18,6 +18,8 @@ typedef uint16_t echar_t;
 class estring
 {
 public:
+	typedef std::basic_string<echar_t>::iterator iterator;
+
 	estring();
 	estring(const std::string& str);
 	estring(const estring& estr);
@@ -39,14 +41,14 @@ public:
 	const estring& operator= (const echar_t* ecstr);
 	bool operator== (const estring& estr);
 
-	const char* c_str();
+	// const char* c_str();
 	const echar_t* ec_str();
 
 	std::string to_utf8();
 	std::string to_str(const std::string& encode);
 
-	int find(echar_t c);
-	int length();
+	int find(echar_t c) const;
+	int length() const;
 
 	void clear();
 	void append(echar_t c);
@@ -54,6 +56,10 @@ public:
 	estring substr(int begin, int end);
 
 	static const char* encodedetect (const char* data);
+
+	iterator begin();
+	iterator end();
+	void push_back(echar_t c);
 
 private:
 	static std::string load_full_file(const std::string& path);

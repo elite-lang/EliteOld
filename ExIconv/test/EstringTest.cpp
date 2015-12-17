@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-16 12:02:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-16 20:39:39
+* @Last Modified time: 2015-12-17 15:41:57
 */
 
 #include <gtest/gtest.h>
@@ -43,4 +43,12 @@ __ESTRING_TEST__(Select)
 		printf("%04X ", str[i]);
 	printf("\n");
 	EXPECT_EQ(str[4], 'o');
+}
+
+__ESTRING_TEST__(Select2)
+{
+	estring str("0-9");
+	EXPECT_EQ(str[0], '0');
+	EXPECT_EQ(str[1], '-');
+	EXPECT_EQ(str[2], '9');
 }
