@@ -43,7 +43,7 @@ file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 add_executable(elite ${source_files})
 
 target_link_libraries(elite builder meta red scanner lex oolua lua dl exiconv
-						${GLIBMM_LIBRARIES} ${LLVM_LIBS})
+						${LLVM_LIBS})
 
 ## 下载第三方库
 include(cmake/ThirdPartyBuild.cmake)

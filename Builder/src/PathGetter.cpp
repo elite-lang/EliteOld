@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "PathGetter.h"
 #include "FileUtils.h"
-#include <unistd.h>  
+ 
 
 class PathGetter_Private {
 public:
@@ -83,7 +83,7 @@ void PathGetter_Private::setPath() {
 	elite_parser_path = elite_cfg_path;
 	elite_lex_path.append("/lex.cfg");
 	elite_parser_path.append("/parser.cfg");
-	elite_now_path = getcwd(NULL,0); 
+	elite_now_path = FileUtils::get_current_path();
 	if (!FileUtils::test_file(elite_lex_path)) {
 		printf("%s 文件找不到\n", elite_lex_path.c_str());
 		exit(1);

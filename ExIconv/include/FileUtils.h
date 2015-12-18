@@ -17,6 +17,7 @@ public:
 	static bool isNeedUpdate(const std::string& cfg_path, const std::string& save_path);
 	static bool test_dir(const std::string& path);
 	static bool test_file(const std::string& path);
+	static std::string get_current_path();
 };
 
 
