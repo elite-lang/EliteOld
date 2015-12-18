@@ -42,14 +42,14 @@ void MetaScriptRunner::Finished() {
 
 
 bool MetaScriptRunner::run_file (std::string const &filename) {
-	vm->run_file(filename);
+	return vm->run_file(filename);
 }
 bool MetaScriptRunner::load_file (std::string const &filename) {
-	vm->load_file(filename);
+	return vm->load_file(filename);
 }
 bool MetaScriptRunner::load_chunk (std::string const &chunk) {
-	vm->load_chunk(chunk);
+	return vm->load_chunk(chunk);
 }
 bool MetaScriptRunner::run_chunk (std::string const &chunk) {
-	vm->run_chunk(chunk);
+	return vm->run_chunk(chunk);
 }

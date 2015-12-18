@@ -9,6 +9,7 @@
 #include <iostream>
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/TimeValue.h>
+#include <llvm/ADT/SmallVector.h>
 using namespace std;
 using namespace llvm::sys;
 using namespace llvm::sys::fs;
@@ -46,4 +47,10 @@ bool FileUtils::test_file(const std::string& path) {
 	file_status file_status;
 	status (path, file_status);
 	return exists(file_status) && is_regular_file(file_status);
+}
+
+string FileUtils::get_current_path() {
+	llvm::SmallVector< char, 128 > result;
+	current_path(result);
+	return result.data();
 }

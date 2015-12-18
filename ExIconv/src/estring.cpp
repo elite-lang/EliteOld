@@ -50,18 +50,22 @@ const echar_t& estring::operator[] (size_t k) const {
 
 const estring& estring::operator= (const estring& estr) {
 	this->data = estr.data;
+	return *this;
 }
 
 const estring& estring::operator= (const std::string& str) {
 	autoreadstr(str);
+	return *this;
 }
 
 const estring& estring::operator= (const char* cstr) {
 	autoreadstr(cstr);
+	return *this;
 }	
 
 const estring& estring::operator= (const echar_t* ecstr) {
 	this->data = ecstr;
+	return *this;
 }
 
 bool estring::operator== (const estring& estr) {

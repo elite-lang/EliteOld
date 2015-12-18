@@ -2,6 +2,8 @@ include(cmake/ExternalProject.cmake)
 
 set (third_party_install_path ${CMAKE_CURRENT_SOURCE_DIR}/extlib)
 
+if (UNIX)
+
 ExternalProject_Add(libiconv
 	DOWNLOAD_DIR third_party/
 	GIT_REPOSITORY https://github.com/elite-lang/libiconv
@@ -9,9 +11,25 @@ ExternalProject_Add(libiconv
 	CMAKE_COMMAND cmake
 	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
 	# INSTALL_COMMAND ""
-	BUILD_IN_SOURCE 0
 	BUILD_ALWAYS 0
 	)
+
+elseif(WIN32)
+
+ExternalProject_Add(libiconv
+	DOWNLOAD_DIR third_party/
+	GIT_REPOSITORY https://github.com/elite-lang/libiconv
+	GIT_TAG Windows-x86 
+	CONFIGURE_COMMAND ""
+	SOURCE_DIR third_party/libiconv/
+	BUILD_COMMAND "cp_libs.bat"
+	BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/third_party/libiconv/"
+	INSTALL_COMMAND ""
+	)
+
+endif()
+
+
 
 ExternalProject_Add(libcharsetdetect
 	DOWNLOAD_DIR third_party/
@@ -20,7 +38,6 @@ ExternalProject_Add(libcharsetdetect
 	CMAKE_COMMAND cmake
 	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
 	# INSTALL_COMMAND ""
-	BUILD_IN_SOURCE 0
 	BUILD_ALWAYS 0
 	)
 
@@ -31,7 +48,6 @@ ExternalProject_Add(liblua
 	CMAKE_COMMAND cmake
 	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
 	# INSTALL_COMMAND ""
-	BUILD_IN_SOURCE 0
 	BUILD_ALWAYS 0
 	)
 
@@ -42,11 +58,11 @@ ExternalProject_Add(liblua
 
 ## oolua的构建
 if (APPLE)
-	set(OOLUA_BUILD_COMMAND "mac")
+	set(OOLUA_BUILD_COMMAND make "mac")
 elseif (UNIX)
-	set(OOLUA_BUILD_COMMAND "linux")
+	set(OOLUA_BUILD_COMMAND make "linux")
 elseif (WIN32)
-	set(OOLUA_BUILD_COMMAND "win32")
+	set(OOLUA_BUILD_COMMAND "vs2013x86_build.bat")
 endif()
 
 ExternalProject_Add(liboolua
@@ -55,22 +71,22 @@ ExternalProject_Add(liboolua
 	GIT_REPOSITORY https://github.com/elite-lang/oolua
 	SOURCE_DIR third_party/oolua/
 	CONFIGURE_COMMAND ""
-	BUILD_COMMAND make ${OOLUA_BUILD_COMMAND}
+	BUILD_COMMAND ${OOLUA_BUILD_COMMAND}
 	BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
 	INSTALL_COMMAND ""
 	INSTALL_DIR ${third_party_install_path}
 	)
 
 if (UNIX)
-	set(COPY_OOLUA_LIB_COMMAND "cp-unix")
+	set(COPY_OOLUA_LIB_COMMAND make "cp-unix")
 elseif(WIN32)
-	set(COPY_OOLUA_LIB_COMMAND "cp-win32")
+	set(COPY_OOLUA_LIB_COMMAND "cp_win32.bat")
 endif()
 
 ## 在完成编译后，复制库
 add_custom_command(OUTPUT copy-liboolua
   DEPENDS liboolua
-  COMMAND make ${COPY_OOLUA_LIB_COMMAND}
+  COMMAND  ${COPY_OOLUA_LIB_COMMAND}
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
   COMMENT "comment"
   ) 
@@ -86,7 +102,6 @@ ExternalProject_Add(libdyncall
 	CMAKE_COMMAND cmake
 	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
 	# INSTALL_COMMAND ""
-	BUILD_IN_SOURCE 0
 	BUILD_ALWAYS 0
 	)
 

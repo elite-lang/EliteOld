@@ -12,32 +12,32 @@
 using namespace OOLUA;
 
 static int include_meta_api(const char* filename) {
-
+	return 0;
 }
 
 // 这个接口最好做成可变参数的，而不是现在这种
 static int add_bnf_meta_api(const char* bnf) {
-
+	return 0;
 }
 
 static int add_bnf_file_meta_api(const char* filename) {
-
+	return 0;
 }
 
 static int load_default_bnf() {
-
+	return 0;
 }
 
 static int load_empty_bnf() {
-
+	return 0;
 }
 
 static int parse_file(const char* filename) {
-
+	return 0;
 }
 
 static int print_bnf() {
-
+	return 0;
 }
 
 Node* node_root;

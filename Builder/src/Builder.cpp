@@ -36,29 +36,30 @@ int Builder::BuildFile(std::string filename) {
 
 // 构建其中指定的路径
 int Builder::BuildPath(std::string filepath, bool isRecursive) {
-
+	return 0;
 }
 
 
 // 扫描SearchPath下的全部符号
 int Builder::PreBuildAll() {
-	
+	return 0;
 }
 
 
 // 添加源代码的搜索路径
 int Builder::AddSearchPath(std::string path) {
-
+	return 0;
 }
 
 
 // 添加库路径
 int Builder::AddLibPath(std::string path) {
-
+	return 0;
 }
 
 int Builder::SetBuildPath(std::string path) {
 	buildpath = path;
+	return 0;
 }
 
 
