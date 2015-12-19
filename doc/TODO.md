@@ -16,7 +16,6 @@
 文本解析转码库 libiconv1.14 libcharsetdetect
 LLVM3.6平台
 Lua5.2
-glibmm giomm
 flex bison
 
 # 目前需要进行的工作
@@ -28,6 +27,7 @@ flex bison
 
 2. 元脚本解析器的完善
 	添加更多的可用的元脚本命令，控制编译器编译过程，查看中间变量
+	希望添加完整的元脚本控制RedApple宏翻译功能
 
 3. 词法分析器的结构优化
 	词法分析器结构有些混乱，需要优化结构，整理代码

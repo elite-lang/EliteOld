@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:16:04
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-17 20:42:31
+* @Last Modified time: 2015-12-19 14:23:23
 */
 
 #include <stdlib.h>
@@ -19,6 +19,7 @@ public:
 	string elite_lex_path;
 	string elite_parser_path;
 	string elite_now_path;
+	string elite_tools_path;
 };
 
 
@@ -68,14 +69,30 @@ void PathGetter_Private::setPath() {
 	}
 	elite_lib_path = elite_home;
 	elite_cfg_path = elite_home;
+	elite_tools_path = elite_home;
 	elite_lib_path.append("/libs");
 	elite_cfg_path.append("/conf");
+
 	if (!FileUtils::test_dir(elite_lib_path)) {
 		printf("%s 目录找不到\n", elite_lib_path.c_str());
 		exit(1);
 	}
 	if (!FileUtils::test_dir(elite_cfg_path)) {
 		printf("%s 目录找不到\n", elite_cfg_path.c_str());
+		exit(1);
+	}
+
+#if defined(_WIN32)
+	elite_tools_path.append("/tools/windows_x64");
+#endif
+#if defined(__linux__)
+	elite_tools_path.append("/tools/linux_x64");
+#endif
+#if defined(__APPLE__) && defined(__MACH__)
+	elite_tools_path.append("/tools/darwin_x64");
+#endif
+	if (!FileUtils::test_dir(elite_tools_path)) {
+		printf("%s 目录找不到\n", elite_tools_path.c_str());
 		exit(1);
 	}
 
@@ -92,6 +109,7 @@ void PathGetter_Private::setPath() {
 		printf("%s 文件找不到\n", elite_parser_path.c_str());
 		exit(1);
 	}
+
 }
 
 bool PathGetter::testFile(const char* file) {
