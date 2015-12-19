@@ -9,7 +9,7 @@ if(UNIX)
 	include(cmake/ClangConf.cmake) # 使用clang编译
 elseif(WIN32)
 	include(cmake/MSVCConf.cmake) # 使用MSVC编译
-	set (LLVM_SDK_PATH D:\\workspace\\Windows\\LLVM)
+	#set (LLVM_SDK_PATH D:\\LLVM)
 	include(cmake/WindowsLLVM.cmake) # 寻找LLVM
 endif()
 
