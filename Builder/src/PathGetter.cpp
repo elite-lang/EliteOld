@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:16:04
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-19 14:23:23
+* @Last Modified time: 2015-12-19 15:12:11
 */
 
 #include <stdlib.h>
@@ -46,6 +46,10 @@ const char* PathGetter::getDefaultParserCfg() {
 
 const char* PathGetter::getNowPath() {
 	return getInstance()->elite_now_path.c_str();
+}
+
+const char* PathGetter::getEliteToolsPath() {
+	return getInstance()->elite_tools_path.c_str();
 }
 
 PathGetter_Private* PathGetter::getInstance() {

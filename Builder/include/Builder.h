@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 09:06:35
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-17 20:57:34
+* @Last Modified time: 2015-12-19 16:26:08
 */
 
 
@@ -24,6 +24,12 @@ public:
 	
 	// 构建其中指定的路径
 	int BuildPath(std::string filepath, bool isRecursive = false);
+
+	// 添加一个链接文件, 如果是bc的话, 会自动用llc编译成本地文件, 如果是.o则直接链接
+	int AddLinkFile(std::string filename);
+
+	// 添加一个链接路径
+	int AddLinkPath(std::string filepath);
 
 	// 设置构建路径
 	int SetBuildPath(std::string path);
@@ -51,7 +57,12 @@ protected:
 	Worker* worker = 0;
 	std::string buildpath;
 	static std::string fileReader(const char* path);
-	static char* make_default_name(const char* filename);
+	static std::string make_default_name(const char* filename);
+	static std::string get_file_name(const char* filename);
+
+	static int call_llc(std::string filein);
+	static int call_ld(std::string filein, std::string fileout);
+
 };
 
 

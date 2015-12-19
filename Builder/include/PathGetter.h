@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:08:05
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-07 11:29:44
+* @Last Modified time: 2015-12-19 15:11:29
 */
 
 #ifndef PATH_GETTER_H
@@ -18,6 +18,7 @@ public:
 	static const char* getEliteHome();
 	static const char* getEliteLibPath();
 	static const char* getEliteCfgPath();
+	static const char* getEliteToolsPath();
 	static const char* getDefaultLexCfg();
 	static const char* getDefaultParserCfg();
 	static const char* getNowPath();
