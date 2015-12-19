@@ -2,7 +2,7 @@ set(LLVM_TARGETS_TO_BUILD X86)
 set(LLVM_BUILD_RUNTIME OFF)
 set(LLVM_BUILD_TOOLS OFF)
 
-SET (CMAKE_PREFIX_PATH /usr/local/Cellar/llvm/3.6.2/share/llvm) # fix apple
+SET (CMAKE_PREFIX_PATH "${LLVM_SDK_PATH}\\share\\llvm\\cmake") # fix windows
 
 find_package(LLVM 3.6 REQUIRED CONFIG)
 message(STATUS "Found LLVM ${LLVM_PACKAGE_VERSION}")
