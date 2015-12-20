@@ -2,12 +2,13 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:16:04
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-19 15:12:11
+* @Last Modified time: 2015-12-20 12:02:27
 */
 
 #include <stdlib.h>
 #include "PathGetter.h"
 #include "FileUtils.h"
+#include "PathUtils.h"
  
 
 class PathGetter_Private {
@@ -76,6 +77,9 @@ void PathGetter_Private::setPath() {
 	elite_tools_path = elite_home;
 	elite_lib_path.append("/libs");
 	elite_cfg_path.append("/conf");
+	// 本地化
+	elite_lib_path = PathUtils::native(elite_lib_path);
+	elite_cfg_path = PathUtils::native(elite_cfg_path);
 
 	if (!FileUtils::test_dir(elite_lib_path)) {
 		printf("%s 目录找不到\n", elite_lib_path.c_str());
@@ -95,6 +99,9 @@ void PathGetter_Private::setPath() {
 #if defined(__APPLE__) && defined(__MACH__)
 	elite_tools_path.append("/tools/darwin_x64");
 #endif
+	// 本地化
+	elite_tools_path = PathUtils::native(elite_tools_path);
+
 	if (!FileUtils::test_dir(elite_tools_path)) {
 		printf("%s 目录找不到\n", elite_tools_path.c_str());
 		exit(1);
@@ -104,6 +111,9 @@ void PathGetter_Private::setPath() {
 	elite_parser_path = elite_cfg_path;
 	elite_lex_path.append("/lex.cfg");
 	elite_parser_path.append("/parser.cfg");
+	// 本地化
+	elite_lex_path = PathUtils::native(elite_lex_path);
+	elite_parser_path = PathUtils::native(elite_parser_path);
 	elite_now_path = FileUtils::get_current_path();
 	if (!FileUtils::test_file(elite_lex_path)) {
 		printf("%s 文件找不到\n", elite_lex_path.c_str());

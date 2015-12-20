@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-11 18:48:19
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 11:44:13
+* @Last Modified time: 2015-12-20 12:08:48
 */
 
 #include "FileUtils.h"
@@ -53,6 +53,7 @@ bool FileUtils::test_file(const std::string& path) {
 string FileUtils::get_current_path() {
 	llvm::SmallVector< char, 128 > result;
 	current_path(result);
+	result.append(1, (char)0);
 	return result.data();
 }
 
