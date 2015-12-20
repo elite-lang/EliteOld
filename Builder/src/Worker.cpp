@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-13 14:03:04
+* @Last Modified time: 2015-12-20 21:47:28
 */
 
 
@@ -36,8 +36,12 @@ void Worker::Run(const char* input, const char* output) {
 	node->print(0);
 	codegen->PreScan(node);
 	codegen->Make(node, output, "Main");
-	codegen->MakeMeta("meta.bc", "Meta");
 }
+
+void Worker::MetaGen(const char* output) {
+	codegen->MakeMeta(output, "Meta");
+}
+
 
 Worker* Worker::CreateDefault(const char* lex_cfg, const char* parser_cfg) {
 	Lex* l = new Lex();
