@@ -8,6 +8,8 @@ if(UNIX)
 	# include(cmake/UnixGlib.cmake) # 使用Pkg-Config寻找Glibmm 不再依赖Glibmm
 	include(cmake/ClangConf.cmake) # 使用clang编译
 elseif(WIN32)
+	set(LLVM_SDK_PATH "C:/program files(x86)/LLVM" CACHE PATH "PATH TO LLVM")
+	set(LLVM_VERSION 3.6 CACHE STRING "LLVM version to use default 3.6")
 	include(cmake/MSVCConf.cmake) # 使用MSVC编译
 	#set (LLVM_SDK_PATH D:\\LLVM)
 	include(cmake/WindowsLLVM.cmake) # 寻找LLVM
