@@ -1,14 +1,16 @@
-cmake_minimum_required(VERSION 2.8)
+﻿cmake_minimum_required(VERSION 2.8)
 project(Elite)
 
 SET (CMAKE_BUILD_TYPE Debug) # 默认构建Debug模式
-SET (CMAKE_PREFIX_PATH /usr/local/Cellar/llvm/3.6.2/share/llvm)
+
 if(UNIX)
 	include(cmake/UnixLLVM.cmake) # 使用LLVM的CMake自动寻找功能
 	# include(cmake/UnixGlib.cmake) # 使用Pkg-Config寻找Glibmm 不再依赖Glibmm
 	include(cmake/ClangConf.cmake) # 使用clang编译
 elseif(WIN32)
 	include(cmake/MSVCConf.cmake) # 使用MSVC编译
+	#set (LLVM_SDK_PATH D:\\LLVM)
+	include(cmake/WindowsLLVM.cmake) # 寻找LLVM
 endif()
 
 
@@ -42,8 +44,13 @@ add_subdirectory(Builder)
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 add_executable(elite ${source_files})
 
-target_link_libraries(elite builder meta red scanner lex oolua lua dl exiconv
-						${LLVM_LIBS})
+
+if(UNIX)
+	set (dl_lib_link dl)
+endif()
+
+target_link_libraries(elite builder meta red scanner lex oolua lua exiconv
+						${LLVM_LIBS} ${dl_lib_link})
 
 ## 下载第三方库
 include(cmake/ThirdPartyBuild.cmake)
