@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 10:35:46
+* @Last Modified time: 2015-12-20 12:02:36
 */
 
 #include "Builder.h"
@@ -13,6 +13,8 @@
 #include <fstream>
 #include <cstdlib>
 #include <streambuf>
+#include "PathUtils.h"
+
 using namespace std;
 
 // 构建一个文件
@@ -29,6 +31,8 @@ int Builder::BuildFile(std::string filename) {
 
 	string objname = program + ".o";
 	string data = fileReader(filename.c_str());
+	// 本地化
+	buildpath = PathUtils::native(buildpath);
 	printf("输入文件: %s \n输出文件: %s\n", filename.c_str(), buildpath.c_str());
 	worker->Run(data.c_str(), buildpath.c_str());
 
@@ -43,8 +47,8 @@ int Builder::BuildFile(std::string filename) {
 
 // 构建其中指定的路径
 int Builder::BuildPath(std::string filepath, bool isRecursive) {
-	
-	
+
+
 	return 0;
 }
 
