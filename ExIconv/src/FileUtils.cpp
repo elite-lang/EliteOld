@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-11 18:48:19
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 12:08:48
+* @Last Modified time: 2015-12-20 22:47:34
 */
 
 #include "FileUtils.h"
@@ -14,6 +14,11 @@
 using namespace std;
 using namespace llvm::sys;
 using namespace llvm::sys::fs;
+
+int FileUtils::create_directory(const std::string& path, bool IgnoreExisting) {
+	llvm::sys::fs::create_directory(path, IgnoreExisting);
+	return 0;
+}
 
 bool FileUtils::isNeedUpdate(const std::string& cfg_path, const std::string& save_path) {
 	file_status save_file_status;

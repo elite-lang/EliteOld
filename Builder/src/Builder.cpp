@@ -2,12 +2,13 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 22:42:15
+* @Last Modified time: 2015-12-20 22:48:48
 */
 
 #include "Builder.h"
 #include "Worker.h"
 #include "PathGetter.h"
+#include "FileUtils.h"
 #include <cstring>
 #include <iostream>
 #include <fstream>
@@ -92,6 +93,7 @@ int Builder::AddLibPath(std::string path) {
 
 int Builder::SetBuildPath(std::string path) {
 	buildpath = path;
+	FileUtils::create_directory(path);
 	return 0;
 }
 

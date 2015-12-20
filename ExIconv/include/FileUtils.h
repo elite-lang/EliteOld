@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-11 18:42:32
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 11:43:19
+* @Last Modified time: 2015-12-20 22:46:32
 */
 
 
@@ -27,6 +27,7 @@ public:
 class FileUtils
 {
 public:
+	static int create_directory(const std::string& path, bool IgnoreExisting=true);
 	static bool isNeedUpdate(const std::string& cfg_path, const std::string& save_path);
 	static bool test_dir(const std::string& path);
 	static bool test_file(const std::string& path);
