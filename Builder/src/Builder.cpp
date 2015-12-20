@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-19 16:28:53
+* @Last Modified time: 2015-12-20 10:35:46
 */
 
 #include "Builder.h"
@@ -43,6 +43,8 @@ int Builder::BuildFile(std::string filename) {
 
 // 构建其中指定的路径
 int Builder::BuildPath(std::string filepath, bool isRecursive) {
+	
+	
 	return 0;
 }
 

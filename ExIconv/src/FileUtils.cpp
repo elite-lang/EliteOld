@@ -2,13 +2,14 @@
 * @Author: sxf
 * @Date:   2015-12-11 18:48:19
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-17 20:50:33
+* @Last Modified time: 2015-12-20 11:44:13
 */
 
 #include "FileUtils.h"
 #include <iostream>
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/TimeValue.h>
+#include <llvm/Support/Path.h>
 #include <llvm/ADT/SmallVector.h>
 using namespace std;
 using namespace llvm::sys;
@@ -53,4 +54,26 @@ string FileUtils::get_current_path() {
 	llvm::SmallVector< char, 128 > result;
 	current_path(result);
 	return result.data();
+}
+
+int FileUtils::dir_traversal(const std::string& path, IFileTraversal& ifile) {
+	std::error_code ec;
+	directory_iterator di(path, ec);
+	directory_iterator end;
+	while (di != end) {
+		auto entry = *di;
+		if (is_regular_file(entry.path())) {
+			ifile.Work(
+				llvm::sys::path::parent_path(entry.path()).str(),
+				llvm::sys::path::filename(entry.path()).str(),
+				llvm::sys::path::extension(entry.path()).str()
+				);
+		}
+		di.increment(ec);
+	}
+	return 0;
+}
+
+int FileUtils::dir_recursive_traversal(const std::string& path, IFileTraversal& ifile) {
+	return 0;
 }
