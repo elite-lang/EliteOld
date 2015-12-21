@@ -5,10 +5,10 @@ git:
 
 install:
   - sudo apt-get update
-  - sudo apt-get install -y llvm-3.6-dev libedit-dev flex bison 
+  - sudo apt-get install -y llvm-3.6-dev libedit-dev flex bison
   - sudo sh ./scripts/fix_ubuntu_llvm.sh
   - sudo sh ./scripts/install_gtest.sh
 
 script:
   - make test
-
+  - python ./EliteTest/full_test/run_test.py
