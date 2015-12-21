@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 13:52:11
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 21:37:00
+* @Last Modified time: 2015-12-21 19:31:06
 */
 #ifndef WORKER_H
 #define WORKER_H
@@ -26,6 +26,7 @@ public:
 	Parser* getParser() { return parser; }
 	ScriptRunner* getScriptRunner() { return script_runner; }
 	CodeGen* getCodegen() { return codegen; }
+	void setDebugFilePath(const char* path);
 	
 	Worker();
 	~Worker();

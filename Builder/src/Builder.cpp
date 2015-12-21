@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 22:48:48
+* @Last Modified time: 2015-12-21 19:31:23
 */
 
 #include "Builder.h"
@@ -97,6 +97,9 @@ int Builder::SetBuildPath(std::string path) {
 	return 0;
 }
 
+void setDebugFilePath(const char* path) {
+	this->worker->setDebugFilePath(path);
+}
 
 void Builder::setWorker(Worker* worker) {
 	this->worker = worker;
