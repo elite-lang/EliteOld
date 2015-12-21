@@ -51,7 +51,7 @@ if(UNIX)
 	set (dl_lib_link dl)
 endif()
 
-target_link_libraries(elite builder meta red scanner lex oolua lua exiconv
+target_link_libraries(elite builder meta red scanner lex oolua_d lua exiconv
 						${LLVM_LIBS} ${dl_lib_link})
 
 ## 下载第三方库
