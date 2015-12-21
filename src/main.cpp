@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 22:36:39
+* @Last Modified time: 2015-12-21 19:53:33
 */
 
 #include <iostream>
@@ -90,6 +90,8 @@ int main(int argc, const char *argv[])
 			defalut_lex.c_str(), defalut_parser.c_str());
 		Builder* builder = Builder::Create(worker);
 		builder->SetBuildPath(dir);
+		if (is_show_time == 1)
+			builder->setDebugFilePath(dir.c_str());
 		if (only_one_file == 1) {
 			builder->BuildFile(onlyfile);
 		} else {

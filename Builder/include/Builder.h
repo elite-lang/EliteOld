@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 09:06:35
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-19 16:26:08
+* @Last Modified time: 2015-12-21 19:30:12
 */
 
 
@@ -42,6 +42,9 @@ public:
 
 	// 添加库路径
 	int AddLibPath(std::string path);
+
+	// 设置Debug过程文件生成路径
+	void setDebugFilePath(const char* path);
 
 	// 设置工作器
 	void setWorker(Worker* worker);
