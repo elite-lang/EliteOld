@@ -3,7 +3,7 @@
 # @Author: sxf
 # @Date:   2015-12-20 18:37:22
 # @Last Modified by:   sxf
-# @Last Modified time: 2015-12-21 15:27:17
+# @Last Modified time: 2015-12-21 20:08:19
 
 import os, sys
 import commands
@@ -33,6 +33,7 @@ class TestRunner:
 		if status != 0:  
 			print '\033[1;31m'
 			print '编译失败:', path
+			print output
 			print '\033[0m'
 			self.compile_error.append(path)
 		return status
@@ -43,6 +44,7 @@ class TestRunner:
 			print '\033[1;31m'
 			print '运行失败:', filepath
 			print 'status:', status
+			print output
 			print '\033[0m'
 			self.run_error.append(filepath)
 			return status
@@ -50,7 +52,10 @@ class TestRunner:
 		with open(output_file, 'rU') as f:
 			read_data = f.read() 
 		if read_data != output:
+			print '\033[1;31m'
 			print '执行结果错误：', filepath
+			print output
+			print '\033[0m'
 			self.output_error.append(filepath)
 			return 1
 		return 0
