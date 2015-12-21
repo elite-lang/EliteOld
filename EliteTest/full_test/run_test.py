@@ -3,7 +3,7 @@
 # @Author: sxf
 # @Date:   2015-12-20 18:37:22
 # @Last Modified by:   sxf
-# @Last Modified time: 2015-12-21 20:08:19
+# @Last Modified time: 2015-12-21 20:15:31
 
 import os, sys
 import commands
@@ -29,7 +29,9 @@ class TestRunner:
 
 	def compile_path(self, path):
 		cmd = self.bin_path + ' -i ' + path + '/test.elite -d ' + path + '/build/'
+		print cmd
 		status, output = commands.getstatusoutput(cmd)
+		print output
 		if status != 0:  
 			print '\033[1;31m'
 			print '编译失败:', path
