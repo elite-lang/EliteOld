@@ -21,9 +21,10 @@ void print(int k) {
 }
 
 
-void main() {
+int main() {
 	printf("hello world\n");
 	hello(1,2);
 	print(9);
+	return 0;
 }
 
