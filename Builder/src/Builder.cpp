@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-21 19:52:40
+* @Last Modified time: 2015-12-22 11:19:18
 */
 
 #include "Builder.h"
@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <streambuf>
 #include "PathUtils.h"
+#include "DebugMsg.h"
 
 using namespace std;
 
@@ -98,7 +99,7 @@ int Builder::SetBuildPath(std::string path) {
 }
 
 void Builder::setDebugFilePath(const char* path) {
-	this->worker->setDebugFilePath(path);
+	DebugMsg::setDebugFilePath(path);
 }
 
 void Builder::setWorker(Worker* worker) {

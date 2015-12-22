@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-21 19:32:07
+* @Last Modified time: 2015-12-22 11:18:24
 */
 
 
@@ -64,10 +64,6 @@ Worker* Worker::Create(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c) 
 	Worker* k = new Worker();
 	k->Init(l, p, s, c);
 	return k;
-}
-
-void Worker::setDebugFilePath(const char* path) {
-	parser->setDebugFilePath(path);
 }
 
 Worker::Worker() {
