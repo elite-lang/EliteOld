@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-15 09:43:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-17 15:28:55
+* @Last Modified time: 2015-12-22 08:19:33
 */
 #ifndef ESTRING_H
 #define ESTRING_H
@@ -15,6 +15,9 @@
 
 typedef uint16_t echar_t;
 
+/**
+ * @brief 内部使用utf16LE编码的字符串类, 能够实现编码的字符识别和转换
+ */
 class estring
 {
 public:

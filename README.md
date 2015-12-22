@@ -1,4 +1,7 @@
 [![Travis](https://travis-ci.org/elite-lang/Elite.svg?branch=master)](https://travis-ci.org/elite-lang/Elite)
+
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/elite-lang?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
+
 # Elite - 精锐编译器
 
 Elite是一款脚本化驱动的编译器，一般的编程语言，语法是固定的，只能使用有限的表达方式，而Elite的语法并非固定，而是由脚本配置而成的，如果需要，随时都可以自由更改。

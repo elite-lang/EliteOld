@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 09:17:30
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-11-12 12:05:50
+* @Last Modified time: 2015-12-22 08:23:22
 */
 
 #ifndef PATH_SET_H
@@ -12,6 +12,10 @@
 #include <string>
 
 class PathSet_private;
+
+/**
+ * @brief 搜索路径集合
+ */
 class PathSet
 {
 public:

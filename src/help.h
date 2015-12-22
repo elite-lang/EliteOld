@@ -2,12 +2,14 @@
 * @Author: sxf
 * @Date:   2015-12-07 10:43:17
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-07 11:01:31
+* @Last Modified time: 2015-12-22 08:37:56
 */
 
+#include "elite-config.h"
+
 const char* help_message = 
-	"欢迎使用精锐编译器1.0版\r\n"
-	"Welcome to use Elite Compiler V1.0\r\n\r\n"
+	"欢迎使用精锐编译器" ELITE_RELEASE "版\r\n"
+	"Welcome to use " ELITE_RELEASE "\r\n\r\n"
 	"----------------------------------------------------------\r\n"
 	"-h/--help\t\t打印帮助信息 / Print help message\r\n"
 	"-s/--src <path>\t\t指定源程序路径 / Set the source file path\r\n"
