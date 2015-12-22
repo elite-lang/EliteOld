@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-21 20:39:08
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 15:32:10
+* @Last Modified time: 2015-12-22 15:54:20
 */
 
 #include "DebugMsg.h"
@@ -17,8 +17,9 @@ public:
 	string dbg_file_path;
 	bool is_debug_mode;
 
-	fstream parser_dbg_fs;
 	fstream lex_dbg_fs;
+	fstream parser_dbg_fs;
+	fstream red_dbg_fs;
 };
 
 void DebugMsg::setDebugFilePath(const char* path) {
@@ -43,6 +44,24 @@ bool DebugMsg::isDebug() {
 }
 
 
+
+/**
+ * @brief 获取词法分析器的debug文件输出流
+ */
+std::ostream& DebugMsg::lex_dbg() {
+	auto& fs = getInstance()->lex_dbg_fs;
+	if(!fs.is_open()) {
+		fs.open(getInstance()->dbg_file_path+"/lex_dbg.log", std::ios::out);
+		return fs;
+	}
+	return fs;
+}
+
+void DebugMsg::lex_close() {
+	auto& fs = getInstance()->lex_dbg_fs;
+	fs.close();
+}
+
 /**
  * @brief 获取解析器的debug输出文件流
  */
@@ -61,21 +80,21 @@ void DebugMsg::parser_close() {
 
 
 /**
- * @brief 获取词法分析器的debug文件输出流
+ * @brief 获取解析器的debug输出文件流
  */
-std::ostream& DebugMsg::lex_dbg() {
-	auto& fs = getInstance()->lex_dbg_fs;
+std::ostream& DebugMsg::DebugMsg::red_dbg() {
+	auto& fs = getInstance()->red_dbg_fs;
 	if(!fs.is_open()) {
-		fs.open(getInstance()->dbg_file_path+"/lex_dbg.log", std::ios::out);
-		return fs;
+		fs.open(getInstance()->dbg_file_path+"/red_dbg.log", std::ios::out);
 	}
 	return fs;
 }
 
-void DebugMsg::lex_close() {
-	auto& fs = getInstance()->lex_dbg_fs;
+void DebugMsg::red_close() {
+	auto& fs = getInstance()->red_dbg_fs;
 	fs.close();
 }
+
 
 
 

@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-21 20:35:05
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 12:33:15
+* @Last Modified time: 2015-12-22 15:54:44
 */
 
 
@@ -33,16 +33,22 @@ public:
     static bool isDebug();
 
     /**
+     * @brief 获取词法分析器的debug文件输出流
+     */
+    static std::ostream& lex_dbg();
+    static void lex_close();
+
+    /**
      * @brief 获取解析器的debug输出文件流
      */
     static std::ostream& parser_dbg();
     static void parser_close();
 
     /**
-     * @brief 获取词法分析器的debug文件输出流
+     * @brief 获取解析器的debug输出文件流
      */
-    static std::ostream& lex_dbg();
-    static void lex_close();
+    static std::ostream& red_dbg();
+    static void red_close();
 
 	static DebugMsg_Private* getInstance();
 private:
