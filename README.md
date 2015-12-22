@@ -1,7 +1,5 @@
 [![Travis](https://travis-ci.org/elite-lang/Elite.svg?branch=master)](https://travis-ci.org/elite-lang/Elite)
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/elite-lang?utm_source=share-link&utm_medium=link&utm_campaign=share-link)
-
 # Elite - 精锐编译器
 
 [![Join the chat at https://gitter.im/elite-lang/Elite](https://badges.gitter.im/elite-lang/Elite.svg)](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

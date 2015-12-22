@@ -9,7 +9,12 @@ install:
   - sudo sh ./scripts/fix_ubuntu_llvm.sh
   - sudo sh ./scripts/install_gtest.sh
   - sudo sh ./scripts/chmod_runnable.sh
+  - pip install --user codecov
 
 script:
   - make test
   - python ./EliteTest/full_test/run_test.py
+
+after_success:
+  - codecov
+

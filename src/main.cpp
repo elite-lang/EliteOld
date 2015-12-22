@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-21 19:53:33
+* @Last Modified time: 2015-12-22 12:38:29
 */
 
 #include <iostream>
@@ -38,8 +38,9 @@ int main(int argc, const char *argv[])
 	int close_link = 0;
 	if (argc <= 1) printf(help_message);
 	else {
-		int i = 1;
-		while (i < argc) {
+		int i = 0;
+		while (i < argc-1) {
+			++i;
 			string opt(argv[i]);
 			if (opt == "-h" || opt == "--help") {
 				printf(help_message);
@@ -80,7 +81,6 @@ int main(int argc, const char *argv[])
 				string lex = safe_getNext(argc, argv, i);
 				defalut_lex = nowdir + lex;
 			}
-			++i;
 		}
 		if (only_one_file == -1)
 			only_one_file = 0;

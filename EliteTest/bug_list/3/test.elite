@@ -1,6 +1,6 @@
 
 
-void main() {
+int main() {
 	pair a = new pair();
 	pair b = new pair();
 	a.x = 1; a.y = 0;
@@ -10,6 +10,7 @@ void main() {
 	printf("b.x = %d  ", b.x);
 	printf("b.y = %d\n", b.y);
 	printf("ans = %d\n", dot(a,b));
+	return 0;
 }
 
 
