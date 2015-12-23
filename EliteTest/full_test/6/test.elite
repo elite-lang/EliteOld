@@ -3,6 +3,7 @@ void print(int k) {
 	printf("hello-%d\n",k);
 }
 
-void main() {
+int main() {
 	FunctionCall("print", 5);
+	return 0;
 }
