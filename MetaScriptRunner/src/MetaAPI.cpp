@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-07 15:46:24
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-13 11:24:49
+* @Last Modified time: 2015-12-23 09:14:01
 */
 
 #include "oolua/oolua.h"
@@ -48,6 +48,10 @@ static void setroot_meta_api(Node* p) {
 
 static Node* newnode_meta_api() {
 	return Node::Create();
+}
+
+static Node* newnull_meta_api() {
+	return NULL;
 }
 
 static Node* newparent_meta_api(Node* n) {
@@ -120,6 +124,10 @@ static int l_newnode_meta_api(lua_State* vm) {
 	OOLUA_C_FUNCTION(light_return< Node* >, newnode_meta_api)
 }
 
+static int l_newnull_meta_api(lua_State* vm) {
+	OOLUA_C_FUNCTION(light_return< Node* >, newnull_meta_api)
+}
+
 static int l_newparent_meta_api(lua_State* vm) {
 	OOLUA_C_FUNCTION(light_return< Node* >, newparent_meta_api, light_p< Node* >)
 }
@@ -173,6 +181,7 @@ extern void InitMetaAPI(lua_State* L) {
 	OOLUA::set_global(L, "setRoot", l_setroot_meta_api);
 	OOLUA::set_global(L, "makeList", l_make_list_meta_api);
 	OOLUA::set_global(L, "newNode", l_newnode_meta_api);
+	OOLUA::set_global(L, "newNull", l_newnull_meta_api);
 	OOLUA::set_global(L, "newParent", l_newparent_meta_api);
 	OOLUA::set_global(L, "newStringNode", l_new_stringnode_meta_api);
 	OOLUA::set_global(L, "newIDNode", l_new_idnode_meta_api);

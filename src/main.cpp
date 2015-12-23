@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 12:38:29
+* @Last Modified time: 2015-12-22 20:01:28
 */
 
 #include <iostream>
@@ -11,6 +11,8 @@
 #include "PathGetter.h"
 #include <string>
 #include "help.h"
+#include "PathUtils.h"
+
 using namespace std;
 
 const char* safe_getNext(int argc, const char *argv[], int& i) {
@@ -74,18 +76,18 @@ int main(int argc, const char *argv[])
 				only_one_file = 1; continue;
 			}
 			if (opt == "-p" || opt == "--parser") {
-				string parser = safe_getNext(argc, argv, i);
-				defalut_parser = nowdir + parser;	
+				defalut_parser = safe_getNext(argc, argv, i);
 			}
 			if (opt == "-l" || opt == "--lex") {
-				string lex = safe_getNext(argc, argv, i);
-				defalut_lex = nowdir + lex;
+				defalut_lex = safe_getNext(argc, argv, i);
 			}
 		}
 		if (only_one_file == -1)
 			only_one_file = 0;
 
 		// 创建Worker和Builder
+		defalut_lex    = PathUtils::native(defalut_lex);
+		defalut_parser = PathUtils::native(defalut_parser);
 		Worker* worker = Worker::CreateDefault(
 			defalut_lex.c_str(), defalut_parser.c_str());
 		Builder* builder = Builder::Create(worker);
