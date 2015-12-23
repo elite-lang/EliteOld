@@ -65,7 +65,7 @@ void DebugMsg::lex_close() {
 /**
  * @brief 获取解析器的debug输出文件流
  */
-std::ostream& DebugMsg::DebugMsg::parser_dbg() {
+std::ostream& DebugMsg::parser_dbg() {
 	auto& fs = getInstance()->parser_dbg_fs;
 	if(!fs.is_open()) {
 		fs.open(getInstance()->dbg_file_path+"/parser_dbg.log", std::ios::out);
@@ -82,7 +82,7 @@ void DebugMsg::parser_close() {
 /**
  * @brief 获取解析器的debug输出文件流
  */
-std::ostream& DebugMsg::DebugMsg::red_dbg() {
+std::ostream& DebugMsg::red_dbg() {
 	auto& fs = getInstance()->red_dbg_fs;
 	if(!fs.is_open()) {
 		fs.open(getInstance()->dbg_file_path+"/red_dbg.log", std::ios::out);
