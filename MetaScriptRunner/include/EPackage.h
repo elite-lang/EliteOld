@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-24 15:55:11
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-24 16:30:23
+* @Last Modified time: 2015-12-24 17:20:18
 */
 
 #ifndef E_PACKAGE_H
@@ -23,9 +23,10 @@ public:
 	const string& getVersion();
 
 	void Load();
-	cosnt string& getProp(const string& name);
+	const string& getProp(const string& name);
 private:
 	map<string, string> props;
+	string str_null;
 };
 
 
