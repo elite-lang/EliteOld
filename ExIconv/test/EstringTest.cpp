@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-16 12:02:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-17 15:41:57
+* @Last Modified time: 2015-12-24 22:32:10
 */
 
 #include <gtest/gtest.h>
@@ -51,4 +51,23 @@ __ESTRING_TEST__(Select2)
 	EXPECT_EQ(str[0], '0');
 	EXPECT_EQ(str[1], '-');
 	EXPECT_EQ(str[2], '9');
+}
+
+__ESTRING_TEST__(Enter)
+{
+	estring str("hello\n您好, 这是一段中英混排\n"
+		"这里稍稍有点问题"
+		"so, I\n want to have a try."
+		);
+	EXPECT_EQ(str[5], '\n');
+	EXPECT_EQ(str[18], '\n');
+	int i = 19;
+	while(i < str.length()) {
+        if (str[i] == '\n') break;
+        ++i;
+    }
+    estring substr = str.substr(19, i-19); // 注意, substr的第二个参数需要的是长度, 而不是到哪里
+    printf("%s\n",substr.to_utf8().c_str());
+    estring ans = "这里稍稍有点问题so, I";
+    EXPECT_EQ(substr==ans, true);
 }

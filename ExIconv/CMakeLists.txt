@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(ExIconv)
 
 if(NOT BUILD_ALL)
-  
+include(../cmake/UnixLLVM.cmake)
 SET (CMAKE_CXX_COMPILER_ENV_VAR "clang++")
 SET (CMAKE_CXX_FLAGS "-std=c++11")
 SET (CMAKE_CXX_FLAGS_DEBUG   "-g")
