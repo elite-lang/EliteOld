@@ -9,3 +9,7 @@
 [submodule "RedApple"]
 	path = RedApple
 	url = https://github.com/elite-lang/RedApple.git
+
+[submodule "tools"]
+	path = tools
+	url = https://github.com/elite-lang/tools.git

@@ -2,14 +2,14 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:16:04
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 12:02:27
+* @Last Modified time: 2015-12-24 20:18:52
 */
 
 #include <stdlib.h>
 #include "PathGetter.h"
 #include "FileUtils.h"
 #include "PathUtils.h"
- 
+#include "elite_tools.h"
 
 class PathGetter_Private {
 public:
@@ -90,15 +90,7 @@ void PathGetter_Private::setPath() {
 		exit(1);
 	}
 
-#if defined(_WIN32)
-	elite_tools_path.append("/tools/windows_x64");
-#endif
-#if defined(__linux__)
-	elite_tools_path.append("/tools/linux_x64");
-#endif
-#if defined(__APPLE__) && defined(__MACH__)
-	elite_tools_path.append("/tools/darwin_x64");
-#endif
+	elite_tools_path.append(ELITE_TOOLS_PATH);
 	// 本地化
 	elite_tools_path = PathUtils::native(elite_tools_path);
 
