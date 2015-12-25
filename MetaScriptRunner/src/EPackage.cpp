@@ -2,12 +2,14 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:15:29
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 12:51:07
+* @Last Modified time: 2015-12-25 12:56:14
 */
 
 #include "EPackage.h"
 #include "cJSON.h"
 #include "FileUtils.h"
+#include <iostream>
+using namespace std;
 
 class FileTraversal : public IFileTraversal {
 public:
