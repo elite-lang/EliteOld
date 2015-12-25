@@ -1,4 +1,5 @@
 [![Travis](https://travis-ci.org/elite-lang/Elite.svg?branch=master)](https://travis-ci.org/elite-lang/Elite)
+[![Build status](https://ci.appveyor.com/api/projects/status/vrg2p8onq4xrdep6?svg=true)](https://ci.appveyor.com/project/sunxfancy/elite)
 
 # Elite - 精锐编译器
 
