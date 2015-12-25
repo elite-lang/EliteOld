@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:16:04
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-24 20:18:52
+* @Last Modified time: 2015-12-25 10:24:30
 */
 
 #include <stdlib.h>
@@ -21,6 +21,7 @@ public:
 	string elite_parser_path;
 	string elite_now_path;
 	string elite_tools_path;
+	string elite_packages_path;
 };
 
 
@@ -53,6 +54,11 @@ const char* PathGetter::getEliteToolsPath() {
 	return getInstance()->elite_tools_path.c_str();
 }
 
+const char* PathGetter::getElitePackagesPath() {
+	return getInstance()->elite_packages_path.c_str();
+}
+
+
 PathGetter_Private* PathGetter::getInstance() {
 	if (instance == NULL) {
 		instance = new PathGetter_Private();
@@ -77,6 +83,7 @@ void PathGetter_Private::setPath() {
 	elite_tools_path = elite_home;
 	elite_lib_path.append("/libs");
 	elite_cfg_path.append("/conf");
+	elite_packages_path.append("/packages");
 	// 本地化
 	elite_lib_path = PathUtils::native(elite_lib_path);
 	elite_cfg_path = PathUtils::native(elite_cfg_path);

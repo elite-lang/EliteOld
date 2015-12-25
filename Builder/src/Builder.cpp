@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 11:19:18
+* @Last Modified time: 2015-12-25 10:25:44
 */
 
 #include "Builder.h"
@@ -115,7 +115,10 @@ Builder* Builder::Create(Worker* worker) {
 Builder::Builder(Worker* worker) {
 	if (worker == 0) 
 		setWorker(Worker::CreateDefault(
-			PathGetter::getDefaultLexCfg(), PathGetter::getDefaultParserCfg()));
+			PathGetter::getDefaultLexCfg(), 
+			PathGetter::getDefaultParserCfg(),
+			PathGetter::getElitePackagesPath()
+		));
 	else 
 		setWorker(worker);
 }

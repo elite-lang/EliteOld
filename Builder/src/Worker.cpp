@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 10:12:44
+* @Last Modified time: 2015-12-25 10:26:37
 */
 
 
@@ -47,8 +47,8 @@ Worker* Worker::CreateDefault(const char* lex_cfg,
 	const char* parser_cfg, const char* package_path) {
 	Lex* l = new Lex();
 	Parser* p = Parser::NewLRParser();
-	ScriptRunner* s = MetaScriptRunner::Create();
-	CodeGen* c = RedCodeGen::Create();
+	MetaScriptRunner* s = MetaScriptRunner::Create();
+	RedCodeGen* c = RedCodeGen::Create();
 	
 	// 配置联系
     p->setLex(l);
