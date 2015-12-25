@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-24 15:55:11
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 15:25:11
+* @Last Modified time: 2015-12-25 17:03:57
 */
 
 #ifndef E_PACKAGE_H
@@ -12,6 +12,8 @@
 #include <map>
 
 using namespace std;
+
+class MetaScriptRunner;
 
 class EPackage
 {
@@ -34,6 +36,8 @@ public:
 	 */
 	bool isDefaultLoad();
 
+	bool isLoaded();
+
 	/**
 	 * @brief 立即加载整个插件
 	 * @details 插件的加载方式是, 搜索当前插件路径下的所有可以识别的文件, 进行载入, 但不会递归到下层文件夹
@@ -47,12 +51,13 @@ public:
 	 * @return 对应的值
 	 */
 	const string& getProp(const string& name);
+
+	static string str_null;
+	
 private:
 	map<string, string> props;
 	string base_path;
 	MetaScriptRunner* msr;
-
-	static string str_null;
 
 	/**
 	 * 加载Json配置数据项

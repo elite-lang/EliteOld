@@ -2,13 +2,14 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:15:29
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 15:26:44
+* @Last Modified time: 2015-12-25 17:03:40
 */
 
 #include "EPackage.h"
 #include "cJSON.h"
 #include "FileUtils.h"
 #include "PathUtils.h"
+#include "MetaScriptRunner.h"
 #include <iostream>
 using namespace std;
 
@@ -55,6 +56,9 @@ const string& EPackage::getVersion() {
 
 bool EPackage::isDefaultLoad() {
 	return getProp("default_load") != "true";
+}
+bool EPackage::isLoaded() {
+	return getProp("package_loaded") != "true";
 }
 
 const string& EPackage::getProp(const string& name) {
