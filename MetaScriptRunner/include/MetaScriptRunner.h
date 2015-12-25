@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-14 18:35:29
+* @Last Modified time: 2015-12-25 10:09:51
 */
 
 
@@ -16,6 +16,7 @@ using namespace std;
 namespace OOLUA {
 	class Script;
 }
+class PackageLoader;
 
 /**
  * @brief 元脚本解析器类
@@ -84,9 +85,12 @@ public:
 	 */
 	bool run_chunk (string const &chunk);
 
+	void setUpLoader(const string& path);
+
 protected:
 	OOLUA::Script* vm;
 	Node* root;
+	PackageLoader* loader;
 
 	MetaScriptRunner();
 	~MetaScriptRunner();
