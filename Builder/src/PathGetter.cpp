@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 11:16:04
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 10:24:30
+* @Last Modified time: 2015-12-25 11:16:36
 */
 
 #include <stdlib.h>
@@ -81,12 +81,14 @@ void PathGetter_Private::setPath() {
 	elite_lib_path = elite_home;
 	elite_cfg_path = elite_home;
 	elite_tools_path = elite_home;
+	elite_packages_path = elite_home;
 	elite_lib_path.append("/libs");
 	elite_cfg_path.append("/conf");
 	elite_packages_path.append("/packages");
 	// 本地化
 	elite_lib_path = PathUtils::native(elite_lib_path);
 	elite_cfg_path = PathUtils::native(elite_cfg_path);
+	elite_packages_path = PathUtils::native(elite_packages_path);
 
 	if (!FileUtils::test_dir(elite_lib_path)) {
 		printf("%s 目录找不到\n", elite_lib_path.c_str());
@@ -94,6 +96,10 @@ void PathGetter_Private::setPath() {
 	}
 	if (!FileUtils::test_dir(elite_cfg_path)) {
 		printf("%s 目录找不到\n", elite_cfg_path.c_str());
+		exit(1);
+	}
+	if (!FileUtils::test_dir(elite_packages_path)) {
+		printf("%s 目录找不到\n", elite_packages_path.c_str());
 		exit(1);
 	}
 

@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-11 18:48:19
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-20 22:47:34
+* @Last Modified time: 2015-12-25 11:29:53
 */
 
 #include "FileUtils.h"
@@ -62,13 +62,18 @@ string FileUtils::get_current_path() {
 	return result.data();
 }
 
-int FileUtils::dir_traversal(const std::string& path, IFileTraversal& ifile) {
+int FileUtils::dir_traversal(const std::string& path, IFileTraversal& ifile, traversal_type t) {
 	std::error_code ec;
 	directory_iterator di(path, ec);
 	directory_iterator end;
 	while (di != end) {
 		auto entry = *di;
-		if (is_regular_file(entry.path())) {
+		bool pd = true;
+		if (t == only_file)
+			pd = is_regular_file(entry.path());
+		if (t == only_dir)
+			pd = is_directory(entry.path());
+		if (pd) {
 			ifile.Work(
 				llvm::sys::path::parent_path(entry.path()).str(),
 				llvm::sys::path::filename(entry.path()).str(),
@@ -80,6 +85,6 @@ int FileUtils::dir_traversal(const std::string& path, IFileTraversal& ifile) {
 	return 0;
 }
 
-int FileUtils::dir_recursive_traversal(const std::string& path, IFileTraversal& ifile) {
+int FileUtils::dir_recursive_traversal(const std::string& path, IFileTraversal& ifile, traversal_type t) {
 	return 0;
 }
