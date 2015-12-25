@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 10:09:51
+* @Last Modified time: 2015-12-25 18:46:07
 */
 
 
@@ -57,7 +57,7 @@ public:
 	 * @brief 执行一个lua脚本
 	 * 
 	 * @param filename 脚本的完整或相对路径
-	 * @return 成功为false, 异常为true
+	 * @return 成功为true, 异常为false
 	 */
 	bool run_file (string const &filename);
 
@@ -65,7 +65,7 @@ public:
 	 * @brief 加载一个脚本, 但暂不执行 (需要pcall才执行)
 	 * 
 	 * @param filename 脚本的完整或相对路径
-	 * @return 成功为false, 异常为true
+	 * @return 成功为true, 异常为false
 	 */
 	bool load_file (string const &filename);
 
@@ -73,7 +73,7 @@ public:
 	 * @brief 加载一段内存中的lua脚本 (不执行)
 	 * 
 	 * @param chunk 脚本字符串
-	 * @return 成功为false, 异常为true
+	 * @return 成功为true, 异常为false
 	 */
 	bool load_chunk (string const &chunk);
 
@@ -81,7 +81,7 @@ public:
 	 * @brief 运行一段内存中的lua脚本
 	 * 
 	 * @param chunk 脚本字符串
-	 * @return 成功为false, 异常为true
+	 * @return 成功为true, 异常为false
 	 */
 	bool run_chunk (string const &chunk);
 

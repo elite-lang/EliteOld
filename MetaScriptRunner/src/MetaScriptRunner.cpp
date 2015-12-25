@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-07 13:52:20
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 17:01:43
+* @Last Modified time: 2015-12-25 17:42:32
 */
 
 #include "MetaScriptRunner.h"
@@ -33,6 +33,7 @@ MetaScriptRunner::~MetaScriptRunner() {
 void MetaScriptRunner::setUpLoader(const string& path) {
 	loader = new PackageLoader(path, this);
 	loader->FindAll();
+	loader->LoadDefault();
 }
 
 Node* MetaScriptRunner::getRoot() {

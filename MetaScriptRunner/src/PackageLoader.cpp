@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:21:09
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 17:05:59
+* @Last Modified time: 2015-12-25 18:37:44
 */
 
 #include "PackageLoader.h"
@@ -14,8 +14,8 @@ using namespace std;
 
 class DirFileTraversal : public IFileTraversal {
 public:
-	DirFileTraversal(map<string, EPackage*>& packages, MetaScriptRunner* msr)
-		: packages(packages)
+	DirFileTraversal(map<string, EPackage*>& pkgs, MetaScriptRunner* msr)
+		: packages(pkgs)
 	{
 		this->msr = msr;
 	}
@@ -26,7 +26,7 @@ public:
 	{
 		string cfg_path = PathUtils::native(now_path+"/"+filename+"/package.json");
 		if (!FileUtils::test_file(cfg_path)) return;
-		string path = PathUtils::native(now_path+"/filename");
+		string path = PathUtils::native(now_path+"/"+filename);
 		EPackage* pkg = new EPackage(path, msr);
 		string name = pkg->getName();
 		if (name == EPackage::str_null) { delete pkg; return; }
@@ -53,7 +53,6 @@ PackageLoader::~PackageLoader() {
  * @brief 找出目录下所以的可加载项
  */	
 void PackageLoader::FindAll() {
-	cout << "begin FindAll: " << base_path <<endl;
 	DirFileTraversal dft(packages, msr);
 	FileUtils::dir_traversal(base_path, dft, FileUtils::only_dir);
 }
