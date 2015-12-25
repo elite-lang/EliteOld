@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 13:52:11
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 11:18:14
+* @Last Modified time: 2015-12-25 10:12:56
 */
 #ifndef WORKER_H
 #define WORKER_H
@@ -23,7 +23,7 @@ public:
 	void Run(const char* input, const char* output);
 	void MetaGen(const char* output);
 	
-	static Worker* CreateDefault(const char* lex_cfg, const char* parser_cfg);
+	static Worker* CreateDefault(const char* lex_cfg, const char* parser_cfg, const char* package_path);
 	static Worker* Create(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c);
 
 	LexInterface* getLex() { return lex; }

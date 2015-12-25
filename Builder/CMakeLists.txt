@@ -13,13 +13,14 @@ SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 include_directories(../Lex/include 
 					../LR_Scanner/include 
 					../RedApple/includes 
-					../MetaScriptRunner/include)
+					../MetaScriptRunner/include
+					)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 endif()
 
 
 # 核心路径配置
-include_directories(src include)
+include_directories(src include ../tools)
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 if(USE_DYNAMIC)
 	add_library(builder SHARED ${source_files}) # 使用动态库

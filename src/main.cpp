@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 20:01:28
+* @Last Modified time: 2015-12-25 10:29:26
 */
 
 #include <iostream>
@@ -89,7 +89,9 @@ int main(int argc, const char *argv[])
 		defalut_lex    = PathUtils::native(defalut_lex);
 		defalut_parser = PathUtils::native(defalut_parser);
 		Worker* worker = Worker::CreateDefault(
-			defalut_lex.c_str(), defalut_parser.c_str());
+			defalut_lex.c_str(), defalut_parser.c_str(),
+			PathGetter::getElitePackagesPath()
+			);
 		Builder* builder = Builder::Create(worker);
 		builder->SetBuildPath(dir);
 		if (is_show_time == 1)

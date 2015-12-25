@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 11:18:24
+* @Last Modified time: 2015-12-25 10:26:37
 */
 
 
@@ -43,11 +43,12 @@ void Worker::MetaGen(const char* output) {
 }
 
 
-Worker* Worker::CreateDefault(const char* lex_cfg, const char* parser_cfg) {
+Worker* Worker::CreateDefault(const char* lex_cfg, 
+	const char* parser_cfg, const char* package_path) {
 	Lex* l = new Lex();
 	Parser* p = Parser::NewLRParser();
-	ScriptRunner* s = MetaScriptRunner::Create();
-	CodeGen* c = RedCodeGen::Create();
+	MetaScriptRunner* s = MetaScriptRunner::Create();
+	RedCodeGen* c = RedCodeGen::Create();
 	
 	// 配置联系
     p->setLex(l);
@@ -56,6 +57,9 @@ Worker* Worker::CreateDefault(const char* lex_cfg, const char* parser_cfg) {
     // 配置词法分析器和语法分析器
 	l->ReadConfig(lex_cfg);
 	p->AddBNF(parser_cfg);
+
+	// 配置外置插件
+	s->setUpLoader(package_path);
 
 	return Create(l, p, s, c);
 }

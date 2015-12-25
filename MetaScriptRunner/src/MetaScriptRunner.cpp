@@ -2,12 +2,12 @@
 * @Author: sxf
 * @Date:   2015-11-07 13:52:20
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-10 18:23:21
+* @Last Modified time: 2015-12-25 17:01:43
 */
 
 #include "MetaScriptRunner.h"
 #include "oolua/oolua.h"
-
+#include "PackageLoader.h"
 
 extern void InitMetaAPI(lua_State*);
 
@@ -27,6 +27,12 @@ MetaScriptRunner::MetaScriptRunner() {
 
 MetaScriptRunner::~MetaScriptRunner() {
 	delete vm;
+	if (loader != NULL) delete loader;
+}
+
+void MetaScriptRunner::setUpLoader(const string& path) {
+	loader = new PackageLoader(path, this);
+	loader->FindAll();
 }
 
 Node* MetaScriptRunner::getRoot() {

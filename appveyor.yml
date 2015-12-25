@@ -1,0 +1,15 @@
+platform:
+  - x86
+  - Any CPU
+
+configuration:
+  - Release
+  - Debug
+
+install:
+# how to install LLVM?
+
+before_build:
+  - mkdir build
+  - cd build
+  - cmake ..
