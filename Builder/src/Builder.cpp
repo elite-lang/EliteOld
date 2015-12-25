@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 10:25:44
+* @Last Modified time: 2015-12-25 14:34:46
 */
 
 #include "Builder.h"
@@ -30,7 +30,7 @@ int Builder::BuildFile(std::string filename) {
 	string outfile_path = this->buildpath + "/" + program + ".bc";
 	outfile_path = PathUtils::native(outfile_path); // 本地化
 
-	string data = fileReader(filename.c_str());
+	string data = FileUtils::fileReader(filename.c_str());
 	printf("输入文件: %s \n输出文件: %s\n", filename.c_str(), outfile_path.c_str());
 	worker->Run(data.c_str(), outfile_path.c_str());
 
@@ -131,18 +131,7 @@ void Builder::Close() {
 	delete this;
 }
 
-std::string Builder::fileReader(const char* path) {
-    std::ifstream t(path, std::ios::binary);
-	std::string str;
 
-	t.seekg(0, std::ios::end);   
-	str.reserve(t.tellg());
-	t.seekg(0, std::ios::beg);
-
-	str.assign((std::istreambuf_iterator<char>(t)),
-	            std::istreambuf_iterator<char>());
-    return str;
-}
 string Builder::make_default_name(const char* filename) {
 	const char* ans = strrchr(filename, '/');
 	const char* file;

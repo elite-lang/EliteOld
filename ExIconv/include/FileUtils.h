@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-11 18:42:32
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 11:28:05
+* @Last Modified time: 2015-12-25 14:34:02
 */
 
 
@@ -32,6 +32,7 @@ public:
 	static bool test_dir(const std::string& path);
 	static bool test_file(const std::string& path);
 	static std::string get_current_path();
+	static std::string fileReader(const char* path);
 
 	enum traversal_type {
 		all, only_file, only_dir

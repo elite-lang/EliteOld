@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-24 15:55:11
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 11:06:47
+* @Last Modified time: 2015-12-25 15:25:11
 */
 
 #ifndef E_PACKAGE_H
@@ -16,7 +16,7 @@ using namespace std;
 class EPackage
 {
 public:
-	EPackage(const string& json_data);
+	EPackage(const string& path, MetaScriptRunner* msr);
 	~EPackage();
 
 	/**
@@ -49,7 +49,10 @@ public:
 	const string& getProp(const string& name);
 private:
 	map<string, string> props;
-	string str_null;
+	string base_path;
+	MetaScriptRunner* msr;
+
+	static string str_null;
 
 	/**
 	 * 加载Json配置数据项

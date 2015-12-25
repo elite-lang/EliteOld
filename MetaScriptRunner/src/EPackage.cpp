@@ -2,27 +2,37 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:15:29
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 12:56:14
+* @Last Modified time: 2015-12-25 15:26:44
 */
 
 #include "EPackage.h"
 #include "cJSON.h"
 #include "FileUtils.h"
+#include "PathUtils.h"
 #include <iostream>
 using namespace std;
 
 class FileTraversal : public IFileTraversal {
 public:
+	FileTraversal(MetaScriptRunner* msr) {
+		this->msr = msr;
+	}
+
 	virtual void Work(const std::string& now_path, 
 			  const std::string& filename, 
 			  const std::string& suffix) 
 	{
-		cout << now_path + "/" + filename << endl;
+		cout << now_path + "/" + filename + suffix << endl;
 	}
+	MetaScriptRunner* msr;
 };
 
 
-EPackage::EPackage(const string& json_data) {
+EPackage::EPackage(const string& path, MetaScriptRunner* msr) {
+	this->msr = msr;
+	base_path = path;
+	string json_path = PathUtils::native(base_path+"/package.json");
+	string json_data = FileUtils::fileReader(json_path.c_str());
 	loadJson(json_data);
 }
 
@@ -31,7 +41,8 @@ EPackage::~EPackage() {
 }
 
 void EPackage::Load() {
-
+	FileTraversal ft(msr);
+	FileUtils::dir_traversal(base_path, ft, FileUtils::only_file);
 }
 
 const string& EPackage::getName() {
@@ -66,3 +77,5 @@ void EPackage::loadJson(const string& json) {
 
 	cJSON_Delete(cj);
 }
+
+string EPackage::str_null;

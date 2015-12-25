@@ -2,11 +2,12 @@
 * @Author: sxf
 * @Date:   2015-12-11 18:48:19
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 11:29:53
+* @Last Modified time: 2015-12-25 14:37:11
 */
 
 #include "FileUtils.h"
 #include <iostream>
+#include <fstream>
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/TimeValue.h>
 #include <llvm/Support/Path.h>
@@ -87,4 +88,17 @@ int FileUtils::dir_traversal(const std::string& path, IFileTraversal& ifile, tra
 
 int FileUtils::dir_recursive_traversal(const std::string& path, IFileTraversal& ifile, traversal_type t) {
 	return 0;
+}
+
+std::string FileUtils::fileReader(const char* path) {
+    std::ifstream t(path, std::ios::binary);
+	std::string str;
+
+	t.seekg(0, std::ios::end);   
+	str.reserve(t.tellg());
+	t.seekg(0, std::ios::beg);
+
+	str.assign((std::istreambuf_iterator<char>(t)),
+	            std::istreambuf_iterator<char>());
+    return str;
 }

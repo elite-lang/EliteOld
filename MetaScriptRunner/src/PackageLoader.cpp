@@ -2,28 +2,43 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:21:09
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 11:31:20
+* @Last Modified time: 2015-12-25 16:41:42
 */
 
 #include "PackageLoader.h"
 #include "FileUtils.h"
+#include "MetaScriptRunner.h"
 #include <iostream>
 using namespace std;
 
 class DirFileTraversal : public IFileTraversal {
 public:
+	DirFileTraversal(map<string, EPackage*>& packages, MetaScriptRunner* msr) {
+		this->packages = packages; this->msr = msr;
+	}
+
 	virtual void Work(const std::string& now_path, 
 			  const std::string& filename, 
 			  const std::string& suffix) 
 	{
-		cout << now_path + "/" + filename << endl;
+		string cfg_path = PathUtils::native(now_path+"/"+filename+"/package.json");
+		if (!FileUtils::test_file(cfg_path)) return;
+		string path = PathUtils::native(now_path+"/filename");
+		EPackage* pkg = new EPackage(path, msr);
+		string name = pkg->getName();
+		if (name == EPackage::str_null) { delete pkg; return; }
+		packages[name] = pkg;
 	}
+
+	map<string, EPackage*>& packages;
+	MetaScriptRunner* msr;
 };
 
 
 
-PackageLoader::PackageLoader(const string& base_path) {
+PackageLoader::PackageLoader(const string& base_path, MetaScriptRunner* msr) {
 	this->base_path = base_path;
+	this->msr = msr;
 }
 
 PackageLoader::~PackageLoader() {
@@ -47,7 +62,7 @@ void PackageLoader::FindAll() {
 void PackageLoader::LoadDefault() {
 	for (auto& p : packages) {
 		auto pkg = p.second;
-		if (pkg->isDefaultLoad())
+		if (pkg->isDefaultLoad() && !pkg->isLoaded())
 			pkg->Load();
 	}
 } 
