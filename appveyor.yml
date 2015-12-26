@@ -10,4 +10,4 @@ install:
 before_build:
   - mkdir build
   - cd build
-  - cmake ..
+  - cmake -DLLVM_SDK_PATH="C:/projects/elite/LLVM_SDK" ..
