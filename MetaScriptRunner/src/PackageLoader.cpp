@@ -2,13 +2,14 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:21:09
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 18:37:44
+* @Last Modified time: 2015-12-26 19:21:56
 */
 
 #include "PackageLoader.h"
 #include "FileUtils.h"
 #include "PathUtils.h"
 #include "MetaScriptRunner.h"
+#include "PackageJIT.h"
 #include <iostream>
 using namespace std;
 
@@ -57,11 +58,16 @@ void PackageLoader::FindAll() {
 	FileUtils::dir_traversal(base_path, dft, FileUtils::only_dir);
 }
 
+static void HelloWorld() {
+	cout << "Hello World" << endl;
+}
+
 
 /**
  * @brief 加载全部默认需要加载的包
  */
 void PackageLoader::LoadDefault() {
+	PackageJIT::AddSymbol("HelloWorld", (void*)HelloWorld);
 	for (auto& p : packages) {
 		auto pkg = p.second;
 		if (pkg->isDefaultLoad() && !pkg->isLoaded())

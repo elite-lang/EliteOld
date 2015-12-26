@@ -30,6 +30,7 @@ include_directories(src extlib/include
     ExIconv/include
 )
 
+
 ## 链接目录
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/extlib/lib)
 
@@ -53,6 +54,10 @@ endif()
 
 target_link_libraries(elite builder meta red scanner lex oolua_d lua exiconv
 						${LLVM_LIBS} ${dl_lib_link})
+
+
+## 合并Headers
+include(cmake/CombineHeader.cmake)
 
 ## 下载第三方库
 include(cmake/ThirdPartyBuild.cmake)

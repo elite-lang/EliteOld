@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 18:46:07
+* @Last Modified time: 2015-12-26 14:36:28
 */
 
 
@@ -17,6 +17,7 @@ namespace OOLUA {
 	class Script;
 }
 class PackageLoader;
+class CodeGenContext;
 
 /**
  * @brief 元脚本解析器类
@@ -87,10 +88,13 @@ public:
 
 	void setUpLoader(const string& path);
 
+	void setCodeGenContext(CodeGenContext* ctx) { context = ctx; } 
+	CodeGenContext* getCodeGenContext() { return context; }
 protected:
 	OOLUA::Script* vm;
 	Node* root;
 	PackageLoader* loader;
+	CodeGenContext* context;
 
 	MetaScriptRunner();
 	~MetaScriptRunner();

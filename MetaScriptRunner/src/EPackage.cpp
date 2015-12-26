@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:15:29
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 18:47:00
+* @Last Modified time: 2015-12-26 19:12:39
 */
 
 #include "EPackage.h"
@@ -10,12 +10,14 @@
 #include "FileUtils.h"
 #include "PathUtils.h"
 #include "MetaScriptRunner.h"
+#include "PackageJIT.h"
 #include <iostream>
 using namespace std;
 
 class FileTraversal : public IFileTraversal {
 public:
-	FileTraversal(MetaScriptRunner* msr) {
+	FileTraversal(MetaScriptRunner* msr, EPackage& epkg) 
+		: epkg(epkg) {
 		this->msr = msr;
 	}
 
@@ -27,8 +29,12 @@ public:
 		if (suffix == ".lua") {
 			msr->run_file(filepath);
 		}
+		if (suffix == ".epbc") {
+			PackageJIT::LoadPlugin(filepath, epkg.getName(), msr);
+		}
 	}
 	MetaScriptRunner* msr;
+	EPackage& epkg;
 };
 
 
@@ -46,7 +52,7 @@ EPackage::~EPackage() {
 
 void EPackage::Load() {
 	cout << "Load Package: " << base_path << endl;
-	FileTraversal ft(msr);
+	FileTraversal ft(msr, *this);
 	FileUtils::dir_traversal(base_path, ft, FileUtils::only_file);
 }
 
