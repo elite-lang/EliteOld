@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 10:26:37
+* @Last Modified time: 2015-12-26 19:19:22
 */
 
 
@@ -21,7 +21,7 @@ void Worker::Init(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c) {
 	// 初始化词法分析器与语法分析器
 	l->Init(NULL);
     p->BuildParser();
-    c->Init();
+    
 }
 
 void Worker::Run(const char* input, const char* output) {
@@ -54,12 +54,17 @@ Worker* Worker::CreateDefault(const char* lex_cfg,
     p->setLex(l);
     p->setScriptRunner(s);
 
+	// 向脚本引擎中注入更多接口
+	c->Init(NULL);
+	s->setCodeGenContext(c->getContext());
+    
     // 配置词法分析器和语法分析器
 	l->ReadConfig(lex_cfg);
 	p->AddBNF(parser_cfg);
 
 	// 配置外置插件
 	s->setUpLoader(package_path);
+	
 
 	return Create(l, p, s, c);
 }
