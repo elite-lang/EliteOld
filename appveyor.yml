@@ -1,13 +1,11 @@
 platform:
   - x86
-  - Any CPU
 
 configuration:
   - Release
-  - Debug
 
 install:
-# how to install LLVM?
+  - scripts\install_llvm_win32.bat
 
 before_build:
   - mkdir build
