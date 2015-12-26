@@ -3,6 +3,7 @@ cd llvm
 mkdir build
 cd build
 cmake -DCMAKE_INSTALL_PREFIX="C:/projects/elite/LLVM_SDK" ..
-call "%VS140COMNTOOLS%vsvars32.bat" x86
+"C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
 devenv.exe "llvm.sln" /build release /project "install.vcxproj"
 cd ../..
+
