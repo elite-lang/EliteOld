@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-26 09:51:14
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-26 19:21:50
+* @Last Modified time: 2015-12-26 22:00:20
 */
 
 #include "PackageJIT.h"
@@ -66,8 +66,6 @@ public:
 		std::vector<GenericValue> args;
 		args.push_back(GenericValue(msr->getCodeGenContext()));
 		GenericValue gv = EE->runFunction(func, args);
-		// plugin_init_func init = (plugin_init_func)(intptr_t)(EE->getPointerToFunction(func));
-		// init(msr->getCodeGenContext());
 	}
 
 };

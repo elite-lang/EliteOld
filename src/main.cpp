@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 10:29:26
+* @Last Modified time: 2015-12-26 22:20:31
 */
 
 #include <iostream>
@@ -38,14 +38,14 @@ int main(int argc, const char *argv[])
 	string defalut_parser = PathGetter::getDefaultParserCfg();
 	int only_one_file = -1;
 	int close_link = 0;
-	if (argc <= 1) printf(help_message);
+	if (argc <= 1) cout << help_message;
 	else {
 		int i = 0;
 		while (i < argc-1) {
 			++i;
 			string opt(argv[i]);
 			if (opt == "-h" || opt == "--help") {
-				printf(help_message);
+				cout << help_message;
 				exit(0);
 			}
 			if (opt == "-d" || opt == "--dir") {
@@ -60,7 +60,7 @@ int main(int argc, const char *argv[])
 			}
 			if (opt == "-s" || opt == "--src") {
 				if (only_one_file == 1) {
-					printf(cscw);
+					cout << cscw;
 					exit(0);
 				}
 				srcdir = safe_getNext(argc, argv, i);
@@ -69,7 +69,7 @@ int main(int argc, const char *argv[])
 			}
 			if (opt == "-i" || opt == "--in") {
 				if (only_one_file == 0) {
-					printf(cscw);
+					cout << cscw;
 					exit(0);
 				}
 				onlyfile = safe_getNext(argc, argv, i);
