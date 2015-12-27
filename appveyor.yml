@@ -8,7 +8,7 @@ install:
   - scripts\install_llvm_win32.bat
 
 before_build:
-  - msbuild  /p:Configuration=Release "llvm/build/install.vcxproj"
+  - msbuild /p:Configuration=Release "llvm/build/install.vcxproj"
   - mkdir build
   - cd build
   - cmake -DLLVM_SDK_PATH="C:/projects/elite/LLVM_SDK" ..
