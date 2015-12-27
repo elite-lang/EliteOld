@@ -58,7 +58,7 @@ target_link_libraries(elite builder meta red scanner lex  lua exiconv
 if (CMAKE_BUILD_TYPE EQUAL "Debug")
 	target_link_libraries(elite oolua_d)
 else()
-	target_link_libraries(elite oolua_d)
+	target_link_libraries(elite oolua)
 endif()
 
 
