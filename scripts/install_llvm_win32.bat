@@ -1,7 +1,1 @@
-git clone --depth=1 -b release_36 https://github.com/llvm-mirror/llvm.git llvm
-cd llvm
-mkdir build
-cd build
-cmake -DCMAKE_INSTALL_PREFIX="C:/projects/elite/LLVM_SDK" ..
-cd ../..
-
+git clone --depth=1 https://github.com/elite-lang/LLVM_Windows_37.git LLVM_SDK
