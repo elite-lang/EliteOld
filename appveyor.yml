@@ -13,7 +13,7 @@ install:
 before_build:
   - mkdir build
   - cd build
-  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TEST=ON -DLLVM_SDK_PATH="C:/projects/elite/LLVM_SDK" -DLLVM_VERSION=3.7 ..
+  - cmake -DCMAKE_BUILD_TYPE=Release -DLLVM_SDK_PATH="C:/projects/elite/LLVM_SDK" -DLLVM_VERSION=3.7 ..
 
 build_script:
   - msbuild /p:Configuration=Release "deps.vcxproj"
