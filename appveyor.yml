@@ -12,3 +12,5 @@ before_build:
   - mkdir build
   - cd build
   - cmake -DLLVM_SDK_PATH="C:/projects/elite/LLVM_SDK" ..
+  - msbuild /p:Configuration=Release "deps.vcxproj"
+  - msbuild /p:Configuration=Release "elite.vcxproj"
