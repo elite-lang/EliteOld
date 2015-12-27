@@ -52,8 +52,14 @@ if(UNIX)
 	set (dl_lib_link dl)
 endif()
 
-target_link_libraries(elite builder meta red scanner lex oolua_d lua exiconv
+target_link_libraries(elite builder meta red scanner lex  lua exiconv
 						${LLVM_LIBS} ${dl_lib_link})
+
+if (CMAKE_BUILD_TYPE EQUAL "Debug")
+	target_link_libraries(elite oolua_d)
+else()
+	target_link_libraries(elite oolua)
+endif()
 
 
 ## 合并Headers
