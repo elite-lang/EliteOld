@@ -4,12 +4,16 @@ platform:
 configuration:
   - Release
 
+clone_depth: 3                      # clone entire repository history if not defined
+
 install:
   - scripts\install_llvm_win32.bat
 
-build:
+before_build:
   - mkdir build
   - cd build
   - cmake -DLLVM_SDK_PATH="C:/projects/elite/LLVM_SDK" -DLLVM_VERSION=3.7 ..
+
+build_script:
   - msbuild /p:Configuration=Release "deps.vcxproj"
   - msbuild /p:Configuration=Release "elite.vcxproj"
