@@ -148,4 +148,4 @@ Elite分为如下几个模块：
 - EliteShow Elite语言的中间过程展示工具，使用Electron作为GUI框架，方便查看编译过程
 
 
-![](doc/编译系统工作流程.png)
+![](doc/design/编译系统工作流程.png)
