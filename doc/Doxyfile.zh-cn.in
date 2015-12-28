@@ -42,5 +42,3 @@ GENERATE_RTF           = NO
 GENERATE_MAN           = NO
 GENERATE_XML           = NO
 
-GENERATE_DOCBOOK       = YES
-DOCBOOK_OUTPUT         = docbook
