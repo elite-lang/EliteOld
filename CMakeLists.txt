@@ -68,6 +68,5 @@ include(cmake/CombineHeader.cmake)
 ## 下载第三方库
 include(cmake/ThirdPartyBuild.cmake)
 
-include(cmake/Doxygen.cmake)
-
+add_subdirectory(doc)
 
