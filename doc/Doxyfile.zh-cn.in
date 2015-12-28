@@ -1,0 +1,44 @@
+PROJECT_NAME           = "@CMAKE_PROJECT_NAME@"  
+PROJECT_NUMBER         = @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RELEASE@  
+STRIP_FROM_PATH        = @PROJECT_SOURCE_DIR@  
+INPUT                  = @doxy_main_page@ \  
+                         @PROJECT_SOURCE_DIR@ 
+OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@
+FILE_PATTERNS          = *.h \  
+                         *.cpp \
+                         *.zh-cn.md 
+
+IMAGE_PATH             = ./doc
+OUTPUT_LANGUAGE        = Chinese
+RECURSIVE              = YES  
+EXTRACT_ALL            = YES  
+EXTRACT_PRIVATE        = YES  
+EXTRACT_STATIC         = YES  
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+BUILTIN_STL_SUPPORT    = YES
+EXCLUDE_PATTERNS       = extlib build bin third_party cmake example lib
+USE_MDFILE_AS_MAINPAGE = index.zh-cn.md
+SEARCHENGINE           = YES
+SERVER_BASED_SEARCH    = NO 
+
+#---------------------------------------------------------------------------
+# Configuration options related to the HTML output
+#---------------------------------------------------------------------------
+
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html/zh-cn
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = ./doc/misc/header.html
+HTML_FOOTER            = ./doc/misc/footer.html
+HTML_EXTRA_STYLESHEET  = ./doc/misc/doxygenextra.css
+HTML_TIMESTAMP         = YES
+DISABLE_INDEX          = YES
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 250
+
+GENERATE_LATEX         = NO
+GENERATE_RTF           = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
