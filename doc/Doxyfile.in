@@ -3,7 +3,7 @@ PROJECT_NUMBER         = @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RELEASE@
 STRIP_FROM_PATH        = @PROJECT_SOURCE_DIR@  
 INPUT                  = @doxy_main_page@ \  
                          @PROJECT_SOURCE_DIR@ 
-OUTPUT_DIRECTORY       = @CMAKE_CURRENT_BINARY_DIR@
+OUTPUT_DIRECTORY       = @PROJECT_SOURCE_DIR@/build-doc
 FILE_PATTERNS          = *.h \  
                          *.cpp \
                          *.en.md 
