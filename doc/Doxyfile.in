@@ -8,7 +8,7 @@ FILE_PATTERNS          = *.h \
                          *.cpp \
                          *.en.md 
 IMAGE_PATH             = ./doc
-OUTPUT_LANGUAGE  	   = English
+OUTPUT_LANGUAGE        = English
 RECURSIVE              = YES  
 EXTRACT_ALL            = YES  
 EXTRACT_PRIVATE        = YES  
