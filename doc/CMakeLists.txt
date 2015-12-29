@@ -9,7 +9,7 @@ IF(BUILD_DOCUMENTATION)
     CONFIGURE_FILE(Doxyfile.in Doxyfile @ONLY)
     CONFIGURE_FILE(Doxyfile.zh-cn.in Doxyfile.zh-cn @ONLY)
   
-    file(GLOB_RECURSE MARKDOWN_DOC ${CMAKE_CURRENT_BINARY_DIR}/*.md)
+    file(GLOB_RECURSE MARKDOWN_DOC ${PROJECT_SOURCE_DIR}/doc/*.md)
 
     add_custom_command(OUTPUT html
         COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
