@@ -32,7 +32,7 @@ Windows用户：
 	git clone --depth=1 --recursive git@github.com:elite-lang/Elite.git 
 
 
-\subsection Linux环境下的编译
+\subsection ins-linux Linux环境下的编译
 
 #### 开发环境和依赖项
 
@@ -85,7 +85,7 @@ ubuntu源中LLVM-3.6的CMake脚本存在bug，如果您安装了llvm-3.6-dev后c
 
 
 
-\subsection MacOSX环境下的编译
+\subsection ins-mac MacOSX环境下的编译
 
 Mac下的编译方式同样为CMake，构建方式也完全一致，仅仅是依赖项的安装有所区别。
 
@@ -96,5 +96,9 @@ Mac下的编译方式同样为CMake，构建方式也完全一致，仅仅是依
 
 
 
+
+\subsection ins-windows Windows环境下的编译
+
+Windows下支持使用VS2013及以上版本，不建议使用MinGW和Cygwin等兼容平台。
 
 

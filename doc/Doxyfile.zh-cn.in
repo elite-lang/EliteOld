@@ -21,6 +21,8 @@ EXCLUDE_PATTERNS       = extlib build bin third_party cmake example lib
 USE_MDFILE_AS_MAINPAGE = index.zh-cn.md
 SEARCHENGINE           = YES
 SERVER_BASED_SEARCH    = NO 
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
 
 #---------------------------------------------------------------------------
 # Configuration options related to the HTML output
