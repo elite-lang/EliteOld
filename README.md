@@ -149,3 +149,18 @@ Elite分为如下几个模块：
 
 
 ![](doc/design/编译系统工作流程.png)
+
+
+## 加入我们
+
+目前，项目还处于开发初期，非常欢迎热爱开源的朋友们参加此项目，这是一个中等规模的C++项目，加入我们的团队，不但能够促进该项目更快的发展，更能带给您不一样的思路和体验。
+
+希望和我们交流非常容易，可以选择发邮件或在github上直接和我们联系，都可以。
+
+- github：<https://github.com/elite-lang/Elite>    
+- 邮箱：<mailto:sunxfancy@gmail.com>    
+- gitter：[参与讨论](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+
+## 开源协议
+
+MIT协议，允许任何人基于该项目开发其他项目，无论是开源的还是商业的，仅仅需要您在使用时，附带我们的版权声明即可。

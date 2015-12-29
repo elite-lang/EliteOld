@@ -9,7 +9,7 @@
 
 \section lang-ref-intro 语法简介
 
-这是一款类C语言语法，使用C语言的用户可以很方便的适应这种写法，当然，Elite默认语言也有一下小的不同。
+这是一款类C语言语法，使用C语言的用户可以很方便的适应这种写法，当然，Elite默认语法也有一些小的不同。
 下面是一段Hello World代码示例：
 
 	int main() {
@@ -113,5 +113,99 @@ Elite提供基本的C语言类型，默认内置的类型有以下：
 		char[] data;
 	}
 
+复合类型的使用，和C语言类似，是使用`.`运算符进行的：
+
+	int dot(pair a, pair b) {
+		int k = a.x + b.y;
+		printf("k = %d\n", k);
+		return k;
+	}
+
+
 #### 数组类型
+
+和C语言不同，Elite默认语言里原生支持变长数组类型，数组类型均为堆分配的数组指针。
+
+	int[] g = new int[10];
+	g[0] = 1;
+
+该数组可以在调用C函数时，直接作为C数组传入
+
+同时，支持二维数组及高维数组：
+
+	int[][] g = new int[10][5];
+
+Elite和C数组最大的不同，在于Elite数组中记录有每一维的长度信息，这个长度信息是存放在数组地址前面的字节中，内存布局如下：
+
+![Elite数组内存布局]()
+
+
+
+\subsection lang-ref-basic-memory 内存管理
+
+Elite的内存管理是可配置的，首先Elite语言本身支持C语言的内存管理，使用malloc和free封装后的接口，new和delete，使用方式和C++几乎一致。
+
+可以new单独的对象
+
+	struct Person {
+		char[] name;
+		int age;
+	}
+
+	int main() {
+		Person person = new Persion;
+		return 0;
+	}
+
+也可以构建数组或对象数组
+
+	int main() {
+		Person[] persons = new Persion[20];
+		return 0;
+	}
+
+
+使用后的内存，需要使用delete语句手动释放。
+
+	delete person;		// 释放单个指针
+	delete[] persons;   // 释放数组指针
+
+\section lang-ref-macro 强大的宏机制
+
+Elite语言内置了类似lisp风格的宏，拥有强大的表达能力，很多情况下，无需改变语法结构，已经能够让您自定义许多常见语法。
+
+宏的使用示例如下：
+
+
+	void print(int k) {
+		@for_n (i, k) {
+			printf("hello-%d\n", i);
+		}
+	}
+
+	defmacro for_n (p, size, code)  {
+		for (int p = 1; p <= size; p = p+1)
+			code;
+	}
+
+	int main() {
+		print(5);
+		return 0;
+	}
+
+
+和函数不同的是，宏使用`defmacro`关键字定义，是一个编译时函数，运行时不会再存在宏，通过宏，我们能够实现许多自定义的语法。
+例如上面例子中的`for_n`宏，我们只需简要的包装一下，接口正确的翻译。
+
+宏的调用要显式的使用`@`符。
+
+宏调用的基本格式为：
+
+	@ <宏符号名> <参数列表>
+
+宏的语法十分独特，由于宏调用的宽泛性，我们支持在宏运算符后加如下几种结构，作为参数列表中的参数：
+
+- 括号表示式 形如：`( 元素, 元素 )` ， 每一个元素都会作为一个参数
+- id标识符 	任意一个字符串， 会单独作为一个参数
+- 大括号表达式 形如：`{ ... code ... }`，往往是一个代码段，整体作为一个参数
 
