@@ -5,9 +5,9 @@ void work(int k, int src, int obj) {
 		print(src, obj);
 		return;
 	}
-	work(k-1, src, 3-obj-src);
+	work(k - 1, src, 3 - obj - src);
 	print(src, obj);
-	work(k-1, 3-obj-src, obj);
+	work(k - 1, 3 - obj - src, obj);
 }
 
 int main() {
@@ -19,8 +19,9 @@ char[] select(int k) {
 	if (k == 0) return "A";
 	if (k == 1) return "B";
 	if (k == 2) return "C";
+	return "";
 }
 
 void print(int src, int obj) {
-	printf("%s => %s", select(src), select(obj));
+	printf("%s => %s\n", select(src), select(obj));
 }
