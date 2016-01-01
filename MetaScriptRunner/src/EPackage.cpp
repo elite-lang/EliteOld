@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-24 17:15:29
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-26 19:12:39
+* @Last Modified time: 2016-01-01 15:48:30
 */
 
 #include "EPackage.h"
@@ -11,6 +11,7 @@
 #include "PathUtils.h"
 #include "MetaScriptRunner.h"
 #include "PackageJIT.h"
+#include "Builder.h"
 #include <iostream>
 using namespace std;
 
@@ -44,6 +45,7 @@ EPackage::EPackage(const string& path, MetaScriptRunner* msr) {
 	string json_path = PathUtils::native(base_path+"/package.json");
 	string json_data = FileUtils::fileReader(json_path.c_str());
 	loadJson(json_data);
+	addRuntimePath();
 }
 
 EPackage::~EPackage() {
@@ -54,6 +56,9 @@ void EPackage::Load() {
 	cout << "Load Package: " << base_path << endl;
 	FileTraversal ft(msr, *this);
 	FileUtils::dir_traversal(base_path, ft, FileUtils::only_file);
+	string link_args = getRuntime();
+	if (link_args != str_null) // 添加runtime链接参数
+		msr->getBuilder()->AddLinkArgs(link_args);
 }
 
 const string& EPackage::getName() {
@@ -62,6 +67,10 @@ const string& EPackage::getName() {
 
 const string& EPackage::getVersion() {
 	return getProp("version");
+}
+
+const string& EPackage::getRuntime() {
+	return getProp("runtime");
 }
 
 bool EPackage::isDefaultLoad() {
@@ -91,5 +100,16 @@ void EPackage::loadJson(const string& json) {
 
 	cJSON_Delete(cj);
 }
+
+void EPackage::addRuntimePath() {
+	string args = getRuntime();
+	if (args == str_null) return;
+	string Lpath = "-L";
+	Lpath += base_path;
+	Lpath += ' ';
+	Lpath += args;
+	insertProp("runtime", Lpath);
+}
+
 
 string EPackage::str_null;

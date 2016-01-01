@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-07 15:46:24
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-23 09:14:01
+* @Last Modified time: 2016-01-01 12:24:21
 */
 
 #include "oolua/oolua.h"
@@ -176,6 +176,15 @@ OOLUA_CFUNC(getlist_meta_api, l_getlist_meta_api)
 OOLUA_CFUNC(newparent_meta_api, l_newparent_meta_api)
 */
 
+
+
+
+
+
+
+
+
+
 extern void InitMetaAPI(lua_State* L) {
 	OOLUA::set_global(L, "include", l_include_meta_api);
 	OOLUA::set_global(L, "setRoot", l_setroot_meta_api);
@@ -192,4 +201,5 @@ extern void InitMetaAPI(lua_State* L) {
 	OOLUA::set_global(L, "addBrother", l_addbrother_meta_api); 
 	OOLUA::set_global(L, "addChildren", l_addchildren_meta_api);  
 	OOLUA::set_global(L, "addDimension", l_adddimension_meta_api);
+
 }

@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 14:34:46
+* @Last Modified time: 2016-01-01 15:46:40
 */
 
 #include "Builder.h"
@@ -98,6 +98,13 @@ int Builder::SetBuildPath(std::string path) {
 	return 0;
 }
 
+int Builder::AddLinkArgs(std::string args) {
+	link_args += " ";
+	link_args += args;
+	return 0;
+}
+
+
 void Builder::setDebugFilePath(const char* path) {
 	DebugMsg::setDebugFilePath(path);
 }
@@ -117,7 +124,8 @@ Builder::Builder(Worker* worker) {
 		setWorker(Worker::CreateDefault(
 			PathGetter::getDefaultLexCfg(), 
 			PathGetter::getDefaultParserCfg(),
-			PathGetter::getElitePackagesPath()
+			PathGetter::getElitePackagesPath(),
+			this
 		));
 	else 
 		setWorker(worker);
@@ -192,7 +200,7 @@ int Builder::call_ld(std::string filein, std::string fileout) {
 	string runtime = " -L";
 	runtime += PathGetter::getEliteToolsPath();
 	runtime += "/runtime/";
-	string args = runtime + " -o " + fileout + " " + filein + " -lruntime -ldyncall_s";
+	string args = runtime + " -o " + fileout + " " + filein + link_args + " -lruntime -ldyncall_s";
 	ld += args;
 	printf("ld: %s\n", ld.c_str());
 	return system(ld.c_str());
