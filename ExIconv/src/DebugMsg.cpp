@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-21 20:39:08
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 15:54:20
+* @Last Modified time: 2016-01-04 11:05:40
 */
 
 #include "DebugMsg.h"
@@ -42,8 +42,6 @@ void DebugMsg::setDebugFilePath(const char* path) {
 bool DebugMsg::isDebug() {
 	return getInstance()->is_debug_mode;
 }
-
-
 
 /**
  * @brief 获取词法分析器的debug文件输出流
@@ -95,9 +93,6 @@ void DebugMsg::red_close() {
 	fs.close();
 }
 
-
-
-
 DebugMsg_Private* DebugMsg::getInstance() {
 	if (instance == NULL) 
 		instance = new DebugMsg_Private();
@@ -105,3 +100,5 @@ DebugMsg_Private* DebugMsg::getInstance() {
 }
 
 DebugMsg_Private* DebugMsg::instance = NULL;
+
+

@@ -4,7 +4,7 @@
 [TOC]
 
 
-\section proj-struct-folders 各项目文件夹命名习惯及约定
+@section proj-struct-folders 各项目文件夹命名习惯及约定
 
 无论是子项目还是主项目，各文件夹都有几乎一致的命名方式和含义，下面简要阐述：
 
@@ -18,6 +18,3 @@
 | scripts | 脚本文件                              |
 | tools   | 工具链目录                             |
 | test    | 单元测试文件目录                          |
-
-
-

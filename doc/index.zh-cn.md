@@ -12,11 +12,11 @@ Elite是一款脚本化驱动的编译器，一般的编程语言，语法是固
 
 ## 下载、使用和贡献代码
 
-Elite是一款开源项目，任何人都可以免费使用，修改和发布该项目代码，遵循MIT协议。  
+Elite是一款开源项目，任何人都可以免费使用，修改和发布该项目代码，遵循MIT协议。
 
 - 下载：<https://github.com/elite-lang/Elite>
-- 编译安装指南：  
-- 贡献本项目：  
+- 编译安装指南：
+- 贡献本项目：
 
 ## Elite语言正在解决哪方面的问题
 
@@ -39,9 +39,9 @@ Elite是一款可自定语法的编程语言，通过自行配置语法，能够
 
 希望和我们交流非常容易，可以选择发邮件或在github上直接和我们联系，都可以。
 
-- github：<https://github.com/elite-lang/Elite>    
-- 邮箱：<mailto:sunxfancy@gmail.com>    
-- gitter：[参与讨论](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+- github：<https://github.com/elite-lang/Elite>
+- 邮箱：<mailto:sunxfancy@gmail.com>
+- gitter：[参与讨论] (https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## 开源协议
 
