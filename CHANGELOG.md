@@ -1,6 +1,13 @@
 Change Log
 ================
 
+### v0.8.2
+
+2016纪念版
+添加了json输出接口
+方便Gui调试器的开发
+添加了扩展包管理器的链接属性支持
+添加bdwgc库
 
 ### v0.8.1 2015-12-26
 
@@ -177,16 +184,16 @@ first prebuild version.
 
 ### V0.4.0 2015-11-11
 
-#### Change 
+#### Change
 
 实现了词法分析器和语法分析器的中文支持
 大幅完善了各个库的依赖项和定义
-完善了meta项目  
+完善了meta项目
 
 #### Fix
 
-Fix a lot of bugs.  
-修改了大量bug  
+Fix a lot of bugs.
+修改了大量bug
 
 
 ------------------------
@@ -202,8 +209,8 @@ The first usable version.
 
 ### V0.3.0  2015-11-02
 
-The first commit, it has combined 3 basic components.  
+The first commit, it has combined 3 basic components.
 This project is a follow-up of the RedApple.
 
-这是本项目的第一个版本，但其接续RedApple项目进行开发。  
+这是本项目的第一个版本，但其接续RedApple项目进行开发。
 整合了三个基础组件。
