@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-21 20:39:08
 * @Last Modified by:   sxf
@@ -94,11 +94,9 @@ void DebugMsg::red_close() {
 }
 
 DebugMsg_Private* DebugMsg::getInstance() {
-	if (instance == NULL) 
+	if (instance == NULL)
 		instance = new DebugMsg_Private();
 	return instance;
 }
 
 DebugMsg_Private* DebugMsg::instance = NULL;
-
-

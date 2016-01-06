@@ -7,21 +7,22 @@
 
 在首次安装好后，您需要配置环境变量：
 
-	// for elite 
+	// for elite
 	export ELITE_HOME=【您的Elite仓库地址】
 	export PATH=$ELITE_HOME/bin:$ELITE_HOME/tools:$PATH
 
 
 ## 编写hello.elite
 
-	void hello() {
-		printf("hello world");
-	}
+~~~cpp
+void hello() {
+	printf("hello world");
+}
 
-	void main() {
-		hello();
-	}
-
+void main() {
+	hello();
+}
+~~~
 
 ## 执行编译命令
 

@@ -3,6 +3,7 @@
 .fuse*
 *.sublime-*
 *.lrsave
+.clang_complete
 bin/
 build/
 Lex/bin/

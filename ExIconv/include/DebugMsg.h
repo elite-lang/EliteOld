@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-21 20:35:05
 * @Last Modified by:   sxf
@@ -22,7 +22,7 @@ class DebugMsg
 public:
 	/**
      * @brief 设置解释器生成中间变量的目录，设置后自动打印中间过程
-     * 
+     *
      * @param path 设置路径，设置为NULL或不设置则不打印过程
      */
     static void setDebugFilePath(const char* path);
