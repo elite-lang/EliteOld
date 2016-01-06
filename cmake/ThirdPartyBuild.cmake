@@ -110,7 +110,18 @@ ExternalProject_Add(libdyncall
 	)
 
 
+ExternalProject_Add(bdwgc
+	DOWNLOAD_DIR third_party/
+	GIT_REPOSITORY https://github.com/elite-lang/bdwgc
+	SOURCE_DIR third_party/bdwgc/
+	CMAKE_COMMAND cmake
+	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
+	# INSTALL_COMMAND ""
+	BUILD_ALWAYS 0
+	)
+
+
 
 ADD_CUSTOM_TARGET(deps
-	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall
+	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall bdwgc
 	)  

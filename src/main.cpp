@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-26 22:20:31
+* @Last Modified time: 2016-01-01 15:38:44
 */
 
 #include <iostream>
@@ -88,11 +88,13 @@ int main(int argc, const char *argv[])
 		// 创建Worker和Builder
 		defalut_lex    = PathUtils::native(defalut_lex);
 		defalut_parser = PathUtils::native(defalut_parser);
+		Builder* builder = Builder::Create();
 		Worker* worker = Worker::CreateDefault(
 			defalut_lex.c_str(), defalut_parser.c_str(),
-			PathGetter::getElitePackagesPath()
-			);
-		Builder* builder = Builder::Create(worker);
+			PathGetter::getElitePackagesPath(),
+			builder
+		);
+		builder->setWorker(worker);
 		builder->SetBuildPath(dir);
 		if (is_show_time == 1)
 			builder->setDebugFilePath(dir.c_str());

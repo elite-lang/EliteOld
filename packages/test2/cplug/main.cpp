@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-26 09:53:58
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-26 19:20:49
+* @Last Modified time: 2016-01-01 10:55:25
 */
 
 #include <iostream>
@@ -22,11 +22,9 @@ static const FuncReg macro_funcs[] = {
 };
 
 extern "C" {
-	extern CodeGenContext* getCtx();
 	extern void HelloWorld();
 	extern void test2_elite_plugin_init(CodeGenContext* context) {
 		HelloWorld();
-		// CodeGenContext* context = getCtx();
 		printf("test2_elite_plugin_init\n");
 		if (context == NULL) printf("Error for context\n");
 		else context->AddOrReplaceMacros(macro_funcs);

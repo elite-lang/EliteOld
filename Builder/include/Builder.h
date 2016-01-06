@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-08 09:06:35
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-25 14:34:16
+* @Last Modified time: 2016-01-01 15:47:59
 */
 
 
@@ -43,6 +43,9 @@ public:
 	// 添加库路径
 	int AddLibPath(std::string path);
 
+	// 添加链接时参数
+	int AddLinkArgs(std::string args);
+
 	// 设置Debug过程文件生成路径
 	void setDebugFilePath(const char* path);
 
@@ -59,11 +62,13 @@ protected:
 
 	Worker* worker = 0;
 	std::string buildpath;
+	std::string link_args;
+
 	static std::string make_default_name(const char* filename);
 	static std::string get_file_name(const char* filename);
 
-	static int call_llc(std::string filein);
-	static int call_ld(std::string filein, std::string fileout);
+	int call_llc(std::string filein);
+	int call_ld(std::string filein, std::string fileout);
 
 };
 

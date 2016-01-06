@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-24 15:55:11
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-29 12:24:34
+* @Last Modified time: 2016-01-01 13:28:11
 */
 
 #ifndef E_PACKAGE_H
@@ -45,6 +45,11 @@ public:
 	 * @brief 返回版本号, 格式为字符串
 	 */
 	const string& getVersion();
+
+	/**
+	 * @brief 获取一个Runtime时添加链接的字符串
+	 */
+	const string& getRuntime();
 
 	/**
 	 * @brief 判断是否是默认载入这个包
@@ -90,6 +95,13 @@ private:
 	 * @param value 属性值
 	 */
 	void insertProp(const string& name, const string& value);
+
+
+	/**
+	 * @brief 为runtime属性添加-L寻找路径，否则会造成库找不到.
+	 *        这个函数仅在构造函数中调用一次, 不能多次调用
+	 */
+	void addRuntimePath();
 };
 
 

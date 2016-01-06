@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-26 19:19:22
+* @Last Modified time: 2016-01-01 15:36:14
 */
 
 
@@ -44,7 +44,7 @@ void Worker::MetaGen(const char* output) {
 
 
 Worker* Worker::CreateDefault(const char* lex_cfg, 
-	const char* parser_cfg, const char* package_path) {
+	const char* parser_cfg, const char* package_path, Builder* b) {
 	Lex* l = new Lex();
 	Parser* p = Parser::NewLRParser();
 	MetaScriptRunner* s = MetaScriptRunner::Create();
@@ -58,20 +58,25 @@ Worker* Worker::CreateDefault(const char* lex_cfg,
 	c->Init(NULL);
 	s->setCodeGenContext(c->getContext());
     
+	// 配置外置插件
+	s->setUpLoader(package_path);
+
+	// 向脚本引擎中注入各对象
+	s->setLex(l);
+	s->setParser(p);
+	s->setBuilder(b);
+
     // 配置词法分析器和语法分析器
 	l->ReadConfig(lex_cfg);
 	p->AddBNF(parser_cfg);
 
-	// 配置外置插件
-	s->setUpLoader(package_path);
-	
-
-	return Create(l, p, s, c);
+	return Create(l, p, s, c, b);
 }
 
-Worker* Worker::Create(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c) {
+Worker* Worker::Create(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c, Builder* b) {
 	Worker* k = new Worker();
 	k->Init(l, p, s, c);
+	k->builder = b;
 	return k;
 }
 

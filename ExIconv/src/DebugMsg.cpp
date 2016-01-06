@@ -1,8 +1,8 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-21 20:39:08
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-22 15:54:20
+* @Last Modified time: 2016-01-04 11:05:40
 */
 
 #include "DebugMsg.h"
@@ -19,6 +19,7 @@ public:
 
 	fstream lex_dbg_fs;
 	fstream parser_dbg_fs;
+	fstream parser_save_fs;
 	fstream red_dbg_fs;
 };
 
@@ -42,8 +43,6 @@ void DebugMsg::setDebugFilePath(const char* path) {
 bool DebugMsg::isDebug() {
 	return getInstance()->is_debug_mode;
 }
-
-
 
 /**
  * @brief 获取词法分析器的debug文件输出流
@@ -78,6 +77,19 @@ void DebugMsg::parser_close() {
 	fs.close();
 }
 
+std::ostream& DebugMsg::parser_save() {
+	auto& fs = getInstance()->parser_save_fs;
+	if(!fs.is_open()) {
+		fs.open(getInstance()->dbg_file_path+"/parser.json", std::ios::out);
+	}
+	return fs;
+}
+
+void DebugMsg::parser_save_close() {
+	auto& fs = getInstance()->parser_save_fs;
+	fs.close();
+}
+
 
 /**
  * @brief 获取解析器的debug输出文件流
@@ -95,11 +107,8 @@ void DebugMsg::red_close() {
 	fs.close();
 }
 
-
-
-
 DebugMsg_Private* DebugMsg::getInstance() {
-	if (instance == NULL) 
+	if (instance == NULL)
 		instance = new DebugMsg_Private();
 	return instance;
 }

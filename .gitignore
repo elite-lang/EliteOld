@@ -3,6 +3,7 @@
 .fuse*
 *.sublime-*
 *.lrsave
+.clang_complete
 bin/
 build/
 Lex/bin/
@@ -13,3 +14,4 @@ RedApple/bin/
 RedApple/build/
 third_party/
 extlib/
+build-doc/

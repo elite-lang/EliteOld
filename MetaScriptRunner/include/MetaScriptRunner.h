@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-26 14:36:28
+* @Last Modified time: 2016-01-01 15:28:09
 */
 
 
@@ -18,6 +18,9 @@ namespace OOLUA {
 }
 class PackageLoader;
 class CodeGenContext;
+class LexInterface;
+class Parser;
+class Builder;
 
 /**
  * @brief 元脚本解析器类
@@ -90,11 +93,24 @@ public:
 
 	void setCodeGenContext(CodeGenContext* ctx) { context = ctx; } 
 	CodeGenContext* getCodeGenContext() { return context; }
+
+	void setLex(LexInterface* _lex) { lex = _lex; } 
+	LexInterface* getLex() { return lex; }
+	
+	void setParser(Parser* _parser) { parser = _parser; } 
+	Parser* getParser() { return parser; }
+	
+	void setBuilder(Builder* _builder) { builder = _builder; } 
+	Builder* getBuilder() { return builder; }
+	
 protected:
 	OOLUA::Script* vm;
 	Node* root;
 	PackageLoader* loader;
 	CodeGenContext* context;
+	LexInterface* lex;
+	Parser* parser;
+	Builder* builder;
 
 	MetaScriptRunner();
 	~MetaScriptRunner();
