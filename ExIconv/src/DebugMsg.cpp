@@ -19,6 +19,7 @@ public:
 
 	fstream lex_dbg_fs;
 	fstream parser_dbg_fs;
+	fstream parser_save_fs;
 	fstream red_dbg_fs;
 };
 
@@ -73,6 +74,19 @@ std::ostream& DebugMsg::parser_dbg() {
 
 void DebugMsg::parser_close() {
 	auto& fs = getInstance()->parser_dbg_fs;
+	fs.close();
+}
+
+std::ostream& DebugMsg::parser_save() {
+	auto& fs = getInstance()->parser_save_fs;
+	if(!fs.is_open()) {
+		fs.open(getInstance()->dbg_file_path+"/parser.json", std::ios::out);
+	}
+	return fs;
+}
+
+void DebugMsg::parser_save_close() {
+	auto& fs = getInstance()->parser_save_fs;
 	fs.close();
 }
 

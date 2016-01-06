@@ -44,6 +44,9 @@ public:
     static std::ostream& parser_dbg();
     static void parser_close();
 
+    static std::ostream& parser_save();
+    static void parser_save_close();
+
     /**
      * @brief 获取解析器的debug输出文件流
      */
