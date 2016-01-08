@@ -48,6 +48,7 @@ public:
 	}
 	~PackageJIT_private() {
 		delete EE;
+		delete RTDyldMM;
 	}
 	LLVMContext context;
 	ExecutionEngine* EE = NULL;
