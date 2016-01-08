@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-24 17:15:29
 * @Last Modified by:   sxf
@@ -17,14 +17,14 @@ using namespace std;
 
 class FileTraversal : public IFileTraversal {
 public:
-	FileTraversal(MetaScriptRunner* msr, EPackage& epkg) 
+	FileTraversal(MetaScriptRunner* msr, EPackage& epkg)
 		: epkg(epkg) {
 		this->msr = msr;
 	}
 
-	virtual void Work(const std::string& now_path, 
-			  const std::string& filename, 
-			  const std::string& suffix) 
+	virtual void Work(const std::string& now_path,
+			  const std::string& filename,
+			  const std::string& suffix)
 	{
 		string filepath = now_path + "/" + filename;
 		if (suffix == ".lua") {
@@ -59,6 +59,12 @@ void EPackage::Load() {
 	string link_args = getRuntime();
 	if (link_args != str_null) // 添加runtime链接参数
 		msr->getBuilder()->AddLinkArgs(link_args);
+	insertProp("package_loaded", "true");
+}
+
+
+void EPackage::Run() {
+	PackageJIT::RunPlugin(getName(), msr);
 }
 
 const string& EPackage::getName() {
@@ -94,8 +100,8 @@ void EPackage::loadJson(const string& json) {
 	cJSON* cj = cJSON_Parse(json.c_str());
 	if (!cj) { printf("error json format\n"); return; }
 
-	for ( cJSON* p = cj->child; p != NULL; p = p->next ) 
-		if ( p->type == cJSON_String ) 
+	for ( cJSON* p = cj->child; p != NULL; p = p->next )
+		if ( p->type == cJSON_String )
 			insertProp(p->string, p->valuestring);
 
 	cJSON_Delete(cj);

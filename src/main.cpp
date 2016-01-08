@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-11-02 20:13:16
 * @Last Modified by:   sxf
@@ -12,6 +12,8 @@
 #include <string>
 #include "help.h"
 #include "PathUtils.h"
+#include "llvm/Support/Signals.h"
+
 
 using namespace std;
 
@@ -30,6 +32,8 @@ const char* cscw = "-s参数不能和-i参数同时使用, 请选其一指定单
 
 int main(int argc, const char *argv[])
 {
+	llvm::sys::PrintStackTraceOnErrorSignal();
+
     string nowdir = PathGetter::getNowPath();
 	string dir = "build"; // 默认构建位置，当前目录下新建build
 	string srcdir = "src"; // 默认源文件目录

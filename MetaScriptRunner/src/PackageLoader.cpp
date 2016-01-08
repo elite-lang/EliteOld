@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-24 17:21:09
 * @Last Modified by:   sxf
@@ -21,9 +21,9 @@ public:
 		this->msr = msr;
 	}
 
-	virtual void Work(const std::string& now_path, 
-			  const std::string& filename, 
-			  const std::string& suffix) 
+	virtual void Work(const std::string& now_path,
+			  const std::string& filename,
+			  const std::string& suffix)
 	{
 		string cfg_path = PathUtils::native(now_path+"/"+filename+"/package.json");
 		if (!FileUtils::test_file(cfg_path)) return;
@@ -52,7 +52,7 @@ PackageLoader::~PackageLoader() {
 
 /**
  * @brief 找出目录下所以的可加载项
- */	
+ */
 void PackageLoader::FindAll() {
 	DirFileTraversal dft(packages, msr);
 	FileUtils::dir_traversal(base_path, dft, FileUtils::only_dir);
@@ -73,4 +73,10 @@ void PackageLoader::LoadDefault() {
 		if (pkg->isDefaultLoad() && !pkg->isLoaded())
 			pkg->Load();
 	}
-} 
+
+	for (auto& p : packages) {
+		auto pkg = p.second;
+		if (pkg->isLoaded())
+			pkg->Run();
+	}
+}

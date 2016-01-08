@@ -47,7 +47,6 @@ void MetaScriptRunner::Finished() {
 	root = node_root;
 }
 
-
 bool MetaScriptRunner::run_file (std::string const &filename) {
 	return vm->run_file(filename);
 }

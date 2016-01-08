@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-11-08 10:20:02
 * @Last Modified by:   sxf
@@ -38,7 +38,7 @@ int Builder::BuildFile(std::string filename) {
 	string meta_path = this->buildpath + "/meta.bc";
 	meta_path = PathUtils::native(meta_path); // 本地化
 	worker->MetaGen(meta_path.c_str());
-	
+
 	// 生成obj
 	call_llc(outfile_path);
 	call_llc(meta_path);
@@ -120,15 +120,7 @@ Builder* Builder::Create(Worker* worker) {
 }
 
 Builder::Builder(Worker* worker) {
-	if (worker == 0) 
-		setWorker(Worker::CreateDefault(
-			PathGetter::getDefaultLexCfg(), 
-			PathGetter::getDefaultParserCfg(),
-			PathGetter::getElitePackagesPath(),
-			this
-		));
-	else 
-		setWorker(worker);
+	setWorker(worker);
 }
 
 Builder::~Builder() {
@@ -175,7 +167,7 @@ string Builder::get_file_name(const char* filename) {
 }
 
 int Builder::call_llc(std::string filein) {
-	
+
 #if !defined(_WIN32) && (defined(__linux__) || defined(__APPLE__))
 	string llc = PathGetter::getEliteToolsPath();
 	llc += "/llvm-3.6/llc";
@@ -206,8 +198,7 @@ int Builder::call_ld(std::string filein, std::string fileout) {
 	return system(ld.c_str());
 #endif
 #if defined(_WIN32)
-	
+
 #endif
 	return 0;
 }
-

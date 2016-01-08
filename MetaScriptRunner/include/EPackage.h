@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-24 15:55:11
 * @Last Modified by:   sxf
@@ -29,7 +29,7 @@ public:
 	 * @details 构造一个插件包时，当前路径需要被确定校验存在，并含有一个package.json的元数据配置项
 	 *          构造中，会解析package.json的相关数据，但不会加载其他任何内容
 	 *          对于自动加载型的插件包，需要在外层再扫描一次，判断并加载。
-	 * 
+	 *
 	 * @param path 当前软件包的路径，应为绝对路径
 	 * @param msr 当前MetaScriptRunner的指针，加载时，可能会加载lua脚本，或者epbc二进制码，该接口负责调用对应功能
 	 */
@@ -67,16 +67,19 @@ public:
 	 */
 	void Load();
 
+
+	void Run();
+
 	/**
 	 * @brief 获取当前包的属性值
-	 * 
+	 *
 	 * @param name 属性名
 	 * @return 对应的值
 	 */
 	const string& getProp(const string& name);
 
 	static string str_null;
-	
+
 private:
 	map<string, string> props;
 	string base_path;
@@ -90,7 +93,7 @@ private:
 
 	/**
 	 * @brief 向当前插件包中添加新的属性
-	 * 
+	 *
 	 * @param name 属性名
 	 * @param value 属性值
 	 */
