@@ -59,12 +59,12 @@ darwin：
 注释风格：
 
 ~~~cpp
-/**
- * @brief 设置解释器生成中间变量的目录，设置后自动打印中间过程
- *
- * @param path 设置路径，设置为NULL或不设置则不打印过程
- */
- static void setDebugFilePath(const char* path);
+    /**
+     * @brief 设置解释器生成中间变量的目录，设置后自动打印中间过程
+     *
+     * @param path 设置路径，设置为NULL或不设置则不打印过程
+     */
+    static void setDebugFilePath(const char* path);
 ~~~
 
 注释统一编写到头文件中，尽量不要在cpp文件中编写重要的注释。
@@ -72,10 +72,8 @@ darwin：
 cpp中常用的注释往往是遇到了可能的漏洞，或TODO标记，使用示例：
 
 ~~~cpp
-
-/// FIXME: 这个位置可能产生XXX漏洞
-/// TODO: 日后可以添加相关的XXX信息
-
+    /// FIXME: 这个位置可能产生XXX漏洞
+    /// TODO: 日后可以添加相关的XXX信息
 ~~~
 
 
