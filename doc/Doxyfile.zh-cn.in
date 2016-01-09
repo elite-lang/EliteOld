@@ -1,26 +1,26 @@
-PROJECT_NAME           = "@CMAKE_PROJECT_NAME@"  
-PROJECT_NUMBER         = @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RELEASE@  
-STRIP_FROM_PATH        = @PROJECT_SOURCE_DIR@  
-INPUT                  = @doxy_main_page@ \  
-                         @PROJECT_SOURCE_DIR@ 
+PROJECT_NAME           = "@CMAKE_PROJECT_NAME@"
+PROJECT_NUMBER         = @VERSION_MAJOR@.@VERSION_MINOR@.@VERSION_RELEASE@
+STRIP_FROM_PATH        = @PROJECT_SOURCE_DIR@
+INPUT                  = @doxy_main_page@ \
+                         @PROJECT_SOURCE_DIR@
 OUTPUT_DIRECTORY       = @PROJECT_SOURCE_DIR@/build-doc
-FILE_PATTERNS          = *.h \  
+FILE_PATTERNS          = *.h \
                          *.cpp \
-                         *.zh-cn.md 
+                         *.zh-cn.md
 
 IMAGE_PATH             = ./doc
 OUTPUT_LANGUAGE        = Chinese
-RECURSIVE              = YES  
-EXTRACT_ALL            = YES  
-EXTRACT_PRIVATE        = YES  
-EXTRACT_STATIC         = YES  
+RECURSIVE              = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
 BRIEF_MEMBER_DESC      = YES
 REPEAT_BRIEF           = YES
 BUILTIN_STL_SUPPORT    = YES
-EXCLUDE_PATTERNS       = extlib build bin third_party cmake example lib
+EXCLUDE_PATTERNS       = extlib build bin third_party cmake example lib header_libs
 USE_MDFILE_AS_MAINPAGE = index.zh-cn.md
 SEARCHENGINE           = YES
-SERVER_BASED_SEARCH    = NO 
+SERVER_BASED_SEARCH    = NO
 REFERENCED_BY_RELATION = YES
 REFERENCES_RELATION    = YES
 

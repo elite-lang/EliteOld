@@ -1,20 +1,22 @@
-开发者文档
-=================
+开发者文档       {#md-develop}
+===============
 
 对于每一位贡献者，非常感谢您在百忙之中帮助改进我们的项目。Elite是一款开源软件，我们欢迎任何人帮助我们完善本项目。同时也欢迎您提出任何的意见和建议，帮助我们改进。
 
 ### 目录 ###
 
 - @subpage md-proj-struct
+- @subpage md-doc
 - @subpage md-test
+
 
 ### 贡献本项目 ###
 
 如果您是一位开发者，欢迎您帮助我们改进项目，再小的改变都值得我们尊敬。如果您是一位设计师或美术设计人员，欢迎您帮助我们改进项目宣传，包括Logo设计、网页美术设计、帮助文档风格设计。如果您想帮助我们，或与我们洽谈，请与我们联系：
 
-- github：<https://github.com/elite-lang/Elite>    
-- 邮箱：<mailto:sunxfancy@gmail.com>    
-- gitter：[参与讨论](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+- github：<https://github.com/elite-lang/Elite>
+- 邮箱：<mailto:sunxfancy@gmail.com>
+- gitter：[参与讨论](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 贡献代码的流程非常简单，首先您需要从github上fork我们的项目到您的github账户中，通过阅读文档和相关讨论，了解到您具体要添加或修改的内容，您将代码修改完毕并传到您的仓库后，向我们的仓库发送PR即可。
 
@@ -33,7 +35,7 @@
 
 
 
-### 关于本手册 ### 
+### 关于本手册 ###
 
 本手册适合希望开发Elite语言，为Elite增加扩展，修改Elite底层结构的开发者阅读。
 本文档提供中英双语版，也欢迎贡献其他语言的翻译文档。
