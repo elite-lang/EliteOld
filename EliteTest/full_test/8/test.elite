@@ -1,0 +1,17 @@
+// 测试可能有歧义的符号
+
+int main() {
+    int x = 10;
+    if (x == 10) {
+        int x = 20;
+        if (x == 20)
+            printf("1");
+        else
+            printf("0");
+    }
+    if (x == 10)
+        printf("1");
+    else
+        printf("0");
+    return 0;
+}

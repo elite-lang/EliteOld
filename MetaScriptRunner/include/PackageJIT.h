@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-25 20:40:43
 * @Last Modified by:   sxf
@@ -30,17 +30,20 @@ class PackageJIT
 public:
 	/**
 	 * @brief 加载一款C插件
-	 * 
+	 *
 	 * @param path 插件的决定路径，指向一个epbc文件
 	 * @param name 插件名，影响插件的加载入口函数
 	 * @param msr MetaScriptRunner接口
 	 */
 	static void LoadPlugin(const std::string& path, const std::string& name, MetaScriptRunner* msr);
 
+
+	static void RunPlugin(const std::string& name, MetaScriptRunner* msr);
+	
 	/**
 	 * @brief 添加一个动态链接符号
 	 * @details 由于C插件的特殊性，静态链接的函数由于符号名未导出，JIT将无法调用到，所以我们需要为C接口导出动态链接符号
-	 * 
+	 *
 	 * @param name 符号名，一般C函数就是函数名
 	 * @param ptr 对应符号的地址，一般C函数为函数指针
 	 */

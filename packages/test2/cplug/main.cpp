@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-26 09:53:58
 * @Last Modified by:   sxf
@@ -22,9 +22,7 @@ static const FuncReg macro_funcs[] = {
 };
 
 extern "C" {
-	extern void HelloWorld();
 	extern void test2_elite_plugin_init(CodeGenContext* context) {
-		HelloWorld();
 		printf("test2_elite_plugin_init\n");
 		if (context == NULL) printf("Error for context\n");
 		else context->AddOrReplaceMacros(macro_funcs);

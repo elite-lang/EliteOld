@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-26 09:53:58
 * @Last Modified by:   sxf
@@ -6,10 +6,15 @@
 */
 
 #include <iostream>
+#include "ICodeGenContext.h"
 #include "CodeGenContext.h"
 #include "Model/nodes.h"
 
+
 using namespace std;
+
+
+extern "C" {
 
 static LValue new_macro(CodeGenContext* context, Node* node) {
 	printf("Happy New Year!\n");
@@ -27,21 +32,22 @@ static LValue new_macro(CodeGenContext* context, Node* node) {
 			args.push_back(p->codeGen(context));
 		}
 	if (args.size() == 0) {
-		return context->getLLCG()->New(t,args);
+		return context->getLLCG()->New(t,args, "bgc_malloc");
 	} else {
-		return context->getLLCG()->NewArray(t, args);
+		return context->getLLCG()->NewArray(t, args, "bgc_malloc_array");
 	}
 	return NULL;
 }
 
 static const FuncReg macro_funcs[] = {
-	{"new", new_macro},
-	{NULL, NULL}
+	{"new_bgc", new_macro},
+	{0, 0}
 };
 
-extern "C" {
-	extern void bgc_elite_plugin_init(CodeGenContext* context) {
-		if (context == NULL) printf("Error for context\n");
-		else context->AddOrReplaceMacros(macro_funcs);
-	}
+extern void bgc_elite_plugin_init(ICodeGenContext* context) {
+	printf("Bgc plugin loaded.\n");
+	if (context == NULL) printf("Error for context\n");
+	else context->AddOrReplaceMacros(macro_funcs);
+}
+
 }

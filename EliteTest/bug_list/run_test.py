@@ -13,7 +13,7 @@ class TestRunner:
 		self.compile_error = []
 		self.run_error = []
 		self.output_error = []
-		
+
 	def walk_dir(self, path):
 		for line in os.listdir(path):
 			filepath = os.path.join(path,line)
@@ -21,16 +21,16 @@ class TestRunner:
 				print filepath
 				ret = self.compile_path(filepath)
 				if ret != 0:
-					sys.exit(1)
+					break
 				ret = self.run_file(filepath+'/build/test', filepath+'/test.out')
 				if ret != 0:
-					sys.exit(1)
+					break
 
 
 	def compile_path(self, path):
 		cmd = self.bin_path + ' -i ' + path + '/test.elite -d ' + path + '/build/'
 		status, output = commands.getstatusoutput(cmd)
-		if status != 0:  
+		if status != 0:
 			print '\033[1;31m'
 			print '编译失败:', path
 			print output
@@ -50,7 +50,7 @@ class TestRunner:
 			return status
 		read_data = ''
 		with open(output_file, 'rU') as f:
-			read_data = f.read() 
+			read_data = f.read()
 		if read_data != output:
 			print '\033[1;31m'
 			print '执行结果错误：', filepath

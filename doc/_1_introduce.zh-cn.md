@@ -1,4 +1,4 @@
-Elite项目简介
+Elite项目简介   {#md-introduce}
 ===============
 
 Elite是一款编译器，同时也具有编译器生成器的功能，提供类似 [yacc] 和 [lex]的功能，能够解析用户自定义语法，并生成使用LALR分析法的编译器，做到了灵活多遍的语法形式。后端则依托 [LLVM] 项目，实现了编译到llvm字节码的功能，并通过调用llvm工具链，最终生成机器码或通过jit解释执行。
@@ -21,7 +21,7 @@ Elite项目为了实现可自定义语法这一特性，自行开发了词法分
 
 宏翻译是Elite项目中关键的概念，词法分析器和语法分析器，有点像lex和bison，但它们是脚本化的，更加灵活，语法翻译的配置脚本类似下面的：
 
-	<while_state> = "while" "(" <expr:exp> ")" <statement:s> 
+	<while_state> = "while" "(" <expr:exp> ")" <statement:s>
 	                {{ return makeList(newIDNode("while"), exp, s); }}
 	              ;
 
@@ -45,6 +45,6 @@ Elite项目为了实现可自定义语法这一特性，自行开发了词法分
 主要的开发工具是clang套件和llvm套件。大部分依赖项我们都已经设置好git仓库地址，编译时会自动下载并编译。
 
 [yacc]: http://dinosaur.compilertools.net/yacc/ "yacc"
-[lex]: http://dinosaur.compilertools.net/lex/ "lex" 
+[lex]: http://dinosaur.compilertools.net/lex/ "lex"
 [LLVM]: http://llvm.org/ "LLVM"
 [LLVM-IR]: http://llvm.org/docs/LangRef.html "LLVM-IR"

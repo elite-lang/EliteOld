@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-11-11 16:00:38
 * @Last Modified by:   sxf
@@ -21,7 +21,7 @@ void Worker::Init(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c) {
 	// 初始化词法分析器与语法分析器
 	l->Init(NULL);
     p->BuildParser();
-    
+
 }
 
 void Worker::Run(const char* input, const char* output) {
@@ -43,13 +43,13 @@ void Worker::MetaGen(const char* output) {
 }
 
 
-Worker* Worker::CreateDefault(const char* lex_cfg, 
+Worker* Worker::CreateDefault(const char* lex_cfg,
 	const char* parser_cfg, const char* package_path, Builder* b) {
 	Lex* l = new Lex();
 	Parser* p = Parser::NewLRParser();
 	MetaScriptRunner* s = MetaScriptRunner::Create();
 	RedCodeGen* c = RedCodeGen::Create();
-	
+
 	// 配置联系
     p->setLex(l);
     p->setScriptRunner(s);
@@ -57,26 +57,28 @@ Worker* Worker::CreateDefault(const char* lex_cfg,
 	// 向脚本引擎中注入更多接口
 	c->Init(NULL);
 	s->setCodeGenContext(c->getContext());
-    
-	// 配置外置插件
-	s->setUpLoader(package_path);
 
-	// 向脚本引擎中注入各对象
+    // 向脚本引擎中注入各对象
 	s->setLex(l);
 	s->setParser(p);
 	s->setBuilder(b);
 
+	// 配置外置插件
+	s->setUpLoader(package_path);
+
     // 配置词法分析器和语法分析器
 	l->ReadConfig(lex_cfg);
 	p->AddBNF(parser_cfg);
+
+    printf("Create Default\n");
 
 	return Create(l, p, s, c, b);
 }
 
 Worker* Worker::Create(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c, Builder* b) {
 	Worker* k = new Worker();
+    k->builder = b;
 	k->Init(l, p, s, c);
-	k->builder = b;
 	return k;
 }
 

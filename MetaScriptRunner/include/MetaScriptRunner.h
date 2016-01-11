@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-11-05 21:21:50
 * @Last Modified by:   sxf
@@ -59,7 +59,7 @@ public:
 
 	/**
 	 * @brief 执行一个lua脚本
-	 * 
+	 *
 	 * @param filename 脚本的完整或相对路径
 	 * @return 成功为true, 异常为false
 	 */
@@ -67,7 +67,7 @@ public:
 
 	/**
 	 * @brief 加载一个脚本, 但暂不执行 (需要pcall才执行)
-	 * 
+	 *
 	 * @param filename 脚本的完整或相对路径
 	 * @return 成功为true, 异常为false
 	 */
@@ -75,7 +75,7 @@ public:
 
 	/**
 	 * @brief 加载一段内存中的lua脚本 (不执行)
-	 * 
+	 *
 	 * @param chunk 脚本字符串
 	 * @return 成功为true, 异常为false
 	 */
@@ -83,7 +83,7 @@ public:
 
 	/**
 	 * @brief 运行一段内存中的lua脚本
-	 * 
+	 *
 	 * @param chunk 脚本字符串
 	 * @return 成功为true, 异常为false
 	 */
@@ -91,26 +91,26 @@ public:
 
 	void setUpLoader(const string& path);
 
-	void setCodeGenContext(CodeGenContext* ctx) { context = ctx; } 
+	void setCodeGenContext(CodeGenContext* ctx) { context = ctx; }
 	CodeGenContext* getCodeGenContext() { return context; }
 
-	void setLex(LexInterface* _lex) { lex = _lex; } 
+	void setLex(LexInterface* _lex) { lex = _lex; }
 	LexInterface* getLex() { return lex; }
-	
-	void setParser(Parser* _parser) { parser = _parser; } 
+
+	void setParser(Parser* _parser) { parser = _parser; }
 	Parser* getParser() { return parser; }
-	
-	void setBuilder(Builder* _builder) { builder = _builder; } 
+
+	void setBuilder(Builder* _builder) { builder = _builder; }
 	Builder* getBuilder() { return builder; }
-	
+
 protected:
 	OOLUA::Script* vm;
 	Node* root;
-	PackageLoader* loader;
-	CodeGenContext* context;
-	LexInterface* lex;
-	Parser* parser;
-	Builder* builder;
+	PackageLoader* loader = NULL;
+	CodeGenContext* context = NULL;
+	LexInterface* lex = NULL;
+	Parser* parser = NULL;
+	Builder* builder = NULL;
 
 	MetaScriptRunner();
 	~MetaScriptRunner();
