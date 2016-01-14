@@ -10,20 +10,20 @@ Elite是一款脚本化驱动的编译器，一般的编程语言，语法是固
 
 这个特点，使得Elite非常容易自由开发，成为一款领域专业语言（DSL），在自由配置后，方便地表达专业的相关内容。
 
-详细请参加文档： <http://elite-lang.github.io/doc/zh-cn/>
+详细请参加文档： <http://elite-lang.org/doc/zh-cn/>
 
 ## 编译安装
 
 clone全部仓库，注意添加`--recursive`参数来下载全部子项目
 ```
-git clone --depth=1 --recursive git@github.com:elite-lang/Elite.git 
+git clone --depth=1 --recursive git@github.com:elite-lang/Elite.git
 ```
 
 本项目是在Ubuntu14.04 64位系统下开发的，依赖cmake-2.8, LLVM-3.6和glibmm-2.4、giomm-2.4, flex-2.5 bison-3.0
 lua  oolua  dyncall
 
 ```
-sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev flex bison libedit-dev 
+sudo apt-get install cmake llvm-3.6-dev libglibmm-2.4-dev flex bison libedit-dev
 ```
 
 修复ubuntu源中LLVM-3.6的bug:
@@ -42,7 +42,7 @@ make release
 ```
 mkdir build && cd build
 cmake ..   //cmake配置
-make deps  //下载并构建依赖项目 
+make deps  //下载并构建依赖项目
 make       //构建项目
 ```
 
@@ -52,7 +52,7 @@ make       //构建项目
 
 项目不会向系统添加任何文件，希望使用环境变量配置，将编译器添加到PATH目录中，并且ELITE_HOME也确保编译器能够找到默认的词法、语法配置文件
 ```
-# for elite 
+# for elite
 export ELITE_HOME=【您的Elite仓库地址】
 export PATH=$ELITE_HOME/bin:$ELITE_HOME/tools:$PATH
 ```
@@ -79,7 +79,7 @@ void hello(int k, int g) {
 	int y = k + g;
 	printf("%d\n", y);
 	if (k + g < 5) printf("right\n");
-}	
+}
 
 
 void go(int k) {
@@ -93,7 +93,7 @@ void go(int k) {
 void print(int k) {
 	for (int i = 0; i < 10; i = i+1) {
 		printf("hello-%d\n",i);
-	} 
+	}
 }
 
 
@@ -158,9 +158,9 @@ Elite分为如下几个模块：
 
 希望和我们交流非常容易，可以选择发邮件或在github上直接和我们联系，都可以。
 
-- github：<https://github.com/elite-lang/Elite>    
-- 邮箱：<mailto:sunxfancy@gmail.com>    
-- gitter：[参与讨论](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+- github：<https://github.com/elite-lang/Elite>
+- 邮箱：<mailto:sunxfancy@gmail.com>
+- gitter：[参与讨论](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## 开源协议
 

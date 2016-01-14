@@ -1,5 +1,12 @@
 Change Log
-================
+===============
+
+### v0.8.3
+
+大幅修缮了插件系统,修复JIT的bug
+新增ICodeGenContext接口
+修复了BasicBlock的相关bug
+
 
 ### v0.8.2
 
