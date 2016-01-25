@@ -27,7 +27,8 @@ void Worker::Init(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c) {
 void Worker::Run(const char* input, const char* output) {
 	lex->setData(input);
 	Grammer_Node* root = Grammer_Node::NewNode();
-	parser->Parse(root);
+	int err = parser->Parse(root);
+    if (err) exit(1);
 	Node* node = script_runner->getRoot();
 	if (node == NULL) {
 		printf("分析器异常，返回为NULL\n");
