@@ -53,6 +53,13 @@ public:
     static std::ostream& red_dbg();
     static void red_close();
 
+
+    static std::ostream& lex_graphviz();
+    static void lex_graphviz_close();
+
+    static std::ostream& parser_graphviz();
+    static void parser_graphviz_close();
+
 	static DebugMsg_Private* getInstance();
 private:
 	static DebugMsg_Private* instance;
