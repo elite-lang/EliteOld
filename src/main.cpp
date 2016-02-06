@@ -89,10 +89,13 @@ int main(int argc, const char *argv[])
 		if (only_one_file == -1)
 			only_one_file = 0;
 
+
 		// 创建Worker和Builder
 		defalut_lex    = PathUtils::native(defalut_lex);
 		defalut_parser = PathUtils::native(defalut_parser);
 		Builder* builder = Builder::Create();
+		if (is_show_time == 1)
+			builder->setDebugFilePath(dir.c_str());
 		Worker* worker = Worker::CreateDefault(
 			defalut_lex.c_str(), defalut_parser.c_str(),
 			PathGetter::getElitePackagesPath(),
@@ -100,8 +103,7 @@ int main(int argc, const char *argv[])
 		);
 		builder->setWorker(worker);
 		builder->SetBuildPath(dir);
-		if (is_show_time == 1)
-			builder->setDebugFilePath(dir.c_str());
+
 		if (only_one_file == 1) {
 			builder->BuildFile(onlyfile);
 		} else {
