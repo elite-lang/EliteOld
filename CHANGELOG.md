@@ -1,5 +1,18 @@
 Change Log
-================
+===============
+
+### v0.8.4
+
+修复了部分插件系统的bug
+完成了graphviz图的绘制
+
+
+### v0.8.3
+
+大幅修缮了插件系统,修复JIT的bug
+新增ICodeGenContext接口
+修复了BasicBlock的相关bug
+
 
 ### v0.8.2
 

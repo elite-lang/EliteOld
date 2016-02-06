@@ -47,6 +47,11 @@ flex bison
 8. 中间过程的导出 ok
 	使用log模块导出中间调试数据，用作EliteShow的展示
 
+9. 添加break语句, 终止循环
+
+10. 添加switch, do while, do until语句
+
+
 ## 次要任务
 
 1. 编译器输入参数的处理，目前输入参数有误时没有提示信息

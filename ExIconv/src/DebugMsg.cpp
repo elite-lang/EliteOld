@@ -21,6 +21,9 @@ public:
 	fstream parser_dbg_fs;
 	fstream parser_save_fs;
 	fstream red_dbg_fs;
+
+	fstream lex_graphviz_fs;
+	fstream parser_graphviz_fs;
 };
 
 void DebugMsg::setDebugFilePath(const char* path) {
@@ -106,6 +109,39 @@ void DebugMsg::red_close() {
 	auto& fs = getInstance()->red_dbg_fs;
 	fs.close();
 }
+
+
+
+std::ostream& DebugMsg::lex_graphviz() {
+	auto& fs = getInstance()->lex_graphviz_fs;
+	if(!fs.is_open()) {
+		fs.open(getInstance()->dbg_file_path+"/lex.gv", std::ios::out);
+		return fs;
+	}
+	return fs;
+}
+
+void DebugMsg::lex_graphviz_close() {
+	auto& fs = getInstance()->lex_graphviz_fs;
+	fs.close();
+}
+
+
+std::ostream& DebugMsg::parser_graphviz() {
+	auto& fs = getInstance()->parser_graphviz_fs;
+	if(!fs.is_open()) {
+		cout << getInstance()->dbg_file_path+"/parser.gv" << endl;
+		fs.open(getInstance()->dbg_file_path+"/parser.gv", std::ios::out);
+		return fs;
+	}
+	return fs;
+}
+
+void DebugMsg::parser_graphviz_close() {
+	auto& fs = getInstance()->parser_graphviz_fs;
+	fs.close();
+}
+
 
 DebugMsg_Private* DebugMsg::getInstance() {
 	if (instance == NULL)
