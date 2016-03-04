@@ -53,6 +53,8 @@ public:
     static std::ostream& red_dbg();
     static void red_close();
 
+    static std::ostream& red_llvm_bc();
+    static void red_llvm_bc_close();
 
     static std::ostream& lex_graphviz();
     static void lex_graphviz_close();

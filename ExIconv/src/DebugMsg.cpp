@@ -24,6 +24,7 @@ public:
 
 	fstream lex_graphviz_fs;
 	fstream parser_graphviz_fs;
+	fstream llvm_bc_fs;
 };
 
 void DebugMsg::setDebugFilePath(const char* path) {
@@ -110,6 +111,19 @@ void DebugMsg::red_close() {
 	fs.close();
 }
 
+std::ostream& DebugMsg::red_llvm_bc() {
+	auto& fs = getInstance()->llvm_bc_fs;
+	if(!fs.is_open()) {
+		fs.open(getInstance()->dbg_file_path+"/llvm.bc", std::ios::out);
+		return fs;
+	}
+	return fs;
+}
+
+void DebugMsg::red_llvm_bc_close() {
+	auto& fs = getInstance()->llvm_bc_fs;
+	fs.close();
+}
 
 
 std::ostream& DebugMsg::lex_graphviz() {
