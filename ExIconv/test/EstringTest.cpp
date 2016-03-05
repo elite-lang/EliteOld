@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-16 12:02:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2015-12-24 22:32:10
+* @Last Modified time: 2016-03-05 17:01:18
 */
 
 #include <gtest/gtest.h>
@@ -70,4 +70,13 @@ __ESTRING_TEST__(Enter)
     printf("%s\n",substr.to_utf8().c_str());
     estring ans = "这里稍稍有点问题so, I";
     EXPECT_EQ(substr==ans, true);
+}
+
+
+__ESTRING_TEST__(Construction2AndFind)
+{
+	estring str("hello您好, 这是一段中英混排");
+	estring estr(str.ec_str());
+	EXPECT_EQ(str==estr, true);
+	EXPECT_EQ(str.find('l'), 2);
 }
