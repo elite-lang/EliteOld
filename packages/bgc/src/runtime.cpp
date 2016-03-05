@@ -5,10 +5,9 @@
 using namespace std;
 
 extern "C" {
-    
+
 
 extern void* bgc_malloc(int size) {
-    printf("bgc_malloc %d\n", size);
     return GC_malloc(size);
 }
 
@@ -28,7 +27,6 @@ extern void* bgc_malloc_array(int size, ...) {
 
     int full_size = wd.size()*sizeof(int) + size* num;
     int* ans = (int*) GC_malloc(full_size);
-    printf("bgc_malloc_array %d\n", full_size);
     int* i = ans;
     for (auto p = wd.begin(); p != wd.end(); ++p, ++i) {
         *i = *p;
