@@ -9,7 +9,8 @@
 #include "ICodeGenContext.h"
 #include "CodeGenContext.h"
 #include "Model/nodes.h"
-
+#include "Pass.h"
+#include "PassManager.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ using namespace std;
 extern "C" {
 
 static LValue new_macro(CodeGenContext* context, Node* node) {
-	printf("Happy New Year!\n");
+	printf("Happy New Year! ~ From Bcg Package\n");
 	TypeNode* tn = (TypeNode*) node;
 	LValue t = context->FindSrcType(tn->getTypeName());
 
@@ -40,14 +41,19 @@ static LValue new_macro(CodeGenContext* context, Node* node) {
 }
 
 static const FuncReg macro_funcs[] = {
-	{"new_bgc", new_macro},
+	{"new", new_macro},
 	{0, 0}
 };
 
 extern void bgc_elite_plugin_init(ICodeGenContext* context) {
 	printf("Bgc plugin loaded.\n");
 	if (context == NULL) printf("Error for context\n");
-	else context->AddOrReplaceMacros(macro_funcs);
+	else {
+		auto pm = context->getPassManager();
+		auto main_list = pm->getPassList("main");
+		Pass* pass = *(main_list->begin());
+		pass->AddOrReplaceMacros(macro_funcs);
+	}
 }
 
 }

@@ -56,7 +56,7 @@ Worker* Worker::CreateDefault(const char* lex_cfg,
     p->setScriptRunner(s);
 
 	// 向脚本引擎中注入更多接口
-	c->Init(NULL);
+	c->Init();
 	s->setCodeGenContext(c->getContext());
 
     // 向脚本引擎中注入各对象
