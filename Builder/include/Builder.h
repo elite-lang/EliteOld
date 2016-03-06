@@ -26,6 +26,9 @@ public:
 	// 构建其中指定的路径
 	int BuildPath(std::string path, bool isRecursive = false);
 
+	// 自动构建源代码目录下的全部内容
+	int BuildAll();
+
 	// 添加一个链接文件, 如果是bc的话, 会自动用llc编译成本地文件, 如果是.o则直接链接
 	int AddLinkFile(std::string filename);
 

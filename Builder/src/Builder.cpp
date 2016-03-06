@@ -57,12 +57,21 @@ int Builder::BuildFile(std::string filename) {
 }
 
 
-// 构建其中指定的路径
+// 构建其中指定的路径(构建其中一个包)
 int Builder::BuildPath(std::string path, bool isRecursive) {
+	for (auto item : src_paths.getPaths()) {
+		
+	}
+	return 0;
+}
+
+
+int Builder::BuildAll() {
 
 
 	return 0;
 }
+
 
 // 添加一个链接文件, 如果是bc的话, 会自动用llc编译成本地文件, 如果是.o则直接链接
 int Builder::AddLinkFile(std::string filename) {
@@ -158,9 +167,8 @@ string Builder::get_file_name(const char* filename) {
 	const char* file;
 	if (ans == 0) file = filename;
 	else file = ans+1;
-	int size = 0;
-	for (const char* p = file; *p != 0; ++p, ++size)
-		if (*p == '.') break;
+	int size = strrchr(file, '.') - file;
+	if (size <= 0) { string s = file; return s; }
 	char* str = new char[size+1];
 	strncpy(str, file, size);
 	str[size] = 0;
