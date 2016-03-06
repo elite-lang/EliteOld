@@ -19,8 +19,8 @@ SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 include_directories(lib
-					../Lex/include 
-					../LR_Scanner/include 
+					../Lex/include
+					../LR_Scanner/include
 					../RedApple/includes)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib)
 endif()
@@ -30,7 +30,7 @@ endif()
 
 # 核心路径配置
 include_directories(src include)
-file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
 list(REMOVE_ITEM  source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 if(USE_DYNAMIC)
@@ -48,8 +48,8 @@ target_link_libraries(toolua meta oolua lua dl lex scanner red)
 
 # Find the libraries that correspond to the LLVM components
 # that we wish to use
-llvm_map_components_to_libnames(llvm_libs 
-    support core irreader executionengine interpreter 
+llvm_map_components_to_libnames(llvm_libs
+    support core irreader executionengine interpreter
     mc mcjit bitwriter x86codegen target)
 
 # Link against LLVM libraries

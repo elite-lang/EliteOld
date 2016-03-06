@@ -58,20 +58,21 @@ int Builder::BuildFile(std::string filename) {
 
 
 // 构建其中指定的路径
-int Builder::BuildPath(std::string filepath, bool isRecursive) {
+int Builder::BuildPath(std::string path, bool isRecursive) {
 
 
 	return 0;
 }
 
 // 添加一个链接文件, 如果是bc的话, 会自动用llc编译成本地文件, 如果是.o则直接链接
-int AddLinkFile(std::string filename) {
+int Builder::AddLinkFile(std::string filename) {
 	return 0;
 }
 
 
 // 添加一个链接路径
-int AddLinkPath(std::string filepath) {
+int Builder::AddLinkPath(std::string path) {
+	link_paths.AddPath(PathUtils::native(path));
 	return 0;
 }
 
@@ -82,13 +83,15 @@ int Builder::PreBuildAll() {
 
 
 // 添加源代码的搜索路径
-int Builder::AddSearchPath(std::string path) {
+int Builder::AddSrcPath(std::string path) {
+	src_paths.AddPath(PathUtils::native(path));
 	return 0;
 }
 
 
 // 添加库路径
 int Builder::AddLibPath(std::string path) {
+	lib_paths.AddPath(PathUtils::native(path));
 	return 0;
 }
 
