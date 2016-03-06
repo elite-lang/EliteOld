@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-20 11:38:17
 * @Last Modified by:   sxf
@@ -18,6 +18,7 @@ class PathUtils
 {
 public:
 	static std::string native(const std::string& path);
+	static std::string parent_path(const std::string& path);
 };
 
 

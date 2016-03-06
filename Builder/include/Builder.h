@@ -24,7 +24,7 @@ public:
 	int BuildFile(std::string filename);
 
 	// 构建其中指定的路径
-	int BuildPath(std::string path, bool isRecursive = false);
+	int BuildPath(std::string package, bool isRecursive = false);
 
 	// 自动构建源代码目录下的全部内容
 	int BuildAll();
@@ -60,6 +60,9 @@ public:
 	static Builder* Create(Worker* worker = 0);
 	void Close();
 
+
+	static int call_llc(std::string filein);
+	static int call_ld(std::string filein, std::string fileout, std::string link_args);
 protected:
 	Builder(Worker* worker = 0);
 	~Builder();
@@ -71,8 +74,7 @@ protected:
 	static std::string make_default_name(const char* filename);
 	static std::string get_file_name(const char* filename);
 
-	int call_llc(std::string filein);
-	int call_ld(std::string filein, std::string fileout);
+
 
 	/**
 	 * 程序源文件目录

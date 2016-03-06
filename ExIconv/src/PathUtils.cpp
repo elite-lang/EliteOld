@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-20 11:55:34
 * @Last Modified by:   sxf
@@ -13,8 +13,12 @@ using namespace llvm;
 using namespace llvm::sys;
 
 std::string PathUtils::native(const std::string& path) {
-	SmallVector<char, 128> result;
+	SmallVector<char, 256> result;
 	path::native(path, result);
 	result.append(1, (char)0);
 	return result.data();
+}
+
+std::string PathUtils::parent_path(const std::string& path) {
+	return path::parent_path(path).str();
 }

@@ -11,6 +11,7 @@
 #include "PackageChanger.hpp"
 
 #include <string>
+#include <set>
 using namespace std;
 
 class file_searcher : public IFileTraversal {
@@ -23,13 +24,29 @@ public:
 			  const string& filename,
 			  const string& suffix) {
 
-        if (file == (filename + "." + suffix)) {
+        if (file == filename && ans.empty()) {
             ans = now_path + "/" + file;
         }
     }
     string ans;
 private:
     string file;
+};
+
+class package_finder : public IFileTraversal {
+public:
+    package_finder(const string& base_path, set<string>& ps)
+        : packages(ps) {
+        basepath = base_path;
+    }
+    virtual void Work(const string& now_path,
+			  const string& filename,
+			  const string& suffix) {
+        string s = now_path.substr(basepath.length());
+        packages.insert(s);
+    }
+    set<string>& packages;
+    string basepath;
 };
 
 
@@ -70,5 +87,11 @@ std::vector<std::string> PathSet::FindPackage(const std::string& package) {
 
 
 std::vector<std::string> PathSet::FindAllPackageName() {
-
+    set<string> packages;
+    for (string& item : paths) {
+        package_finder pf(item, packages);
+        FileUtils::dir_recursive_traversal(item, pf, FileUtils::only_dir);
+    }
+    vector<string> v(packages.begin(), packages.end());
+    return v;
 }

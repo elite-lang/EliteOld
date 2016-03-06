@@ -25,6 +25,12 @@ void Worker::Init(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c) {
 }
 
 void Worker::Run(const char* input, const char* output) {
+	Node* node = MakeAST(input);
+	codegen->PreScan(node);
+	codegen->Make(node, output, "Main");
+}
+
+Node* Worker::MakeAST(const char* input) {
 	lex->setData(input);
 	Grammer_Node* root = Grammer_Node::NewNode();
 	int err = parser->Parse(root);
@@ -35,8 +41,7 @@ void Worker::Run(const char* input, const char* output) {
 		exit(1);
 	}
 	node->print(0);
-	codegen->PreScan(node);
-	codegen->Make(node, output, "Main");
+    return node;
 }
 
 void Worker::MetaGen(const char* output) {
