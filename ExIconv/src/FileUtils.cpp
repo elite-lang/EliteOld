@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-11 18:48:19
 * @Last Modified by:   sxf
@@ -21,6 +21,11 @@ int FileUtils::create_directory(const std::string& path, bool IgnoreExisting) {
 	return 0;
 }
 
+int FileUtils::create_directories(const std::string& path, bool IgnoreExisting) {
+	llvm::sys::fs::create_directories(path, IgnoreExisting);
+	return 0;
+}
+
 bool FileUtils::isNeedUpdate(const std::string& cfg_path, const std::string& save_path) {
 	file_status save_file_status;
 	status (save_path, save_file_status);
@@ -36,7 +41,7 @@ bool FileUtils::isNeedUpdate(const std::string& cfg_path, const std::string& sav
 	}
 	TimeValue save_time = save_file_status.getLastModificationTime();
 	TimeValue cfg_time  = cfg_file_status.getLastModificationTime();
-	
+
 	if (save_time > cfg_time) return false;
 	else {
 		printf("\n\n##### 时间不正确\n\n\n");
@@ -113,7 +118,7 @@ std::string FileUtils::fileReader(const char* path) {
     std::ifstream t(path, std::ios::binary);
 	std::string str;
 
-	t.seekg(0, std::ios::end);   
+	t.seekg(0, std::ios::end);
 	str.reserve(t.tellg());
 	t.seekg(0, std::ios::beg);
 

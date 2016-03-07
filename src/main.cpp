@@ -37,6 +37,7 @@ int main(int argc, const char *argv[])
     string nowdir = PathGetter::getNowPath();
 	string dir = "build"; // 默认构建位置，当前目录下新建build
 	string srcdir = "src"; // 默认源文件目录
+	string package;
 	string onlyfile; // 单独只构建一个文件
 	string defalut_lex = PathGetter::getDefaultLexCfg();
 	string defalut_parser = PathGetter::getDefaultParserCfg();
@@ -68,6 +69,15 @@ int main(int argc, const char *argv[])
 					exit(0);
 				}
 				srcdir = safe_getNext(argc, argv, i);
+				only_one_file = 0;
+				continue;
+			}
+			if (opt == "-pkg" || opt == "--package") {
+				if (only_one_file == 1) {
+					cout << cscw;
+					exit(0);
+				}
+				package = safe_getNext(argc, argv, i);
 				only_one_file = 0;
 				continue;
 			}
@@ -107,7 +117,8 @@ int main(int argc, const char *argv[])
 		if (only_one_file == 1) {
 			builder->BuildFile(onlyfile);
 		} else {
-			builder->BuildPath(srcdir);
+			builder->AddSrcPath(srcdir);
+			builder->BuildPath(package);
 		}
 		builder->Close();
 	}

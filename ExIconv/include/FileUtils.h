@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-11 18:42:32
 * @Last Modified by:   sxf
@@ -16,8 +16,8 @@
  */
 class IFileTraversal {
 public:
-	virtual void Work(const std::string& now_path, 
-			  const std::string& filename, 
+	virtual void Work(const std::string& now_path,
+			  const std::string& filename,
 			  const std::string& suffix) = 0;
 };
 
@@ -28,6 +28,7 @@ class FileUtils
 {
 public:
 	static int create_directory(const std::string& path, bool IgnoreExisting=true);
+	static int create_directories(const std::string& path, bool IgnoreExisting=true);
 	static bool isNeedUpdate(const std::string& cfg_path, const std::string& save_path);
 	static bool test_dir(const std::string& path);
 	static bool test_file(const std::string& path);
