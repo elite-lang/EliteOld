@@ -27,7 +27,7 @@ void Worker::Init(LexInterface* l, Parser* p, ScriptRunner* s, CodeGen* c) {
 void Worker::Run(const char* input, const char* output) {
 	Node* node = MakeAST(input);
 	codegen->PreScan(node);
-	codegen->Make(node, output, "Main");
+	codegen->Make(node, output, "");
 }
 
 Node* Worker::MakeAST(const char* input) {

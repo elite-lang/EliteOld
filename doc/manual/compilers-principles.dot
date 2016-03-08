@@ -1,0 +1,11 @@
+digraph g {
+    rankdir=LR
+    node [shape=box]
+    source [shape=plaintext]
+    source -> "lexcial ananlysis"
+    "lexcial ananlysis" -> parsing [label="  token"]
+    parsing -> "marco translate" [label="  AST "]
+    "marco translate" -> LLC [label= "  .bc"]
+    LLC -> ".o file"
+    ".o file" [shape=plaintext]
+}

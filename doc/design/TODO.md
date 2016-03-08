@@ -22,7 +22,7 @@ flex bison
 
 ## 核心任务
 
-1. 项目构建器 Builder的完善
+1. 项目构建器 Builder的完善   ok
 	项目构建目前仅能进行单个文件的编译，要实现类似Java的编译方式，给定一个文件夹，编译好最终程序
 
 2. 元脚本解析器的完善
@@ -47,9 +47,11 @@ flex bison
 8. 中间过程的导出 ok
 	使用log模块导出中间调试数据，用作EliteShow的展示
 
-9. 添加break语句, 终止循环
+9. 添加break语句, 终止循环  ok
 
 10. 添加switch, do while, do until语句
+
+11. 添加包和函数名修饰
 
 
 ## 次要任务
