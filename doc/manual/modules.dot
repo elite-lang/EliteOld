@@ -1,0 +1,15 @@
+digraph g {
+    graph [autosize=false, size="16,8", resolution=100, overlap=prism, overlap_scaling=0.01, ratio=0.7];
+    node [shape=Mrecord]
+    lp [label="Lexical analyzer and Parser"]
+    macro [label="Macro Translator"]
+    llcg [label="Low-Level Code Generator"]
+    pm [label="Pass Manager"]
+    model [label="Node Models"]
+    lp -> model [label=" each action will build the model"]
+    model -> pm [label="run a model"]
+    pm -> macro [label="each pass will call"]
+    macro -> model [label="get varibles"]
+    macro -> macro [label=" recursive call"]
+    macro -> llcg [label=" each macro will call"]
+}

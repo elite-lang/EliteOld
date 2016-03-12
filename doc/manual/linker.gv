@@ -1,0 +1,16 @@
+digraph g {
+    rankdir=LR
+    node [shape=box]
+    "main.out" [shape=plaintext]
+    file3, file2, file1 [shape=plaintext]
+    file1 -> "file1.bc" [label=compile]
+    file2 -> "file2.bc" [label=compile]
+    file3 -> "file3.bc" [label=compile]
+    "file1.bc" -> "file1.o" [label=llc]
+    "file2.bc" -> "file2.o" [label=llc]
+    "file3.bc" -> "file3.o" [label=llc]
+    "file1.o" -> linker
+    "file2.o" -> linker
+    "file3.o" -> linker
+    linker -> "main.out"
+}

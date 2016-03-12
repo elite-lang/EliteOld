@@ -1,13 +1,24 @@
 #ifndef MEMBLOCK_HPP
 #define MEMBLOCK_HPP
 
+#include <cstdio>
 #include <cstdlib>
-#include <set>
 
 void* operator new (size_t size, const char* ptr) {
     int* p = (int*) malloc(size + sizeof(int));
     *p = 1;
     return p + 1;
+}
+
+
+void sptr_ref(void* p) {
+    int* k = (int*) p;
+    (*k)++;
+}
+
+void sptr_unref(void* p) {
+    int* k = (int*) p;
+    (*k)--;
 }
 
 
@@ -19,6 +30,7 @@ public:
     }
     sptr<T>& operator=(T* p) {
         ptr = p;
+        return *this;
     }
 
     sptr(const sptr<T>& p) {
@@ -28,6 +40,7 @@ public:
     sptr<T>& operator=(const sptr<T>& p) {
         ptr = p.ptr;
         ref();
+        return *this;
     }
 
     ~sptr() {
@@ -54,15 +67,18 @@ public:
 
 protected:
     void ref() {
+        printf("ref\n");
         int* r = (int*) ptr - 1;
         (*r)++;
     }
     void unref() {
+        printf("unref\n");
         int* r = (int*) ptr - 1;
         (*r)--;
         if (*r == 0) {
             ptr->~T();
             free(r);
+            printf("free\n");
         }
     }
 
