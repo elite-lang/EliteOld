@@ -12,6 +12,8 @@ public:
     const std::string& genCode();
     const std::string& runCode();
 
+    std::string output;
+
 protected:
     lua_State* L;
 
@@ -20,7 +22,6 @@ protected:
 
     const std::string& input;
     std::string code_string;
-    std::string output;
 };
 
 

@@ -19,7 +19,7 @@ const std::string& Preprocessor::genCode() {
 
 const std::string& Preprocessor::runCode() {
     lua_pushlightuserdata(L, this);
-    lua_setfield(L, -1, "__preprocessor");
+    lua_setfield(L, LUA_REGISTRYINDEX, "__preprocessor");
 
     return output;
 }
@@ -37,6 +37,12 @@ static int loadStr(lua_State* L) {
     int id = lua_tonumber(L, -1);
     lua_rawgeti(L, LUA_REGISTRYINDEX, id);
     const char* str = lua_tostring(L, lua_tonumber(L, -1));
-    lua_pop(L, 2);
-    output += str;
+
+    // get the pointer for Class Preprocess
+    lua_getfield(L, LUA_REGISTRYINDEX, "__preprocessor");
+    Preprocessor* p = (Preprocessor*)lua_topointer(L, -1);
+    p->output += str;
+
+    lua_pop(L, 3);
+    return 0;
 }
