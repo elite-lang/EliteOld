@@ -17,7 +17,7 @@ public:
 protected:
     lua_State* L;
 
-    int add_const_str(std::string::iterator p, std::string::iterator q);
+    int add_const_str(std::string::const_iterator p, std::string::const_iterator q);
     int pt_size = 0;
 
     const std::string& input;
