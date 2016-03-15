@@ -1,15 +1,7 @@
 #include "Preprocessor.h"
+#include <cctype>
 
 using namespace std;
-
-Preprocessor::Preprocessor (const std::string& input, lua_State* L)
-    : input(input) {
-    this->L = L;
-}
-
-Preprocessor::~Preprocessor () {
-
-}
 
 
 const std::string& Preprocessor::genCode() {
@@ -24,19 +16,15 @@ const std::string& Preprocessor::genCode() {
             e = (++p);
             if (is_script) script.append(b, e);
             else {
-                int p = add_const_str(b, e);
+                int d = add_const_str(b, e);
                 script += "__loadStr(";
-                script += p;
+                script += d;
                 script += ");";
             }
             b = e;
             if (*b == '#') { ++b; is_script = true; }
             else is_script = false;
             if (b == input.end()) break;
-        }
-
-        if (*p == '$' && !is_script) {
-
         }
     }
 
@@ -45,8 +33,9 @@ const std::string& Preprocessor::genCode() {
 }
 
 const std::string& Preprocessor::runCode() {
+    lua_pushglobaltable(L);
     lua_pushlightuserdata(L, this);
-    lua_setfield(L, LUA_REGISTRYINDEX, "__preprocessor");
+    lua_setfield(L, -2, "__preprocessor");
 
     return output;
 }
@@ -60,16 +49,38 @@ int Preprocessor::add_const_str(
     return luaL_ref(L, LUA_REGISTRYINDEX);
 }
 
+static std::string add_lua_call(const char*& p) {
+    auto b = p;
+    while (isalpha(*p)||isdigit(*p)||(*p=='_')) ++p;
+    if (*p == '(') {
+        for (int k = 1; k != 0; ++p) {
+            if (*p == '(') ++k;
+            if (*p == ')') --k;
+        }
+    }
+    return string(b, p-b);
+}
 
-static int loadStr(lua_State* L) {
+
+static int lua_loadStr(lua_State* L) {
     int id = lua_tonumber(L, -1);
     lua_rawgeti(L, LUA_REGISTRYINDEX, id);
     const char* str = lua_tostring(L, lua_tonumber(L, -1));
 
     // get the pointer for Class Preprocess
-    lua_getfield(L, LUA_REGISTRYINDEX, "__preprocessor");
+    lua_pushglobaltable(L);
+    lua_getfield(L, -1, "__preprocessor");
     Preprocessor* p = (Preprocessor*)lua_topointer(L, -1);
-    p->output += str;
+    lua_pushglobaltable(L);
+    lua_getfield(L, -1, "Escape");
+    bool b = lua_toboolean(L, -1);
+    lua_pop(L, 2);
+
+    if (b == false)
+        p->output += str;
+    else {
+        
+    }
 
     lua_pop(L, 3);
     return 0;
@@ -79,7 +90,8 @@ static int lua_echo (lua_State *L) {
   int n = lua_gettop(L);  /* number of arguments */
 
   // get the pointer for Class Preprocess
-  lua_getfield(L, LUA_REGISTRYINDEX, "__preprocessor");
+  lua_pushglobaltable(L);
+  lua_getfield(L, -1, "__preprocessor");
   Preprocessor* p = (Preprocessor*)lua_topointer(L, -1);
   lua_pop(L, 1);
 
@@ -103,4 +115,19 @@ static int lua_echo (lua_State *L) {
 
 
   return 0;
+}
+
+Preprocessor::Preprocessor (const std::string& input, lua_State* L)
+    : input(input) {
+    this->L = L;
+    lua_register(L, "__loadStr", lua_loadStr);
+    lua_register(L, "echo", lua_echo);
+
+    lua_pushglobaltable(L);
+    lua_pushboolean(L, 0);
+    lua_setfield(L, -2, "Escape");
+}
+
+Preprocessor::~Preprocessor () {
+
 }
