@@ -1,0 +1,15 @@
+# print('hello ecode')
+# Escape = True
+# if true then
+
+void print() {
+    return;
+}
+
+# else
+
+int main() {
+    return 0;
+}
+
+# end

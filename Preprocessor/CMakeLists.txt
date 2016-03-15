@@ -10,6 +10,7 @@ SET (CMAKE_CXX_FLAGS_MINSIZEREL  "-Os -DNDEBUG")
 SET (CMAKE_CXX_FLAGS_RELEASE  "-O4 -DNDEBUG")
 SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
 SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../extlib/lib)
 endif()
 
 
@@ -17,7 +18,11 @@ endif()
 include_directories(include src ../extlib/include)
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 if(USE_DYNAMIC)
-	add_library(builder SHARED ${source_files}) # 使用动态库
+	add_library(preprocessor SHARED ${source_files}) # 使用动态库
 else()
-	add_library(builder STATIC ${source_files}) # 使用静态库
+	add_library(preprocessor STATIC ${source_files}) # 使用静态库
+endif()
+
+if(BUILD_TEST)
+    add_subdirectory(test)
 endif()

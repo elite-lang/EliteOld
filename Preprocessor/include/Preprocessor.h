@@ -13,15 +13,16 @@ public:
     const std::string& runCode();
 
     std::string output;
-
+    const std::string& input;
+    std::string code_string;
 protected:
     lua_State* L;
 
     int add_const_str(std::string::const_iterator p, std::string::const_iterator q);
     int pt_size = 0;
 
-    const std::string& input;
-    std::string code_string;
+
+
 };
 
 
