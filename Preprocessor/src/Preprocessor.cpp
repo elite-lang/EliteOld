@@ -52,7 +52,6 @@ const std::string& Preprocessor::runCode() {
 int Preprocessor::add_const_str(
     std::string::const_iterator p, std::string::const_iterator q) {
     string str(p, q);
-    printf("const: %s\n", str.c_str());
     lua_pushstring(L, str.c_str());
     return luaL_ref(L, LUA_REGISTRYINDEX);
 }
