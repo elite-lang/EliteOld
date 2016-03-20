@@ -1,0 +1,17 @@
+digraph G {
+    node [shape=Mrecord]
+    i2,i3,i4[label="i"]
+    rank = same
+    head
+    {for "(;;)" "return i"}
+    {"i=0" "i<j" "++ i" return i3}
+    {"=" "<" "++"  j i i2 i4 "0"}
+
+    head -> for
+    for -> "(;;)" -> "return i"
+    "(;;)" -> "i=0" -> "i<j" -> "++ i"
+    "i=0" -> "=" -> i4 -> "0"
+    "i<j" -> "<" -> i -> j
+    "++ i" -> "++" -> i2
+    "return i" -> return -> i3
+}
