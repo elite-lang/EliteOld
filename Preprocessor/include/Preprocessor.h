@@ -21,8 +21,6 @@ protected:
     int add_const_str(std::string::const_iterator p, std::string::const_iterator q);
     int pt_size = 0;
 
-
-
 };
 
 

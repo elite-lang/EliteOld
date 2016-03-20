@@ -101,7 +101,7 @@ static int lua_echo (lua_State *L) {
 
 
 static int lua_loadStr(lua_State* L) {
-    int n = lua_gettop(L);  /* number of arguments */
+    lua_gettop(L);  /* number of arguments */
 
     int id = lua_tonumber(L, -1);
     lua_rawgeti(L, LUA_REGISTRYINDEX, id);
