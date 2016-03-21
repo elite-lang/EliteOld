@@ -1,8 +1,9 @@
 ---
-title: RedApple Compiler
+title: RedApple Compiler Infrastructure
 author: Xiaofan Sun
 geometry: margin=1.5in
 ---
+
 
 \pagebreak
 
@@ -66,7 +67,7 @@ So our working flow will be like the following Figure \ref{f1}:
 ![\label{f1}RedApple Compiler Workflow](cp.png)
 
 
-The special point is that the Semantic Analysis was replaced by Macro Translation, which is used to extend the grammer more conveniently.
+The special point is that the Semantic Analysis was replaced by Macro Translation, which is used to extend the grammar more conveniently.
 
 When the object files are all created, compiler will call the linker of system to build the executable program. This linker stage has been shown in Figure \ref{linker}.
 
@@ -280,9 +281,9 @@ Some other important regexs have been listed below:
 
 ### The Generator of Common Nodes Tree
 
-Abstract Class, which is the most usage of the functions to building the AST, can derive types of each kind of leaf nodes.  Those nodes may represent one kind of statements in our grammer, a simple expression, or just a number.
+Abstract Class, which is the most usage of the functions to building the AST, can derive types of each kind of leaf nodes.  Those nodes may represent one kind of statements in our grammar, a simple expression, or just a number.
 
-For the consideration about that our grammer should have extensibility, we won't arrange the statement node, and all kinds of the node types will be a basic constant or a data type.
+For the consideration about that our grammar should have extensibility, we won't arrange the statement node, and all kinds of the node types will be a basic constant or a data type.
 
 
 We just defined some basic nodes for identity, types and constant fields:
@@ -376,5 +377,208 @@ The AST:
 
 
 
+\pagebreak
 
-##
+
+## Macro Translation
+
+Macro Translation is an important stage for RedApple Compiler replacing the Semantic Analysis stage and having an IR generator. It can run the multi-pass macro scanner to get the definitions of functions and types.
+
+It's a recursive process to run the multi-pass macro scanner, that figure \ref{f5} has shown.
+
+![\label{f5} Flow Diagram of Macro Translation](mp.png)
+
+All marco functions need register before used, since this design let the module have a expansibility for user's new marco.
+
+\pagebreak
+
+
+
+
+
+### Order Problem of the Macro Scanning
+
+It's hardly to make a one pass compiler whick grammar looks like Java. We can't do all thing in one pass.
+
+Think about this example:
+
+```
+void run(int p) {
+    hard(p-1);
+    ...
+}
+
+void hard(int p) {
+    if (p==0) return;
+    run(p-1);
+    ...
+}
+
+```
+
+The two functions, `run` and `hard`, called each other and you can't scan any one firstly.  
+So our idea is to scan all the global names first, and collect the information about them. Their names will be stored in the Symbol Table, the bottom of the symbol table in stack fashion.
+
+Before it, when there is a struct defined beside the function:
+
+```
+complex Add(complex x, complex y) {
+    complex ans = new complex();
+    ans.real = x.real + y.real;
+    ans.imag = x.imag + y.imag;
+    return ans;
+}
+
+
+struct complex {
+    double real;
+    double imag;
+}
+
+
+```
+
+So, before we scan the functions, all types should be stored in Symbol Table.
+
+Another pass need to preproccess is User Marco Pass, which is used to find the Marco defined by user and to perform macro substitution on AST nodes.
+
+Here is the passes definition code in this project, which can be divided into four major passes. Each of the passes has the different kinds of marco-functions.
+
+1. User Marco Pass
+2. Scanning Types Pass
+3. Scanning Functions Pass 
+4. Main Pass
+
+```c
+
+extern const FuncReg macro_funcs[];
+extern const FuncReg macro_classes[];
+extern const FuncReg macro_prescan[];
+extern const FuncReg macro_pretype[];
+extern const FuncReg macro_defmacro[];
+
+void PassManager::LoadDefaultLists() {
+    list<Pass*> prescan = { 
+        new Pass(macro_defmacro), 
+        new Pass(macro_prescan), 
+        new Pass(macro_pretype) };
+    list<Pass*> main = { 
+        new Pass(macro_funcs, macro_classes) };
+    NewPassList("prescan", prescan);
+    NewPassList("main", main);
+}
+
+```
+
+`LoadDefaultLists` has defined two lists, one is the prescan list, the other is the main list.
+
+
+### User Marcos and the Replacement
+
+
+Definition of User Marcos is the feature of RedApple Compiler Infrastructure, which let user make their own grammar.
+
+```c
+
+void print(int k) {
+	@for_n (i, k) {  // call user macro
+		printf("hello-%d\n", i);
+	}
+}
+
+defmacro for_n (p, size, code)  {  // define user macro
+	for (int p = 1; p <= size; p = p+1)
+		code;
+}
+
+int main() {
+	print(5);
+	return 0;
+}
+```
+
+This code will be translate to the code below, each name in the macro definition will be replaced:
+
+```c
+void print(int k) {
+	for (int i = 1; i <= k; i = i+1) {
+		printf("hello-%d\n", i);
+	}
+}
+
+int main() {
+	print(5);
+	return 0;
+}
+
+```
+
+Each user macro call should begin with a `@`, following the macro name, we pass arguments to it in the `()`, but the block `{}`, will be recognized as an entirety.
+
+In one user macro call, we can pass lots of arguments until it's not `id`, `(` or `{`;
+
+Here is our bnfs for the user macro grammar:
+
+```bison
+
+<macro_def_args> = [id:id] {{ return newIDNode(id.val); }}
+                 | <macro_def_args:args> "," [id:id]
+                 {{ addBrother(args, newIDNode(id.val));  return args; }}
+                 ;
+
+<marco_def> = "defmacro" [id:id] "(" <macro_def_args:args> ")" <block:b>
+                {{return makeList(newIDNode("defmacro"), newIDNode(id.val), args, b);}}
+            ;
+
+<macro_call> = "@" [id:id] {{ return newIDNode(id.val); }}
+             | <macro_call:m> "(" <macro_call_args:args> ")" 
+             {{ addBrother(m, args); return m; }}
+             | <macro_call:m> <block:b> {{ addBrother(m, getList(b)); return m; }}
+             | <macro_call:m> [id:id] <block:b>
+             {{ addBrother(m, newIDNode(id.val)); addBrother(m, getList(b)); return m; }}
+             ;
+```
+
+
+
+### Meta Model of RedApple Grammar
+
+We support simplied C style grammar, like functions and structs. An obvious difference is that RedApple has bound meta data for reflection.
+
+Each kind of the meta data has a class inherited from `MetaModel`, which can store all of the information about it.
+
+When we have generated the code, those information will be written by lists in the `meta.bc`. All of the meta data which has a common constructor function in C++ style, will be the initialization of the program.
+
+We have all the names of functions and all the types definitions in the meta data. So we can call those functions from string, using the runtime function `FunctionCall`, as the way below.
+
+```c
+int work(int k) {
+    ...
+}
+
+int main() {
+    return FunctionCall("work", 0);
+}
+```
+
+
+The source of `MetaModel` is a simple type value with a name string:
+```cpp
+class MetaModel : public lvalue
+{
+public:
+	MetaModel(std::string);
+	virtual ~MetaModel();
+
+	virtual void insertToST(CodeGenContext* context) = 0;
+	virtual void genCode(CodeGenContext* context) = 0;
+	virtual void genMetaCode(CodeGenContext* context) = 0;
+	virtual MetaType getMetaType() = 0;
+
+	static MetaModel* readJson();
+	static MetaModel* readMetaCode();
+protected:
+	std::string name;
+};
+
+```
