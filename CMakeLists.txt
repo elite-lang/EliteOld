@@ -22,10 +22,10 @@ SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 ## include路径配置
 include_directories(src extlib/include
-    Lex/include 
-    LR_Scanner/includes 
-    RedApple/includes 
-    Builder/include 
+    Lex/include
+    LR_Scanner/includes
+    RedApple/includes
+    Builder/include
     MetaScriptRunner/include
     ExIconv/include
 )
@@ -53,7 +53,7 @@ if(UNIX)
 endif()
 
 target_link_libraries(elite builder meta red scanner lex  lua exiconv
-						${LLVM_LIBS} ${dl_lib_link})
+${LLVM_LIBS} ${dl_lib_link})
 
 if (CMAKE_BUILD_TYPE EQUAL "Debug")
 	target_link_libraries(elite oolua_d)
@@ -69,4 +69,3 @@ include(cmake/CombineHeader.cmake)
 include(cmake/ThirdPartyBuild.cmake)
 
 add_subdirectory(doc)
-
