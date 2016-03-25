@@ -1,6 +1,0 @@
-digraph G {
-    rankdir=BT
-    pointer [shape=plaintext]
-    main [shape="record" label="ref count|<p1>1|2|3|..."]
-    pointer -> main:p1
-}
