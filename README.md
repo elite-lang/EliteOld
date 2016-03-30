@@ -162,6 +162,10 @@ Elite分为如下几个模块：
 - 邮箱：<mailto:sunxfancy@gmail.com>
 - gitter：[参与讨论](https://gitter.im/elite-lang/Elite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+## 特别感谢
+
+熊同学赞助的机械键盘，帮助我更快的打字 O(∩_∩)O哈哈~
+
 ## 开源协议
 
 MIT协议，允许任何人基于该项目开发其他项目，无论是开源的还是商业的，仅仅需要您在使用时，附带我们的版权声明即可。
