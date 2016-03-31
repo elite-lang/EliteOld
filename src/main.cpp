@@ -14,7 +14,6 @@
 #include "PathUtils.h"
 #include "llvm/Support/Signals.h"
 
-
 using namespace std;
 
 const char* safe_getNext(int argc, const char *argv[], int& i) {
@@ -120,6 +119,7 @@ int main(int argc, const char *argv[])
 			builder->AddSrcPath(srcdir);
 			builder->BuildPath(package);
 		}
+
 		builder->Close();
 	}
 	return 0;

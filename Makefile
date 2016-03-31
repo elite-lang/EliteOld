@@ -8,7 +8,7 @@ release:
 
 test:
 	-mkdir build
-	cd build && cmake .. -DBUILD_TEST=ON -DCOVERAGE_FLAG=ON && make deps && make 
+	cd build && cmake .. -DBUILD_TEST=ON -DCOVERAGE_FLAG=ON && make deps && make
 
 only_test:
 	-mkdir build
@@ -22,4 +22,3 @@ deps:
 rm:
 	-rm -rf ./build
 	-rm -rf ./extlib
-
