@@ -18,8 +18,11 @@ public:
 	bool is_debug_mode;
 
 	fstream lex_dbg_fs;
+	fstream lex_save_fs;
+
 	fstream parser_dbg_fs;
 	fstream parser_save_fs;
+
 	fstream red_dbg_fs;
 
 	fstream lex_graphviz_fs;
@@ -64,6 +67,20 @@ void DebugMsg::lex_close() {
 	auto& fs = getInstance()->lex_dbg_fs;
 	fs.close();
 }
+
+std::ostream& DebugMsg::lex_save() {
+	auto& fs = getInstance()->lex_save_fs;
+	if(!fs.is_open()) {
+		fs.open(getInstance()->dbg_file_path+"/parser.json", std::ios::out);
+	}
+	return fs;
+}
+
+void DebugMsg::lex_save_close() {
+	auto& fs = getInstance()->lex_save_fs;
+	fs.close();
+}
+
 
 /**
  * @brief 获取解析器的debug输出文件流

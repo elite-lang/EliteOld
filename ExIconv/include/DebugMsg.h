@@ -38,6 +38,8 @@ public:
     static std::ostream& lex_dbg();
     static void lex_close();
 
+    static std::ostream& lex_save();
+    static void lex_save_close();
     /**
      * @brief 获取解析器的debug输出文件流
      */
