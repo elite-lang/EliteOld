@@ -1,6 +1,7 @@
 {
-	"name":"bgc",
-	"default_load":"true",
-	"version":"0.0.1",
-	"runtime":"-lbgc -lgc-lib"
+	"name": "bgc",
+	"default_load": "true",
+	"platform": "linux",
+	"version": "0.0.1",
+	"runtime": "-lbgc -lgc-lib"
 }
