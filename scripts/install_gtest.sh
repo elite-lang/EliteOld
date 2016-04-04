@@ -10,5 +10,5 @@ cd googletest
 cmake -E make_directory build
 cmake -E chdir build cmake ..
 cmake --build build
-cp build/libgtest* /usr/local/lib/
+cp build/googlemock/gtest/libgtest* /usr/local/lib/
 rm -rf build
