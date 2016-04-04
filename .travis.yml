@@ -15,9 +15,12 @@ matrix:
 addons:
   apt:
     packages:
-      - llvm-3.6-dev libedit-dev flex bison
+      - llvm-3.6-dev
+      - libedit-dev
+      - flex
+      - bison
 
-before install:
+before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install llvm-3.6 flex bison; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh ./scripts/fix_ubuntu_llvm.sh fi
