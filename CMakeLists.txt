@@ -69,3 +69,5 @@ include(cmake/CombineHeader.cmake)
 include(cmake/ThirdPartyBuild.cmake)
 
 add_subdirectory(doc)
+
+include(cmake/Install.cmake)
