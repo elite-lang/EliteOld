@@ -13,9 +13,8 @@ SET(CPACK_PACKAGE_CONTACT "sunxfancy@gmail.com")
 SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Elite compiler")
 
 
-install(TARGETS elite RUNTIME DESTINATION bin)
-
 install(DIRECTORY
+        ${CMAKE_CURRENT_SOURCE_DIR}/bin
         ${CMAKE_CURRENT_SOURCE_DIR}/conf
         ${CMAKE_CURRENT_SOURCE_DIR}/packages
         ${CMAKE_CURRENT_SOURCE_DIR}/tools

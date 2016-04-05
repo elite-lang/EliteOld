@@ -5,6 +5,7 @@
 *.lrsave
 .clang_complete
 bin/
+lib/
 build/
 Lex/bin/
 Lex/build/

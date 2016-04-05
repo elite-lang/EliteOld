@@ -120,8 +120,16 @@ ExternalProject_Add(libdyncall
 # 	BUILD_ALWAYS 0
 # 	)
 
-
+if(APPLE)
+	set(COPY_LIB_COMMAND COMMAND -cp ${third_party_install_path}/bin/*.dylib ${CMAKE_SOURCE_DIR}/bin)
+	set(COPY_LIB_COMMAND COMMAND -cp ${third_party_install_path}/lib/*.dylib ${CMAKE_SOURCE_DIR}/bin)
+elseif(UNIX)
+	set(COPY_LIB_COMMAND COMMAND -cp ${third_party_install_path}/lib/*.so ${CMAKE_SOURCE_DIR}/bin)
+elseif(WIN32)
+	set(COPY_LIB_COMMAND COMMAND -xcopy ${third_party_install_path}\lib\*.dll  ${CMAKE_SOURCE_DIR}\bin  /Y )
+endif()
 
 ADD_CUSTOM_TARGET(deps
 	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall
+	 ${COPY_LIB_COMMAND}
 	)
