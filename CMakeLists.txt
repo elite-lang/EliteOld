@@ -1,6 +1,10 @@
 ﻿cmake_minimum_required(VERSION 2.8)
 project(Elite)
 
+SET(VERSION_MAJOR "0")
+SET(VERSION_MINOR "9")
+SET(VERSION_PATCH "1")
+
 SET (CMAKE_BUILD_TYPE Debug) # 默认构建Debug模式
 
 if(UNIX)
@@ -52,7 +56,7 @@ if(UNIX)
 	set (dl_lib_link dl)
 endif()
 
-target_link_libraries(elite builder meta red scanner lex  lua exiconv
+target_link_libraries(elite builder meta red scanner lex lua exiconv
 ${LLVM_LIBS} ${dl_lib_link})
 
 if (CMAKE_BUILD_TYPE EQUAL "Debug")

@@ -18,6 +18,10 @@ deps:
 	-mkdir build
 	cd build && cmake .. && make deps
 
+package:
+	-mkdir build
+	cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make package
+
 .PHONY:
 rm:
 	-rm -rf ./build

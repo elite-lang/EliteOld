@@ -35,8 +35,10 @@ list(REMOVE_ITEM  source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 if(USE_DYNAMIC)
 	add_library(meta SHARED ${source_files}) # 使用动态库
+	install(TARGETS meta RUNTIME DESTINATION bin)
 else()
 	add_library(meta STATIC ${source_files}) # 使用静态库
+	install(TARGETS meta ARCHIVE DESTINATION lib)
 endif()
 
 
