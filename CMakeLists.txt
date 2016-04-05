@@ -19,8 +19,6 @@ elseif(WIN32)
 	include(cmake/WindowsLLVM.cmake) # 寻找LLVM
 endif()
 
-
-
 ## 配置输出目录
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib )
@@ -58,7 +56,7 @@ if(UNIX)
 	set (dl_lib_link dl)
 endif()
 
-target_link_libraries(elite builder meta red scanner lex lua exiconv
+target_link_libraries(elite builder meta red scanner lex lua exiconv iconv charsetdetect
 ${LLVM_LIBS} ${dl_lib_link})
 
 if (CMAKE_BUILD_TYPE EQUAL "Debug")
