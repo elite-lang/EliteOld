@@ -24,5 +24,5 @@ IF(BUILD_DOCUMENTATION)
         COMMENT "Generating API documentation with Doxygen"
         VERBATIM)
 
-    # INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION share/doc)  
+    INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/build-doc/html DESTINATION doc)
 ENDIF()
