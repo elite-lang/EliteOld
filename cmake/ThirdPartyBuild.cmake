@@ -9,7 +9,7 @@ ExternalProject_Add(libiconv
 	GIT_REPOSITORY https://github.com/elite-lang/libiconv
 	SOURCE_DIR third_party/libiconv/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path} -DBUILD_SHARED_LIBS=ON"
+	CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
@@ -36,7 +36,7 @@ ExternalProject_Add(libcharsetdetect
 	GIT_REPOSITORY https://github.com/elite-lang/libcharsetdetect
 	SOURCE_DIR third_party/libcharsetdetect/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path} -DBUILD_SHARED_LIBS=OFF"
+	CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
@@ -46,7 +46,7 @@ ExternalProject_Add(liblua
 	GIT_REPOSITORY https://github.com/elite-lang/lua
 	SOURCE_DIR third_party/lua/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path} -DBUILD_SHARED_LIBS=OFF"
+	CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
@@ -104,7 +104,7 @@ ExternalProject_Add(libdyncall
 	GIT_REPOSITORY https://github.com/elite-lang/dyncall
 	SOURCE_DIR third_party/dyncall/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path} -DBUILD_SHARED_LIBS=OFF"
+	CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
