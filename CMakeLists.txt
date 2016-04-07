@@ -62,6 +62,7 @@ else()
 	set (oolua_lib oolua)
 endif()
 
+
 target_link_libraries(elite builder meta red scanner lex ${oolua_lib} lua exiconv iconv charsetdetect charset
 ${LLVM_LIBS} ${dl_lib_link})
 
