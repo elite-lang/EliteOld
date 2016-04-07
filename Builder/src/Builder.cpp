@@ -239,7 +239,7 @@ string Builder::make_default_name(const char* filename) {
 	str[size+2] = 'c';
 	str[size+3] = 0;
 	string s = str;
-	delete str;
+	delete[] str;
 	return s;
 }
 
