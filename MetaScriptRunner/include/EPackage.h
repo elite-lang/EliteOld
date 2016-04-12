@@ -54,12 +54,17 @@ public:
 	/**
 	 * @brief 判断是否是默认载入这个包
 	 */
-	bool isDefaultLoad();
+	const bool isDefaultLoad();
+
+	/**
+	 * @brief 判断这个包能否在本平台环境下被载入
+	 */
+	const bool canLoadOnPlatform();
 
 	/**
 	 * @brief 判断这个软包是否已经加载
 	 */
-	bool isLoaded();
+	const bool isLoaded();
 
 	/**
 	 * @brief 立即加载整个插件
