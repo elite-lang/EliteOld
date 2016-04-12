@@ -285,7 +285,7 @@ int Builder::call_ld(std::string filein, std::string fileout, std::string link_a
 	string ld = "g++";
 #endif
 	string runtime = " -L";
-	runtime += PathGetter::getEliteToolsPath();
+	runtime += PathGetter::getEliteHome();
 	runtime += "/runtime/";
 	string args = runtime + " -o " + fileout + " " + filein + link_args + " -lruntime -ldyncall_s";
 	ld += args;

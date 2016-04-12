@@ -48,6 +48,15 @@ add_subdirectory(RedApple)
 add_subdirectory(MetaScriptRunner)
 add_subdirectory(Builder)
 
+set_target_properties( runtime
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/runtime"
+    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/runtime"
+    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/runtime"
+)
+
+
+
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 add_executable(elite ${source_files})
 
