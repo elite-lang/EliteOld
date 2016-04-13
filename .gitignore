@@ -6,6 +6,7 @@
 .clang_complete
 bin/
 lib/
+runtime/
 build/
 Lex/bin/
 Lex/build/

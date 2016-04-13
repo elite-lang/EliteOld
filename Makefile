@@ -23,6 +23,5 @@ package:
 	cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make package
 
 .PHONY:
-rm:
-	-rm -rf ./build
-	-rm -rf ./extlib
+clean:
+	-rm -rf ./build ./bin ./lib ./runtime ./extlib
