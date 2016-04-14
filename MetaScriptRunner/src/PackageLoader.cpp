@@ -70,7 +70,7 @@ void PackageLoader::LoadDefault() {
 	PackageJIT::AddSymbol("HelloWorld", (void*)HelloWorld);
 	for (auto& p : packages) {
 		auto pkg = p.second;
-		if (pkg->isDefaultLoad() && !pkg->isLoaded())
+		if (pkg->isDefaultLoad() && !pkg->isLoaded() && pkg->canLoadOnPlatform())
 			pkg->Load();
 	}
 

@@ -4,11 +4,11 @@
 # @Last Modified by:   sxf
 # @Last Modified time: 2015-12-16 18:32:56
 
-apt-get install libgtest-dev
-
-cd /usr/src/gtest
+cd /usr/src/
+git clone --depth=1 https://github.com/google/googletest.git
+cd googletest
 cmake -E make_directory build
 cmake -E chdir build cmake ..
 cmake --build build
-cp build/libgtest* /usr/local/lib/
+cmake --build build --target install
 rm -rf build

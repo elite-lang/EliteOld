@@ -9,7 +9,7 @@ ExternalProject_Add(libiconv
 	GIT_REPOSITORY https://github.com/elite-lang/libiconv
 	SOURCE_DIR third_party/libiconv/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
+	CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
@@ -19,7 +19,7 @@ elseif(WIN32)
 ExternalProject_Add(libiconv
 	DOWNLOAD_DIR third_party/
 	GIT_REPOSITORY https://github.com/elite-lang/libiconv
-	GIT_TAG Windows-x86 
+	GIT_TAG Windows-x86
 	CONFIGURE_COMMAND ""
 	SOURCE_DIR third_party/libiconv/
 	BUILD_COMMAND "cp_libs.bat"
@@ -36,7 +36,7 @@ ExternalProject_Add(libcharsetdetect
 	GIT_REPOSITORY https://github.com/elite-lang/libcharsetdetect
 	SOURCE_DIR third_party/libcharsetdetect/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
+	CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
@@ -46,7 +46,7 @@ ExternalProject_Add(liblua
 	GIT_REPOSITORY https://github.com/elite-lang/lua
 	SOURCE_DIR third_party/lua/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
+	CMAKE_ARGS -DBUILD_SHARED_LIBS=OFF -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
@@ -93,7 +93,7 @@ add_custom_command(OUTPUT copy-liboolua
   COMMAND  ${COPY_OOLUA_LIB_COMMAND}
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/third_party/oolua/build_scripts/"
   COMMENT "comment"
-  ) 
+  )
 
 
 
@@ -104,24 +104,22 @@ ExternalProject_Add(libdyncall
 	GIT_REPOSITORY https://github.com/elite-lang/dyncall
 	SOURCE_DIR third_party/dyncall/
 	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
+	CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=${third_party_install_path}
 	# INSTALL_COMMAND ""
 	BUILD_ALWAYS 0
 	)
 
 
-ExternalProject_Add(bdwgc
-	DOWNLOAD_DIR third_party/
-	GIT_REPOSITORY https://github.com/elite-lang/bdwgc
-	SOURCE_DIR third_party/bdwgc/
-	CMAKE_COMMAND cmake
-	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
-	# INSTALL_COMMAND ""
-	BUILD_ALWAYS 0
-	)
-
-
+# ExternalProject_Add(bdwgc
+# 	DOWNLOAD_DIR third_party/
+# 	GIT_REPOSITORY https://github.com/elite-lang/bdwgc
+# 	SOURCE_DIR third_party/bdwgc/
+# 	CMAKE_COMMAND cmake
+# 	CMAKE_ARGS "-DCMAKE_INSTALL_PREFIX=${third_party_install_path}"
+# 	# INSTALL_COMMAND ""
+# 	BUILD_ALWAYS 0
+# 	)
 
 ADD_CUSTOM_TARGET(deps
-	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall bdwgc
-	)  
+	DEPENDS liblua libiconv libcharsetdetect copy-liboolua libdyncall
+)

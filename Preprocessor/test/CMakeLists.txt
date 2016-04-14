@@ -1,6 +1,8 @@
 enable_testing()
 find_package(GTest REQUIRED)
 
+include(../../cmake/ClangConf.cmake)
+
 include_directories (${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 include_directories (${GTEST_INCLUDE_DIRS})
 file(GLOB_RECURSE test_source_files ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)

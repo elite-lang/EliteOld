@@ -4,11 +4,11 @@ elite:
 
 release:
 	-mkdir build
-	cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make deps && make elite
+	cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make deps && make elite  && make runtime
 
 test:
 	-mkdir build
-	cd build && cmake .. -DBUILD_TEST=ON -DCOVERAGE_FLAG=ON && make deps && make
+	cd build && cmake .. -DBUILD_TEST=ON -DCOVERAGE_FLAG=ON && make deps && make elite && make runtime
 
 only_test:
 	-mkdir build
@@ -18,7 +18,10 @@ deps:
 	-mkdir build
 	cd build && cmake .. && make deps
 
+package:
+	-mkdir build
+	cd build && cmake .. -DCMAKE_BUILD_TYPE=Release && make package
+
 .PHONY:
-rm:
-	-rm -rf ./build
-	-rm -rf ./extlib
+clean:
+	-rm -rf ./build ./bin ./lib ./runtime ./extlib

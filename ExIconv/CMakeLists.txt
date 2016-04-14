@@ -13,7 +13,7 @@ SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 
 include_directories(../extlib/include)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../extlib/lib)
-  
+
 endif()
 
 
@@ -23,6 +23,8 @@ file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
 add_library(exiconv STATIC ${source_files})
 target_link_libraries(exiconv iconv charsetdetect)
+
+install(TARGETS exiconv ARCHIVE DESTINATION lib)
 
 
 if(BUILD_TEST)

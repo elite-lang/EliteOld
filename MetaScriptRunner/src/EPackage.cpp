@@ -67,6 +67,19 @@ void EPackage::Run() {
 	PackageJIT::RunPlugin(getName(), msr);
 }
 
+const bool EPackage::canLoadOnPlatform() {
+	string platform = getProp("platform");
+	if (platform.empty()) return true;
+#if defined(_WIN32)
+	return platform == "win32";
+#elif defined(__linux__)
+	return platform == "linux";
+#elif defined(__APPLE__)
+	return platform == "apple";
+#endif
+	return false;
+}
+
 const string& EPackage::getName() {
 	return getProp("name");
 }
@@ -79,10 +92,10 @@ const string& EPackage::getRuntime() {
 	return getProp("runtime");
 }
 
-bool EPackage::isDefaultLoad() {
+const bool EPackage::isDefaultLoad() {
 	return getProp("default_load") == "true";
 }
-bool EPackage::isLoaded() {
+const bool EPackage::isLoaded() {
 	return getProp("package_loaded") == "true";
 }
 

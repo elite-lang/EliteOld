@@ -239,7 +239,7 @@ string Builder::make_default_name(const char* filename) {
 	str[size+2] = 'c';
 	str[size+3] = 0;
 	string s = str;
-	delete str;
+	delete[] str;
 	return s;
 }
 
@@ -281,16 +281,17 @@ int Builder::call_ld(std::string filein, std::string fileout, std::string link_a
 
 #if !defined(_WIN32) && (defined(__linux__) || defined(__APPLE__))
 	string ld = "clang++";
+#else
+	string ld = "g++";
+#endif
 	string runtime = " -L";
-	runtime += PathGetter::getEliteToolsPath();
+	runtime += PathGetter::getEliteHome();
 	runtime += "/runtime/";
+	runtime += " -L";
+	runtime += PathGetter::getEliteHome();
+	runtime += "/extlib/lib/";
 	string args = runtime + " -o " + fileout + " " + filein + link_args + " -lruntime -ldyncall_s";
 	ld += args;
 	printf("ld: %s\n", ld.c_str());
 	return system(ld.c_str());
-#endif
-#if defined(_WIN32)
-
-#endif
-	return 0;
 }

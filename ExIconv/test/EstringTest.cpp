@@ -1,9 +1,12 @@
-/* 
+/*
 * @Author: sxf
 * @Date:   2015-12-16 12:02:18
 * @Last Modified by:   sxf
 * @Last Modified time: 2016-03-05 17:01:18
 */
+#ifdef __APPLE__
+#define GTEST_HAS_POSIX_RE 0
+#endif
 
 #include <gtest/gtest.h>
 #include <string>

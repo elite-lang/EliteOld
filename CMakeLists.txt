@@ -1,6 +1,10 @@
 ﻿cmake_minimum_required(VERSION 2.8)
 project(Elite)
 
+SET(VERSION_MAJOR "0")
+SET(VERSION_MINOR "9")
+SET(VERSION_PATCH "2")
+
 SET (CMAKE_BUILD_TYPE Debug) # 默认构建Debug模式
 
 if(UNIX)
@@ -15,10 +19,10 @@ elseif(WIN32)
 	include(cmake/WindowsLLVM.cmake) # 寻找LLVM
 endif()
 
-
-
 ## 配置输出目录
-SET (EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin )
+set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib )
+set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib )
 
 ## include路径配置
 include_directories(src extlib/include
@@ -44,6 +48,15 @@ add_subdirectory(RedApple)
 add_subdirectory(MetaScriptRunner)
 add_subdirectory(Builder)
 
+set_target_properties( runtime
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/runtime"
+    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/runtime"
+    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/runtime"
+)
+
+
+
 file(GLOB_RECURSE source_files ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 add_executable(elite ${source_files})
 
@@ -52,14 +65,17 @@ if(UNIX)
 	set (dl_lib_link dl)
 endif()
 
-target_link_libraries(elite builder meta red scanner lex  lua exiconv
+if (CMAKE_BUILD_TYPE EQUAL "Debug")
+	set (oolua_lib oolua_d)
+else()
+	set (oolua_lib oolua)
+endif()
+
+
+target_link_libraries(elite builder meta red scanner lex ${oolua_lib} lua exiconv iconv charsetdetect charset
 ${LLVM_LIBS} ${dl_lib_link})
 
-if (CMAKE_BUILD_TYPE EQUAL "Debug")
-	target_link_libraries(elite oolua_d)
-else()
-	target_link_libraries(elite oolua)
-endif()
+
 
 
 ## 合并Headers
@@ -69,3 +85,5 @@ include(cmake/CombineHeader.cmake)
 include(cmake/ThirdPartyBuild.cmake)
 
 add_subdirectory(doc)
+
+include(cmake/Install.cmake)
