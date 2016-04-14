@@ -3,7 +3,7 @@ project(Elite)
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "9")
-SET(VERSION_PATCH "1")
+SET(VERSION_PATCH "2")
 
 SET (CMAKE_BUILD_TYPE Debug) # 默认构建Debug模式
 
