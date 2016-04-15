@@ -278,12 +278,7 @@ int Builder::call_llc(std::string filein) {
 }
 
 int Builder::call_ld(std::string filein, std::string fileout, std::string link_args) {
-
-#if !defined(_WIN32) && (defined(__linux__) || defined(__APPLE__))
-	string ld = "clang++";
-#else
 	string ld = "g++";
-#endif
 	string runtime = " -L";
 	runtime += PathGetter::getEliteHome();
 	runtime += "/runtime/";
