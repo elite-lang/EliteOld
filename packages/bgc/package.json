@@ -1,6 +1,6 @@
 {
 	"name": "bgc",
-	"default_load": "true",
+	"default_load": "ture",
 	"platform": "linux",
 	"version": "0.0.1",
 	"runtime": "-lbgc -lgc-lib"

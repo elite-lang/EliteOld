@@ -71,7 +71,7 @@ void DebugMsg::lex_close() {
 std::ostream& DebugMsg::lex_save() {
 	auto& fs = getInstance()->lex_save_fs;
 	if(!fs.is_open()) {
-		fs.open(getInstance()->dbg_file_path+"/parser.json", std::ios::out);
+		fs.open(getInstance()->dbg_file_path+"/lex.json", std::ios::out);
 	}
 	return fs;
 }
@@ -161,7 +161,6 @@ void DebugMsg::lex_graphviz_close() {
 std::ostream& DebugMsg::parser_graphviz() {
 	auto& fs = getInstance()->parser_graphviz_fs;
 	if(!fs.is_open()) {
-		cout << getInstance()->dbg_file_path+"/parser.gv" << endl;
 		fs.open(getInstance()->dbg_file_path+"/parser.gv", std::ios::out);
 		return fs;
 	}

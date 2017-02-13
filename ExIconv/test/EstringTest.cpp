@@ -2,7 +2,7 @@
 * @Author: sxf
 * @Date:   2015-12-16 12:02:18
 * @Last Modified by:   sxf
-* @Last Modified time: 2016-03-05 17:01:18
+* @Last Modified time: 2016-05-10 16:30:40
 */
 #ifdef __APPLE__
 #define GTEST_HAS_POSIX_RE 0
@@ -41,11 +41,11 @@ __ESTRING_TEST__(ToUtf8)
 
 __ESTRING_TEST__(Select)
 {
-	estring str("hello您好, 这是一段中英混排");
-	for (int i = 0; i < 8; ++i)
+	estring str("您好hello");
+	for (int i = 0; i < 7; ++i)
 		printf("%04X ", str[i]);
 	printf("\n");
-	EXPECT_EQ(str[4], 'o');
+	EXPECT_EQ(str[3], 'e');
 }
 
 __ESTRING_TEST__(Select2)

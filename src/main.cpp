@@ -12,6 +12,7 @@
 #include <string>
 #include "help.h"
 #include "PathUtils.h"
+#include "FileUtils.h"
 #include "llvm/Support/Signals.h"
 
 using namespace std;
@@ -98,6 +99,8 @@ int main(int argc, const char *argv[])
 		if (only_one_file == -1)
 			only_one_file = 0;
 
+
+		FileUtils::create_directory(dir);
 
 		// 创建Worker和Builder
 		defalut_lex    = PathUtils::native(defalut_lex);

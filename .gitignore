@@ -17,3 +17,6 @@ RedApple/build/
 third_party/
 extlib/
 build-doc/
+*.a
+*.epbc
+*.o
